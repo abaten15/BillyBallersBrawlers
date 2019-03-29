@@ -9,9 +9,20 @@
 #import <SpriteKit/SpriteKit.h>
 #import <GameplayKit/GameplayKit.h>
 
+#import "Background.h"
+#import "Player.h"
+#import "PlayerControls.h"
+
 @interface GameScene : SKScene
 
 @property (nonatomic) NSMutableArray<GKEntity *> *entities;
 @property (nonatomic) NSMutableDictionary<NSString*, GKGraph *> *graphs;
+
+@property (nonatomic) SKSpriteNode *window;
+
+@property (nonatomic) Background *background;
+
+@property (nonatomic) Player *player;
+@property (nonatomic) PlayerControls *playerControls;
 
 @end
