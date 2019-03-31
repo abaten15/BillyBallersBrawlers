@@ -12,6 +12,7 @@
 #import "Bullet.h"
 
 #import "Direction.h"
+#import "CategoryDefinitions.h"
 
 @implementation Bullet {
 
@@ -21,9 +22,20 @@
 
 	Bullet *bullet = [Bullet spriteNodeWithImageNamed:@"Bullet"];
 	
+	// Bullet init
 	[bullet setPosition:point];
 	[bullet setSize:BULLET_SIZE];
 	
+	// Bullet collision body
+	bullet.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:BULLET_SIZE.width];
+	bullet.physicsBody.categoryBitMask = bulletCategory;
+	bullet.physicsBody.contactTestBitMask = wallCategory | playerCategory;
+	bullet.physicsBody.node.name = bulletName;
+	bullet.physicsBody.affectedByGravity = NO;
+	bullet.physicsBody.dynamic = NO;
+	bullet.name = bulletName;
+	
+	// Actions
 	CGFloat totalDistance = BULLET_GOTO_OFFSET - point.y;
 	
 	SKAction * motion;
@@ -40,7 +52,7 @@
 	
 	return bullet;
 	
-}\
+}
 
 @end
 

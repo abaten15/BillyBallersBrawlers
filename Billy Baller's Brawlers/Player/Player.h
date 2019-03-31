@@ -11,7 +11,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-//#import "HealthBar.h
+#import "HealthBar.h"
 
 #define PLAYER_POSITION CGPointMake(0, -500)
 #define PLAYER_SIZE CGSizeMake(100, 100)
@@ -27,14 +27,12 @@
 #define STEVE_SPEED 30.0
 #define STEVE_MAX_HEALTH 100
 
-
-
 @interface Player : SKSpriteNode
 
 @property (nonatomic) int brawlerID;
 + (instancetype)brawlerWithID:(int) brawlerID;
 
-//@property (nonatomic) HealthBar *healthBar;
+@property (nonatomic) HealthBar *healthBar;
 
 @property (nonatomic) CGFloat mySpeed;
 - (void) moveTo:(CGFloat) newX;

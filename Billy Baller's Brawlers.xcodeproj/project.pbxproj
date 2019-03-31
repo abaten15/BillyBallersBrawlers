@@ -50,6 +50,7 @@
 		E50ABFB8224C050900F12911 /* Explosion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Explosion.m; sourceTree = "<group>"; };
 		E50ABFBA224C358300F12911 /* HealthBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HealthBar.h; sourceTree = "<group>"; };
 		E50ABFBB224C35F600F12911 /* HealthBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HealthBar.m; sourceTree = "<group>"; };
+		E52B74F1224EB7C500630F75 /* CategoryDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoryDefinitions.h; sourceTree = "<group>"; };
 		E561D17622495B9C00D53055 /* Background.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
 		E561D17722495BA700D53055 /* Background.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Background.m; sourceTree = "<group>"; };
 		E561D179224961B900D53055 /* Wall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Wall.m; sourceTree = "<group>"; };
@@ -110,6 +111,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E52B74F2224EBA5F00630F75 /* Physics */ = {
+			isa = PBXGroup;
+			children = (
+				E52B74F1224EB7C500630F75 /* CategoryDefinitions.h */,
+			);
+			path = Physics;
+			sourceTree = "<group>";
+		};
 		E561D17C22496A7E00D53055 /* Background */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +172,7 @@
 				E5AC43A0220B2D3400A800CE /* AppDelegate.m */,
 				E5AC43A2220B2D3400A800CE /* GameScene.sks */,
 				E5AC43A4220B2D3400A800CE /* Actions.sks */,
+				E52B74F2224EBA5F00630F75 /* Physics */,
 				E561D17C22496A7E00D53055 /* Background */,
 				E561D17D22496B4D00D53055 /* Player */,
 				E5AC43A6220B2D3400A800CE /* GameScene.h */,

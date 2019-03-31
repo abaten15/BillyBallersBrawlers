@@ -43,9 +43,9 @@
 	[player setPosition:PLAYER_POSITION];
 	[player setSize:PLAYER_SIZE];
 	
-//	HealthBar *healthBar = [HealthBar healthBarFor:self withMaxHealth:maxHealth];
-//	[player addChild:healthBar];
-//	player.healthBar = healthBar;
+	HealthBar *healthBar = [HealthBar healthBarWithMaxHealth:maxHealth];
+	player.healthBar = healthBar;
+	[player addChild:healthBar];
 	
 	return player;
 	
@@ -59,12 +59,22 @@
 
 - (void) performMainAttack {
 	int flippedOffset = 0;
-	if (_flipped) {
-		flippedOffset = BILLY_MAIN_OFFSET.x * -2;
+	CGPoint point;
+	if (self.brawlerID == BILLY_ID) {
+		if (_flipped) {
+			flippedOffset = BILLY_MAIN_OFFSET.x * -2;
+		}
+		point = CGPointMake(BILLY_MAIN_OFFSET.x + self.position.x + flippedOffset, BILLY_MAIN_OFFSET.y + self.position.y);
+		Bullet *bullet = [Bullet bulletAt:point going:North];
+		[[self parent] addChild:bullet];
+	} else {
+		if (_flipped) {
+			flippedOffset = BILLY_MAIN_OFFSET.x * -2;
+		}
+		point = CGPointMake(BILLY_MAIN_OFFSET.x + self.position.x + flippedOffset, BILLY_MAIN_OFFSET.y + self.position.y);
+		Bullet *bulletDefault = [Bullet bulletAt:point going:North];
+		[[self parent] addChild:bulletDefault];
 	}
-	CGPoint point = CGPointMake(BILLY_MAIN_OFFSET.x + self.position.x + flippedOffset, BILLY_MAIN_OFFSET.y + self.position.y);
-	Bullet *bullet = [Bullet bulletAt:point going:North];
-	[[self parent] addChild:bullet];
 }
 
 - (void) performSpecialAttack {

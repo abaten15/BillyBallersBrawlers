@@ -11,16 +11,14 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-#import "Player.h"
-
 #define HEALTH_BAR_IMAGE_NAME @"HealthBar"
 
-#define HEALTH_BAR_SIZE CGSizeMake(100, 20)
+#define HEALTH_BAR_SIZE CGSizeMake(100, 15)
 #define HEALTH_BAR_OFFSET CGPointMake(0, 75)
 
 @interface HealthBar : SKSpriteNode
 
-+ (instancetype) healthBarFor:(Player *)player withMaxHealth:(CGFloat)maxHealth;
++ (instancetype) healthBarWithMaxHealth:(CGFloat)maxHealth;
 
 @property (nonatomic) int maxHealth;
 @property (nonatomic) int currentHealth;

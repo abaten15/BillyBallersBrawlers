@@ -13,12 +13,15 @@
 
 @implementation HealthBar
 
-+ (instancetype) healthBarfor:(Player *)player withMaxHealth:(CGFloat)maxHealth {
++ (instancetype) healthBarWithMaxHealth:(CGFloat)maxHealth {
 	
 	HealthBar *healthBar = [HealthBar spriteNodeWithImageNamed:HEALTH_BAR_IMAGE_NAME];
 	
 	[healthBar setPosition:HEALTH_BAR_OFFSET];
 	[healthBar setSize:HEALTH_BAR_SIZE];
+	
+	healthBar.maxHealth = maxHealth;
+	healthBar.currentHealth = maxHealth;;
 	
 	return healthBar;
 	

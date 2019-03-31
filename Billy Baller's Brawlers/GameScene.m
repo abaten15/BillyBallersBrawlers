@@ -19,6 +19,9 @@
 
 	_lastUpdateTime = 0;
 	
+	self.physicsWorld.contactDelegate = self;
+	self.contactQueue = [NSMutableArray array];
+	
 	self.window = [SKSpriteNode spriteNodeWithTexture:NULL size:CGSizeMake(2000, 2000)];
 	[self.window setPosition:CGPointMake(0, 0)];
 	[self addChild:self.window];
@@ -36,6 +39,26 @@
 	
 }
 
+- (void) didBeginContact:(SKPhysicsContact *)contact {
+	[self.contactQueue addObject:contact];
+	NSLog(@"contact");
+}
+
+- (void)processContactsForUpdate:(NSTimeInterval)currentTime {
+	for (SKPhysicsContact* contact in [self.contactQueue copy]) {
+		[self handleContact:contact];
+        [self.contactQueue removeObject:contact];
+    }
+}
+
+- (void) handleContact:(SKPhysicsContact *)contact {
+	if (!contact.bodyA.node.parent || !contact.bodyB.node.parent) {
+		return;
+	}
+	NSLog(@"contact");
+	NSLog(contact.bodyA.node.name);
+	NSLog(contact.bodyB.node.name);
+}
 
 - (void)touchDownAtPoint:(CGPoint)pos {
 }
@@ -73,6 +96,8 @@
     if (_lastUpdateTime == 0) {
         _lastUpdateTime = currentTime;
     }
+	
+    [self processContactsForUpdate:currentTime];
     
     // Calculate time since last update
     CGFloat dt = currentTime - _lastUpdateTime;

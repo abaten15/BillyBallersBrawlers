@@ -13,12 +13,16 @@
 #import "Player.h"
 #import "PlayerControls.h"
 
-@interface GameScene : SKScene
+@interface GameScene : SKScene <SKPhysicsContactDelegate>
 
 @property (nonatomic) NSMutableArray<GKEntity *> *entities;
 @property (nonatomic) NSMutableDictionary<NSString*, GKGraph *> *graphs;
 
 @property (nonatomic) SKSpriteNode *window;
+
+@property (nonatomic) NSMutableArray *contactQueue;
+- (void) didBeginContact:(SKPhysicsContact *)contact;
+- (void) handleContact:(SKPhysicsContact *)contact;
 
 @property (nonatomic) Background *background;
 

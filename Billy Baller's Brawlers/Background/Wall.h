@@ -16,13 +16,13 @@
 #define WALL_SIZE CGSizeMake(200, 80)
 
 #define WALL_TL 0
-#define WALL_TL_POS CGPointMake(-150, 400)
+#define WALL_TL_POS CGPointMake(-150, 360)
 #define WALL_TR 1
-#define WALL_TR_POS CGPointMake(150, 400)
+#define WALL_TR_POS CGPointMake(150, 360)
 #define WALL_BL 2
-#define WALL_BL_POS CGPointMake(-150, -400)
+#define WALL_BL_POS CGPointMake(-150, -360)
 #define WALL_BR 3
-#define WALL_BR_POS CGPointMake(150, -400)
+#define WALL_BR_POS CGPointMake(150, -360)
 
 @interface Wall : SKSpriteNode
 

@@ -11,6 +11,8 @@
 
 #import "Wall.h"
 
+#import "CategoryDefinitions.h"
+
 @implementation Wall {
 
 }
@@ -35,6 +37,15 @@
 	default:
     	break;
 	}
+	
+	wall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:WALL_SIZE];
+	wall.physicsBody.categoryBitMask = wallCategory;
+	wall.physicsBody.collisionBitMask = 0x0;
+	wall.physicsBody.contactTestBitMask = bulletCategory;
+	wall.physicsBody.node.name = wallName;
+	wall.physicsBody.affectedByGravity = NO;
+	wall.physicsBody.dynamic = NO;
+	wall.name = wallName;
 	
 	[wall setSize:WALL_SIZE];
 
