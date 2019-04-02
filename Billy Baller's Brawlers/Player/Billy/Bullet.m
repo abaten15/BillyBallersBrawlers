@@ -25,14 +25,16 @@
 	// Bullet init
 	[bullet setPosition:point];
 	[bullet setSize:BULLET_SIZE];
+	[bullet setZPosition:1];
 	
 	// Bullet collision body
 	bullet.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:BULLET_SIZE.width];
 	bullet.physicsBody.categoryBitMask = bulletCategory;
+	bullet.physicsBody.collisionBitMask = 0x0;
 	bullet.physicsBody.contactTestBitMask = wallCategory | playerCategory;
 	bullet.physicsBody.node.name = bulletName;
 	bullet.physicsBody.affectedByGravity = NO;
-	bullet.physicsBody.dynamic = NO;
+	bullet.physicsBody.dynamic = YES;
 	bullet.name = bulletName;
 	
 	// Actions

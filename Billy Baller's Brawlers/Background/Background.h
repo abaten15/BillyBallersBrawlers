@@ -12,8 +12,9 @@
 #import <SpriteKit/SpriteKit.h>
 
 #import "Wall.h"
+#import "GameScene.h"
 
-#define BACKGROUND_VERTICAL_OFFSET 80
+#define BACKGROUND_VERTICAL_OFFSET 0 //80
 #define BACKGROUND_POSITION CGPointMake(0,BACKGROUND_VERTICAL_OFFSET)
 #define BACKGROUND_SIZE CGSizeMake(715, 1140)
 
@@ -24,7 +25,7 @@
 @property (nonatomic) Wall *wallBL;
 @property (nonatomic) Wall *wallBR;
 
-+ (instancetype)backgroundWithImageNamed:(NSString *)name;
++ (instancetype)backgroundWithImageNamed:(NSString *)name addTo:(SKScene *)gameScene;
 
 @end
 

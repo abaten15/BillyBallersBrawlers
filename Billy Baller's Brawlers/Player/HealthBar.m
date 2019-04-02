@@ -27,8 +27,19 @@
 	
 }
 
-- (void) takeDamage {
-
+- (BOOL) takeDamage:(int) damage {
+	_currentHealth -= damage;
+	BOOL retVal = NO;
+	if (_currentHealth <= 0) {
+		_currentHealth = 0;
+		retVal = YES;
+	}
+	CGFloat width = HEALTH_BAR_SIZE.width;
+	width *= (_currentHealth / _maxHealth);
+	CGFloat height = HEALTH_BAR_SIZE.height;
+	CGSize newSize = CGSizeMake(width, height);
+	[self setSize:newSize];
+	return retVal;
 }
 
 @end

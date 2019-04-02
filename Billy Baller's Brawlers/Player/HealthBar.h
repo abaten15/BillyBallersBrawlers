@@ -22,7 +22,7 @@
 
 @property (nonatomic) int maxHealth;
 @property (nonatomic) int currentHealth;
-- (void) takeDamage;
+- (BOOL) takeDamage:(int) damage;
 
 @end
 

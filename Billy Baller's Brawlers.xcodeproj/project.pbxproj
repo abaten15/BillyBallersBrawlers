@@ -24,6 +24,7 @@
 		E5AC43B6220B2D3400A800CE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AC43B5220B2D3400A800CE /* main.m */; };
 		E5AC43C0220B2D3500A800CE /* Billy_Baller_s_BrawlersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AC43BF220B2D3500A800CE /* Billy_Baller_s_BrawlersTests.m */; };
 		E5AC43CB220B2D3500A800CE /* Billy_Baller_s_BrawlersUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AC43CA220B2D3500A800CE /* Billy_Baller_s_BrawlersUITests.m */; };
+		E5F26A072253317100CFE53C /* GameServicer.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F26A062253317100CFE53C /* GameServicer.m */; };
 		E5F92150224B0A1E00667955 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F9214F224B0A1E00667955 /* Bullet.m */; };
 		E5F92153224B1B9400667955 /* Grenade.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F92152224B1B9400667955 /* Grenade.m */; };
 /* End PBXBuildFile section */
@@ -79,6 +80,8 @@
 		E5AC43C6220B2D3500A800CE /* Billy Baller's BrawlersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Billy Baller's BrawlersUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AC43CA220B2D3500A800CE /* Billy_Baller_s_BrawlersUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Billy_Baller_s_BrawlersUITests.m; sourceTree = "<group>"; };
 		E5AC43CC220B2D3500A800CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E5F26A052253314A00CFE53C /* GameServicer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameServicer.h; sourceTree = "<group>"; };
+		E5F26A062253317100CFE53C /* GameServicer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameServicer.m; sourceTree = "<group>"; };
 		E5F9214D224B068200667955 /* Bullet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bullet.h; sourceTree = "<group>"; };
 		E5F9214E224B087900667955 /* Direction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Direction.h; sourceTree = "<group>"; };
 		E5F9214F224B0A1E00667955 /* Bullet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Bullet.m; sourceTree = "<group>"; };
@@ -175,6 +178,7 @@
 				E52B74F2224EBA5F00630F75 /* Physics */,
 				E561D17C22496A7E00D53055 /* Background */,
 				E561D17D22496B4D00D53055 /* Player */,
+				E5F26A012253302F00CFE53C /* Networking */,
 				E5AC43A6220B2D3400A800CE /* GameScene.h */,
 				E5AC43A7220B2D3400A800CE /* GameScene.m */,
 				E5AC43A9220B2D3400A800CE /* GameViewController.h */,
@@ -204,6 +208,15 @@
 				E5AC43CC220B2D3500A800CE /* Info.plist */,
 			);
 			path = "Billy Baller's BrawlersUITests";
+			sourceTree = "<group>";
+		};
+		E5F26A012253302F00CFE53C /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				E5F26A052253314A00CFE53C /* GameServicer.h */,
+				E5F26A062253317100CFE53C /* GameServicer.m */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		E5F9214C224B066A00667955 /* Billy */ = {
@@ -360,6 +373,7 @@
 				E561D17822495BA700D53055 /* Background.m in Sources */,
 				E50ABFB9224C050900F12911 /* Explosion.m in Sources */,
 				E561D183224977FD00D53055 /* PlayerControls.m in Sources */,
+				E5F26A072253317100CFE53C /* GameServicer.m in Sources */,
 				E5F92150224B0A1E00667955 /* Bullet.m in Sources */,
 				E5AC43A1220B2D3400A800CE /* AppDelegate.m in Sources */,
 				E561D18022496C6300D53055 /* Player.m in Sources */,

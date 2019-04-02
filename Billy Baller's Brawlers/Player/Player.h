@@ -33,6 +33,7 @@
 + (instancetype)brawlerWithID:(int) brawlerID;
 
 @property (nonatomic) HealthBar *healthBar;
+- (void) takeDamage:(int)damage;
 
 @property (nonatomic) CGFloat mySpeed;
 - (void) moveTo:(CGFloat) newX;

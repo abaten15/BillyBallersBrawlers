@@ -38,7 +38,10 @@
     	break;
 	}
 	
-	wall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:WALL_SIZE];
+	[wall setSize:WALL_SIZE];
+	[wall setZPosition:1];
+	
+	wall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:WALL_PHYSICS_SIZE];
 	wall.physicsBody.categoryBitMask = wallCategory;
 	wall.physicsBody.collisionBitMask = 0x0;
 	wall.physicsBody.contactTestBitMask = bulletCategory;
@@ -46,8 +49,6 @@
 	wall.physicsBody.affectedByGravity = NO;
 	wall.physicsBody.dynamic = NO;
 	wall.name = wallName;
-	
-	[wall setSize:WALL_SIZE];
 
 	return wall;
 

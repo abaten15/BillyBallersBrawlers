@@ -51,6 +51,12 @@
 	
 }
 
+- (void) takeDamage:(int)damage {
+	if ([_healthBar takeDamage:damage]) {
+		NSLog(@"player is dead");
+	}
+}
+
 - (void) moveTo:(CGFloat)newX {
 	CGFloat duration = ((CGFloat)abs((int)(newX - self.position.x))) / self.speed;
 	SKAction *motion = [SKAction moveTo:CGPointMake(newX, self.position.y) duration:duration];

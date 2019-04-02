@@ -17,6 +17,7 @@
 
 #define BULLET_SIZE CGSizeMake(20,20)
 #define BULLET_SPEED 1200
+#define BULLET_DAMAGE 20
 
 #define BULLET_GOTO_OFFSET 1600
 

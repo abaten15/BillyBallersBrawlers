@@ -16,7 +16,7 @@
 
 }
 
-+ (instancetype)backgroundWithImageNamed:(NSString *)name {
++ (instancetype)backgroundWithImageNamed:(NSString *)name addTo:(SKScene *)gameScene {
 	
 	Background *node = [Background spriteNodeWithImageNamed:name];
 	
@@ -25,13 +25,13 @@
 	
 	// Creating Wall Objects
 	node.wallTL = [Wall wallAtLocation:WALL_TL];
-	[node addChild:node.wallTL];
+	[gameScene addChild:node.wallTL];
 	node.wallTR = [Wall wallAtLocation:WALL_TR];
-	[node addChild:node.wallTR];
+	[gameScene addChild:node.wallTR];
 	node.wallBL = [Wall wallAtLocation:WALL_BL];
-	[node addChild:node.wallBL];
+	[gameScene addChild:node.wallBL];
 	node.wallBR = [Wall wallAtLocation:WALL_BR];
-	[node addChild:node.wallBR];
+	[gameScene addChild:node.wallBR];
 	
 	return node;
 }
