@@ -18,6 +18,7 @@
 
 #define GRENADE_SIZE CGSizeMake(20,20)
 #define GRENADE_SPEED 1200
+#define GRENADE_DAMAGE 10
 
 #define GRENADE_GOTO_OFFSET 500
 

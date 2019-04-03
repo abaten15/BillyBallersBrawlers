@@ -12,6 +12,8 @@
 
 #import "GameServicer.h"
 
+static NSString * const GameServiceType = @"game-service";
+
 @implementation GameServicer {
 
 }
@@ -22,27 +24,43 @@
 	
 	_myPeerID = [[MCPeerID alloc] initWithDisplayName:[UIDevice currentDevice].name];
 	
-	_serviceAdvertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:_myPeerID discoveryInfo:nil serviceType:GAME_SERVICE_TYPE];
-	_serviceBrowser = [[MCNearbyServiceBrowser alloc] initWithPeer:_myPeerID serviceType:GAME_SERVICE_TYPE];
+	_gameSession = [[MCSession alloc] initWithPeer:self.myPeerID securityIdentity:nil encryptionPreference:MCEncryptionNone];
+	self.gameSession.delegate = self;
 	
-	self.serviceAdvertiser.delegate = self;
+	_advertiserAssistant = [[MCAdvertiserAssistant alloc] initWithServiceType:GameServiceType discoveryInfo:nil session:_gameSession];
+	
+	_serviceBrowser = [[MCNearbyServiceBrowser alloc] initWithPeer:_myPeerID serviceType:GameServiceType];
 	self.serviceBrowser.delegate = self;
+	
+	_sessionConnected = NO;
 	
 	return self;
 
 }
 
+- (MCSession *) gameSession {
+	if (!_gameSession) {
+		_gameSession = [[MCSession alloc] initWithPeer:self.myPeerID securityIdentity:nil encryptionPreference:MCEncryptionNone];
+		self.gameSession.delegate = self;
+	}
+	return _gameSession;
+}
+
+
 - (void)advertiser:(nonnull MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(nonnull MCPeerID *)peerID withContext:(nullable NSData *)context invitationHandler:(nonnull void (^)(BOOL, MCSession * _Nullable))invitationHandler {
-	invitationHandler(true, self.gameSession);
+	self.gameSession = [[MCSession alloc] initWithPeer:self.myPeerID securityIdentity:nil encryptionPreference:MCEncryptionNone];
+	self.gameSession.delegate = self;
+	invitationHandler(YES, self.gameSession);
 	NSLog(@"recieved invitataion");
 	
 }
 
 - (void)browser:(nonnull MCNearbyServiceBrowser *)browser foundPeer:(nonnull MCPeerID *)peerID withDiscoveryInfo:(nullable NSDictionary<NSString *,NSString *> *)info {
 	NSLog(@"found peer");
-	_gameSession = [[MCSession alloc] initWithPeer:self.myPeerID];
+	self.gameSession = [[MCSession alloc] initWithPeer:self.myPeerID securityIdentity:nil encryptionPreference:MCEncryptionNone];
 	self.gameSession.delegate = self;
-	[_serviceBrowser invitePeer:peerID toSession:_gameSession withContext:nil timeout:10];
+	[_serviceBrowser invitePeer:peerID toSession:self.gameSession withContext:nil timeout:10];
+	_sessionConnected = YES;
 }
 
 - (void)browser:(nonnull MCNearbyServiceBrowser *)browser lostPeer:(nonnull MCPeerID *)peerID {
@@ -50,7 +68,8 @@
 }
 
 - (void) hostGame {
-	[_serviceAdvertiser startAdvertisingPeer];
+	[_advertiserAssistant start];
+//	[_serviceAdvertiser startAdvertisingPeer];
 }
 
 - (void) joinGame {
@@ -58,8 +77,10 @@
 }
 
 - (void) sendData:(NSString *)data {
-	if (_gameSession.connectedPeers.count > 0) {
-		[_gameSession sendData:[data dataUsingEncoding:kCFStringEncodingUTF8] toPeers:_gameSession.connectedPeers withMode:MCSessionSendDataReliable error:nil];
+	if (self.sessionConnected == YES && self.gameSession.connectedPeers.count > 0) {
+		
+		NSData *dataToSend = [data dataUsingEncoding:kCFStringEncodingUTF8];
+		[self.gameSession sendData:dataToSend toPeers:self.gameSession.connectedPeers withMode:MCSessionSendDataReliable error:nil];
 	}
 }
 
@@ -68,9 +89,10 @@
 }
 
 - (void)session:(nonnull MCSession *)session didReceiveData:(nonnull NSData *)data fromPeer:(nonnull MCPeerID *)peerID {
-	NSLog(@"recieved data");
-	NSString *string = [[NSString alloc] initWithData:data encoding:kCFStringEncodingUTF8];
-	NSLog(string);
+
+	NSString *stringFromData = [[NSString alloc] initWithData:data encoding:kCFStringEncodingUTF8];
+	NSLog(stringFromData);
+
 }
 
 - (void)session:(nonnull MCSession *)session didReceiveStream:(nonnull NSInputStream *)stream withName:(nonnull NSString *)streamName fromPeer:(nonnull MCPeerID *)peerID {
@@ -82,7 +104,12 @@
 }
 
 - (void)session:(nonnull MCSession *)session peer:(nonnull MCPeerID *)peerID didChangeState:(MCSessionState)state {
-	
+	if (state == MCSessionStateConnecting) {
+		NSLog(@"connecting state");
+	} else if (state == MCSessionStateConnected) {
+		_sessionConnected = YES;
+		NSLog(@"Connected");
+	}
 }
 
 @end

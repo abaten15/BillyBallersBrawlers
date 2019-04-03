@@ -15,11 +15,13 @@
 
 }
 
-+ (instancetype)controlsForPlayer:(Player *)playerIn {
++ (instancetype)controlsForPlayer:(Player *)playerIn withServicer:(GameServicer *)gameServicerIn {
 
 	PlayerControls *controls = [PlayerControls node];
 	
 	controls.playerToControl = playerIn;
+	
+	controls.gameServicer = gameServicerIn;
 	
 	controls.slider = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithWhite:1 alpha:0] size:SLIDER_SIZE];
 	[controls.slider setPosition:SLIDER_POSITION];
@@ -80,18 +82,28 @@
 		newX = -SLIDER_MAX_X;
 	}
 	[_playerToControl moveTo:newX];
+	
+	// Sending data
+	NSString *stringData = [SLIDER_NETWORK_PREFIX stringByAppendingString:[[NSNumber numberWithInt:(int)newX] stringValue]];
+	[_gameServicer sendData:stringData];
 }
 
 - (void) mainAttackButtonPressed:(CGPoint)point {
 	[_playerToControl performMainAttack];
+	NSString *stringData = MAIN_BUTTON_NETWORK_PREFIX;
+	[_gameServicer sendData:stringData];
 }
 
 - (void) specialAttackButtonPressed:(CGPoint)point {
 	[_playerToControl performSpecialAttack];
+	NSString *stringData = SPECIAL_BUTTON_NETWORK_PREFIX;
+	[_gameServicer sendData:stringData];
 }
 
 - (void) flipBrawlerButtonPressed:(CGPoint)point {
 	[_playerToControl flipBrawler];
+	NSString *stringData = FLIP_BUTTON_NETWORK_PREFIX;
+	[_gameServicer sendData:stringData];
 }
 
 @end

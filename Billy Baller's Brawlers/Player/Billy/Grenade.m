@@ -13,6 +13,7 @@
 
 #import "Direction.h"
 #import "Explosion.h"
+#import "CategoryDefinitions.h"
 
 @implementation Grenade {
 
@@ -24,6 +25,15 @@
 	
 	[grenade setPosition:point];
 	[grenade setSize:GRENADE_SIZE];
+	
+	grenade.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:GRENADE_SIZE.width/2];
+	grenade.physicsBody.categoryBitMask = grenadeCategory;
+	grenade.physicsBody.collisionBitMask = 0x0;
+	grenade.physicsBody.contactTestBitMask = opponentCategory;
+	grenade.physicsBody.node.name = grenadeName;
+	grenade.physicsBody.affectedByGravity = NO;
+	grenade.physicsBody.dynamic = YES;
+	grenade.name = grenadeName;
 	
 	CGFloat totalDistance;
 	

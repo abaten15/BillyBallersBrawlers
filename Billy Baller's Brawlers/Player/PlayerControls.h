@@ -12,25 +12,31 @@
 #include <SpriteKit/SpriteKit.h>
 
 #include "Player.h"
+#include "GameServicer.h"
 
 #define SLIDER_POSITION CGPointMake(0, -500)
 #define SLIDER_SIZE CGSizeMake(700, 300)
 #define SLIDER_MAX_X 275
+#define SLIDER_NETWORK_PREFIX @"slider"
 
 #define MAIN_BUTTON_POSITION CGPointMake(-300, -200)
 #define MAIN_BUTTON_SIZE CGSizeMake(100,100)
+#define MAIN_BUTTON_NETWORK_PREFIX @"mainButton"
 
 #define SPECIAL_BUTTON_POSITION CGPointMake(-200, -200)
 #define SPECIAL_BUTTON_SIZE CGSizeMake(100,100)
+#define SPECIAL_BUTTON_NETWORK_PREFIX @"specialButton"
 
 #define FLIP_BUTTON_POSITION CGPointMake(-300, -100)
 #define FLIP_BUTTON_SIZE CGSizeMake(100,100)
+#define FLIP_BUTTON_NETWORK_PREFIX @"flipButton"
 
 @interface PlayerControls : SKNode
 
 @property (nonatomic) Player *playerToControl;
+@property (nonatomic) GameServicer *gameServicer;
 
-+ (instancetype)controlsForPlayer:(Player *)playerIn;
++ (instancetype)controlsForPlayer:(Player *)playerIn withServicer:(GameServicer *) gameServicerIn;
 
 @property (nonatomic) SKSpriteNode *slider;
 - (void) sliderMotion:(CGFloat) newX;

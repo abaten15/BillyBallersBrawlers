@@ -28,10 +28,10 @@
 	[bullet setZPosition:1];
 	
 	// Bullet collision body
-	bullet.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:BULLET_SIZE.width];
+	bullet.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:BULLET_SIZE.width/2];
 	bullet.physicsBody.categoryBitMask = bulletCategory;
 	bullet.physicsBody.collisionBitMask = 0x0;
-	bullet.physicsBody.contactTestBitMask = wallCategory | playerCategory;
+	bullet.physicsBody.contactTestBitMask = wallCategory | opponentCategory;
 	bullet.physicsBody.node.name = bulletName;
 	bullet.physicsBody.affectedByGravity = NO;
 	bullet.physicsBody.dynamic = YES;

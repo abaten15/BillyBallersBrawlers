@@ -11,6 +11,8 @@
 
 #include <SpriteKit/SpriteKit.h>
 
+#include "Player.h"
+
 #define EXPLOSION_IMAGE_NAME @"Explosion"
 
 #define EXPLOSION_SIZE CGSizeMake(200,200)
@@ -20,6 +22,8 @@
 @interface Explosion : SKSpriteNode
 
 + (instancetype)explosionAt:(CGPoint)point withDuration:(CGFloat)duration;
+
+- (void) checkContact:(Player *) player;
 
 @end
 

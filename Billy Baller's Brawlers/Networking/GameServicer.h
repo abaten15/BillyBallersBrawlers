@@ -18,11 +18,13 @@
 
 @property (nonatomic) MCPeerID *myPeerID;
 
-@property (nonatomic) MCNearbyServiceAdvertiser *serviceAdvertiser;
+//@property (nonatomic) MCNearbyServiceAdvertiser *serviceAdvertiser;
+@property (nonatomic) MCAdvertiserAssistant *advertiserAssistant;
 @property (nonatomic) MCNearbyServiceBrowser *serviceBrowser;
 
 - (id) init;
 
+@property (nonatomic) BOOL sessionConnected;
 @property (nonatomic) MCSession *gameSession;
 
 - (void) sendData:(NSString *)data;

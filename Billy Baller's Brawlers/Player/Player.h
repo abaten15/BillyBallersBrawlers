@@ -19,7 +19,7 @@
 #define BILLY_ID 0
 #define BILLY_IMAGE_NAME @"Billy"
 #define BILLY_SPEED 30.0
-#define BILLY_MAIN_OFFSET CGPointMake(-40, 40)
+#define BILLY_MAIN_OFFSET CGPointMake(-45, 45)
 #define BILLY_MAX_HEALTH 100
 
 #define STEVE_ID 1
@@ -29,8 +29,10 @@
 
 @interface Player : SKSpriteNode
 
+@property (nonatomic) BOOL isOpponent;
+
 @property (nonatomic) int brawlerID;
-+ (instancetype)brawlerWithID:(int) brawlerID;
++ (instancetype)brawlerWithID:(int)brawlerID isOpponent:(BOOL)isOpponentIn;
 
 @property (nonatomic) HealthBar *healthBar;
 - (void) takeDamage:(int)damage;
@@ -43,6 +45,8 @@
 - (void) performSpecialAttack;
 
 @property (nonatomic) BOOL flipped;
+@property (nonatomic) CGPoint shootingOffset;
+- (void) updateShootingOffset;
 - (void) flipBrawler;
 
 @end

@@ -35,7 +35,9 @@
 		retVal = YES;
 	}
 	CGFloat width = HEALTH_BAR_SIZE.width;
-	width *= (_currentHealth / _maxHealth);
+	CGFloat dw = (CGFloat)_currentHealth / (CGFloat)_maxHealth;
+	width *= dw;
+	NSLog(@"%f", dw);
 	CGFloat height = HEALTH_BAR_SIZE.height;
 	CGSize newSize = CGSizeMake(width, height);
 	[self setSize:newSize];

@@ -11,11 +11,26 @@
 
 #import "Explosion.h"
 
+#import "CategoryDefinitions.h"
+#import "Player.h"
+#import "Grenade.h"
+
 @implementation Explosion
 
 + (instancetype) explosionAt:(CGPoint)point withDuration:(CGFloat)duration {
 
 	Explosion *explosion = [Explosion spriteNodeWithImageNamed:EXPLOSION_IMAGE_NAME];
+
+/*
+	explosion.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:EXPLOSION_SIZE.width/2];
+	explosion.physicsBody.categoryBitMask = explosionCategory;
+	explosion.physicsBody.collisionBitMask = 0x0;
+	explosion.physicsBody.contactTestBitMask = opponentCategory;
+	explosion.physicsBody.node.name = explosionName;
+	explosion.physicsBody.affectedByGravity = NO;
+	explosion.physicsBody.dynamic = NO;
+	explosion.name = explosionName;
+*/
 	
 	[explosion setPosition:point];
 	[explosion setSize:EXPLOSION_SIZE];
@@ -27,6 +42,12 @@
 	
 	return explosion;
 
+}
+
+- (void) checkContact:(Player *)player {
+	if ([self containsPoint:player.position]) {
+		[player takeDamage:GRENADE_DAMAGE];
+	}
 }
 
 @end

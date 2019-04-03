@@ -13,6 +13,7 @@
 #import "Background.h"
 #import "Bullet.h"
 #import "GameServicer.h"
+#import "Grenade.h"
 
 @implementation GameScene {
     NSTimeInterval _lastUpdateTime;
@@ -22,17 +23,28 @@
 
 	_lastUpdateTime = 0;
 	
+	_opponent = NULL;
+	
 	_gameServicer = [[GameServicer alloc] init];
-	_hostGameButton = [SKSpriteNode spriteNodeWithImageNamed:@"HostButton"];
+	
+	_hostGameButton = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithWhite:0 alpha:1] size:HOST_GAME_BUTTON_SIZE];
 	[_hostGameButton setPosition:HOST_GAME_BUTTON_POSITION];
-	[_hostGameButton setSize:HOST_GAME_BUTTON_SIZE];
 	[_hostGameButton setZPosition:1];
 	[self addChild:_hostGameButton];
-	_joinGameButton = [SKSpriteNode spriteNodeWithImageNamed:@"JoinButton"];
+	SKLabelNode *hostLabel = [SKLabelNode labelNodeWithText:@"Host Game"];
+	[hostLabel setFontName:@"AvenirNext-Bold"];
+	[hostLabel setFontSize:40];
+	[hostLabel setFontColor:[UIColor colorWithWhite:1 alpha:1]];
+	[_hostGameButton addChild:hostLabel];
+	_joinGameButton = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithWhite:0 alpha:1] size:JOIN_GAME_BUTTON_SIZE];
 	[_joinGameButton setPosition:JOIN_GAME_BUTTON_POSITION];
-	[_joinGameButton setSize:JOIN_GAME_BUTTON_SIZE];
 	[_joinGameButton setZPosition:1];
 	[self addChild:_joinGameButton];
+	SKLabelNode *joinLabel = [SKLabelNode labelNodeWithText:@"Join Game"];
+	[joinLabel setFontName:@"AvenirNext-Bold"];
+	[joinLabel setFontSize:40];
+	[joinLabel setFontColor:[UIColor colorWithWhite:1 alpha:1]];
+	[_joinGameButton addChild:joinLabel];
 	_GameStarted = NO;
 	
 	self.physicsWorld.contactDelegate = self;
@@ -50,22 +62,20 @@
 	[_background setZPosition:0];
 	[self addChild:_background];
 	
-	_player = [Player brawlerWithID:BILLY_ID];
+	_player = [Player brawlerWithID:BILLY_ID isOpponent:NO];
 	[self addChild:_player];
 	
-	_playerControls = [PlayerControls controlsForPlayer:_player];
+	_playerControls = [PlayerControls controlsForPlayer:_player withServicer:_gameServicer];
 	[self addChild:_playerControls];
 	
 }
 
 - (void) didBeginContact:(SKPhysicsContact *)contact {
 	[self.contactQueue addObject:contact];
-	NSLog(@"contact");
 }
 
 - (void)processContactsForUpdate:(NSTimeInterval)currentTime {
 	for (SKPhysicsContact* contact in [self.contactQueue copy]) {
-    	NSLog(@"processing contaacts");
 		[self handleContact:contact];
         [self.contactQueue removeObject:contact];
     }
@@ -75,14 +85,48 @@
 	if (!contact.bodyA.node.parent || !contact.bodyB.node.parent) {
 		return;
 	}
-	if ([contact.bodyA.node.name isEqualToString:wallName] && [contact.bodyB.node.name isEqualToString:bulletName]) {
+	NSString *nameA = contact.bodyA.node.name;
+	NSString *nameB = contact.bodyB.node.name;
+	if ([nameA isEqualToString:wallName] && [nameB isEqualToString:bulletName]) {
 		[contact.bodyB.node removeFromParent];
-	} else if ([contact.bodyB.node.name isEqualToString:wallName] && [contact.bodyA.node.name isEqualToString:bulletName]) {
+	} else if ([nameA isEqualToString:wallName] && [nameB isEqualToString:bulletName]) {
 		[contact.bodyA.node removeFromParent];
-	} else if (([contact.bodyB.node.name isEqualToString:playerName] && [contact.bodyA.node.name isEqualToString:bulletName]) ||
-		([contact.bodyA.node.name isEqualToString:playerName] && [contact.bodyB.node.name isEqualToString:bulletName])) {
-		[_player takeDamage:BULLET_DAMAGE];
+	} else if ([nameA isEqualToString:playerName] || [nameB isEqualToString:playerName]) {
+		if ([nameA isEqualToString:bulletName]) {
+			[_player takeDamage:BULLET_DAMAGE];
+			[contact.bodyA.node removeFromParent];
+		} else if ([nameB isEqualToString:bulletName]) {
+			[_player takeDamage:BULLET_DAMAGE];
+			[contact.bodyB.node removeFromParent];
+		} else if ([nameA isEqualToString:explosionName] || [nameB isEqualToString:explosionName]) {
+			[_player takeDamage:GRENADE_DAMAGE];
+		}
 	}
+	
+/*
+	else if (([nameB isEqualToString:playerName] && [nameA isEqualToString:bulletName]) ||
+		([nameA isEqualToString:playerName] && [nameB isEqualToString:bulletName])) {
+		[_player takeDamage:BULLET_DAMAGE];
+	} else if (([nameA isEqualToString:playerName] && [nameA isEqualToString:explosionName]) ||
+		([nameB isEqualToString:playerName] && [nameA isEqualToString:explosionName])) {
+		[_player takeDamage:GRENADE_DAMAGE];
+	}
+*/
+	
+/*
+	else if ([nameA isEqualToString:playerName] && [nameB isEqualToString:grenadeName]) {
+		Explosion *explosion = [Explosion explosionAt:contact.bodyB.node.position withDuration:EXPLOSION_DURATAION];
+		[explosion checkContact:_player];
+		[self addChild:explosion];
+		[contact.bodyB.node removeFromParent];
+	} else if ([nameB isEqualToString:playerName] && [nameA isEqualToString:grenadeName]) {
+		Explosion *explosion = [Explosion explosionAt:contact.bodyA.node.position withDuration:EXPLOSION_DURATAION];
+		[explosion checkContact:_player];
+		[self addChild:explosion];
+		[contact.bodyA.node removeFromParent];
+	}
+*/
+
 }
 
 - (void)touchDownAtPoint:(CGPoint)pos {
@@ -107,7 +151,6 @@
 			[_hostGameButton removeFromParent];
 			[_joinGameButton removeFromParent];
 			[_gameServicer joinGame];
-			[_gameServicer sendData:@"joined"];
 			_GameStarted = YES;
 		}
 		return;
@@ -134,6 +177,10 @@
 
 }
 
+- (void)spawnOpponent {
+	_opponent = [Player brawlerWithID:BILLY_ID isOpponent:YES];
+	[self addChild:_opponent];
+}
 
 -(void)update:(CFTimeInterval)currentTime {
     // Called before each frame is rendered
@@ -147,13 +194,23 @@
     
     // Calculate time since last update
     CGFloat dt = currentTime - _lastUpdateTime;
+	
+    if (_opponent == NULL && dt > 1.0/60.0) {
+    	_lastUpdateTime = currentTime;
+		if (_gameServicer.sessionConnected) {
+			[self spawnOpponent];
+		}
+	}
     
     // Update entities
     for (GKEntity *entity in self.entities) {
         [entity updateWithDeltaTime:dt];
     }
-    
-    _lastUpdateTime = currentTime;
+
+	if (_opponent != NULL) {
+		_lastUpdateTime = currentTime;
+	}
+
 }
 
 @end

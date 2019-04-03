@@ -10,15 +10,17 @@
 #import <SpriteKit/SpriteKit.h>
 
 #import "Player.h"
+
 #import "Bullet.h"
 #import "Grenade.h"
 #import "HealthBar.h"
+#import "CategoryDefinitions.h"
 
 @implementation Player {
 
 }
 
-+ (instancetype)brawlerWithID:(int) brawlerID {
++ (instancetype)brawlerWithID:(int)brawlerID isOpponent:(BOOL)isOpponentIn {
 
 	Player *player;
 	int maxHealth;
@@ -27,18 +29,30 @@
 		player = [Player spriteNodeWithImageNamed:BILLY_IMAGE_NAME];
 		player.speed = BILLY_SPEED;
 		maxHealth = BILLY_MAX_HEALTH;
+		player.shootingOffset = BILLY_MAIN_OFFSET;
 		break;
 	case STEVE_ID:
 		player = [Player spriteNodeWithImageNamed:STEVE_IMAGE_NAME];
 		player.speed = STEVE_SPEED;
 		maxHealth = STEVE_MAX_HEALTH;
+		player.shootingOffset = BILLY_MAIN_OFFSET;
 		break;
 	default:
 		player = [Player spriteNodeWithImageNamed:BILLY_IMAGE_NAME];
 		player.speed = BILLY_SPEED;
 		maxHealth = BILLY_MAX_HEALTH;
+		player.shootingOffset = BILLY_MAIN_OFFSET;
 		break;
 	}
+	
+	player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:PLAYER_SIZE.width/2];
+	player.physicsBody.categoryBitMask = playerCategory;
+	player.physicsBody.collisionBitMask = 0x0;
+	player.physicsBody.contactTestBitMask = 0x0; // May need changing later
+	player.physicsBody.node.name = playerName;
+	player.physicsBody.affectedByGravity = NO;
+	player.physicsBody.dynamic = YES;
+	player.name = playerName;
 	
 	[player setPosition:PLAYER_POSITION];
 	[player setSize:PLAYER_SIZE];
@@ -46,6 +60,15 @@
 	HealthBar *healthBar = [HealthBar healthBarWithMaxHealth:maxHealth];
 	player.healthBar = healthBar;
 	[player addChild:healthBar];
+	
+	player.isOpponent = isOpponentIn;
+	
+	if (player.isOpponent) {
+		player.physicsBody.categoryBitMask = opponentCategory;
+		player.shootingOffset = CGPointMake(player.shootingOffset.x, player.shootingOffset.y * -1);
+		player.yScale *= -1;
+		player.position = CGPointMake(player.position.x, player.position.y * -1);
+	}
 	
 	return player;
 	
@@ -91,6 +114,10 @@
 	CGPoint point = CGPointMake(BILLY_MAIN_OFFSET.x + self.position.x + flippedOffset, BILLY_MAIN_OFFSET.y + self.position.y);
 	Grenade *grenade = [Grenade grenadeAt:point going:North];
 	[[self parent] addChild:grenade];
+}
+
+- (void) updateShootingOffset {
+	
 }
 
 - (void) flipBrawler {

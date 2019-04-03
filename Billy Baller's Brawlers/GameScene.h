@@ -39,6 +39,10 @@
 @property (nonatomic) Player *player;
 @property (nonatomic) PlayerControls *playerControls;
 
+@property (nonatomic) Player *opponent;
+@property (nonatomic) PlayerControls *opponentControls;
+- (void) spawnOpponent;
+
 @property (nonatomic) GameServicer *gameServicer;
 @property (nonatomic) BOOL GameStarted;
 @property (nonatomic) SKSpriteNode *hostGameButton;
