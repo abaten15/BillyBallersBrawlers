@@ -12,15 +12,19 @@
 
 #import "GameServicer.h"
 
+#import "HealthBar.h"
+
 static NSString * const GameServiceType = @"game-service";
 
 @implementation GameServicer {
 
 }
 
-- (id) init {
+- (id) initWithScene:(GameScene *)gameSceneIn {
 
 	self = [super init];
+	
+	_gameScene = gameSceneIn;
 	
 	_myPeerID = [[MCPeerID alloc] initWithDisplayName:[UIDevice currentDevice].name];
 	
@@ -69,7 +73,6 @@ static NSString * const GameServiceType = @"game-service";
 
 - (void) hostGame {
 	[_advertiserAssistant start];
-//	[_serviceAdvertiser startAdvertisingPeer];
 }
 
 - (void) joinGame {
@@ -89,10 +92,7 @@ static NSString * const GameServiceType = @"game-service";
 }
 
 - (void)session:(nonnull MCSession *)session didReceiveData:(nonnull NSData *)data fromPeer:(nonnull MCPeerID *)peerID {
-
-	NSString *stringFromData = [[NSString alloc] initWithData:data encoding:kCFStringEncodingUTF8];
-	NSLog(stringFromData);
-
+	[_gameScene checkOpponentData:data];
 }
 
 - (void)session:(nonnull MCSession *)session didReceiveStream:(nonnull NSInputStream *)stream withName:(nonnull NSString *)streamName fromPeer:(nonnull MCPeerID *)peerID {

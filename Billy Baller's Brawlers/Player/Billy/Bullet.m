@@ -13,12 +13,13 @@
 
 #import "Direction.h"
 #import "CategoryDefinitions.h"
+#import "Player.h"
 
 @implementation Bullet {
 
 }
 
-+ (instancetype) bulletAt:(CGPoint)point going:(Direction)direction {
++ (instancetype) bulletAt:(CGPoint)point going:(Direction)direction isOpponents:(BOOL)isOpponents {
 
 	Bullet *bullet = [Bullet spriteNodeWithImageNamed:@"Bullet"];
 	
@@ -31,11 +32,15 @@
 	bullet.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:BULLET_SIZE.width/2];
 	bullet.physicsBody.categoryBitMask = bulletCategory;
 	bullet.physicsBody.collisionBitMask = 0x0;
-	bullet.physicsBody.contactTestBitMask = wallCategory | opponentCategory;
+	bullet.physicsBody.contactTestBitMask = wallCategory | opponentCategory | playerCategory;
 	bullet.physicsBody.node.name = bulletName;
 	bullet.physicsBody.affectedByGravity = NO;
 	bullet.physicsBody.dynamic = YES;
 	bullet.name = bulletName;
+	
+	if (isOpponents) {
+		bullet.name = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
+	}
 	
 	// Actions
 	CGFloat totalDistance = BULLET_GOTO_OFFSET - point.y;

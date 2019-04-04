@@ -12,9 +12,15 @@
 #import <SpriteKit/SpriteKit.h>
 
 #import "HealthBar.h"
+@class HealthBar;
+#import "GameServicer.h"
+@class GameServicer;
 
 #define PLAYER_POSITION CGPointMake(0, -500)
 #define PLAYER_SIZE CGSizeMake(100, 100)
+
+#define PLAYER_POSTFIX @"player"
+#define OPPONENT_POSTFIX @"opponent"
 
 #define BILLY_ID 0
 #define BILLY_IMAGE_NAME @"Billy"
@@ -32,7 +38,10 @@
 @property (nonatomic) BOOL isOpponent;
 
 @property (nonatomic) int brawlerID;
-+ (instancetype)brawlerWithID:(int)brawlerID isOpponent:(BOOL)isOpponentIn;
+
+@property (nonatomic) GameServicer *gameServicer;
+
++ (instancetype)brawlerWithID:(int)brawlerID isOpponent:(BOOL)isOpponentIn withServicer:(GameServicer *)gameServicer;
 
 @property (nonatomic) HealthBar *healthBar;
 - (void) takeDamage:(int)damage;

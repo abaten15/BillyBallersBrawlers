@@ -13,9 +13,11 @@
 
 @implementation HealthBar
 
-+ (instancetype) healthBarWithMaxHealth:(CGFloat)maxHealth {
++ (instancetype) healthBarWithMaxHealth:(CGFloat)maxHealth withServicer:(GameServicer *)servicer {
 	
 	HealthBar *healthBar = [HealthBar spriteNodeWithImageNamed:HEALTH_BAR_IMAGE_NAME];
+	
+	healthBar.gameServicer = servicer;
 	
 	[healthBar setPosition:HEALTH_BAR_OFFSET];
 	[healthBar setSize:HEALTH_BAR_SIZE];
@@ -41,7 +43,31 @@
 	CGFloat height = HEALTH_BAR_SIZE.height;
 	CGSize newSize = CGSizeMake(width, height);
 	[self setSize:newSize];
+	NSString *intStr = [[NSNumber numberWithInt:_currentHealth] stringValue];
+	[_gameServicer sendData:[HEALTH_UPDATE_PREFIX stringByAppendingString:intStr]];
 	return retVal;
 }
 
+- (void) checkData:(NSData *)data {
+	NSLog(@"checking data for health bar");
+	NSString *dataStr = [[NSString alloc] initWithData:data encoding:kCFStringEncodingUTF8];
+	NSString *healthPrefix;
+	NSString *healthValue;
+	@try {
+		healthPrefix = [dataStr substringToIndex:HEALTH_UPDATE_PREFIX.length];
+		healthValue = [dataStr substringFromIndex:HEALTH_UPDATE_PREFIX.length];
+	}
+	@catch (NSException *e) {
+		return;
+	}
+	if ([healthPrefix isEqualToString:HEALTH_UPDATE_PREFIX]) {
+		int newHealth = [healthValue intValue];
+		[self takeDamage:_currentHealth - newHealth];
+	}
+}
+
 @end
+
+
+
+

@@ -12,7 +12,9 @@
 #include <SpriteKit/SpriteKit.h>
 
 #include "Player.h"
+@class Player;
 #include "GameServicer.h"
+@class GameServicer;
 
 #define SLIDER_POSITION CGPointMake(0, -500)
 #define SLIDER_SIZE CGSizeMake(700, 300)
@@ -39,20 +41,22 @@
 + (instancetype)controlsForPlayer:(Player *)playerIn withServicer:(GameServicer *) gameServicerIn;
 
 @property (nonatomic) SKSpriteNode *slider;
-- (void) sliderMotion:(CGFloat) newX;
+- (void) sliderMotion:(CGFloat)newX sendData:(BOOL)shouldSendData;
 
 @property (nonatomic) SKSpriteNode *mainAttackButton;
-- (void) mainAttackButtonPressed:(CGPoint) point;
+- (void) mainAttackButtonPressed:(CGPoint)point sendData:(BOOL)shouldSendData;
 
 @property (nonatomic) SKSpriteNode *specialAttackButton;
-- (void) specialAttackButtonPressed:(CGPoint) point;
+- (void) specialAttackButtonPressed:(CGPoint)point sendData:(BOOL)shouldSendData;
 
 @property (nonatomic) SKSpriteNode *flipBrawlerButton;
-- (void) flipBrawlerButtonPressed:(CGPoint) point;
+- (void) flipBrawlerButtonPressed:(CGPoint)point sendData:(BOOL)shouldSendData;
 
 - (void) checkControlsDown:(CGPoint) point;
 - (void) checkControlsMoved:(CGPoint) point;
 - (void) checkControlsUp:(CGPoint) point;
+
+- (void) performActionFromData:(NSData *)data;
 
 @end
 

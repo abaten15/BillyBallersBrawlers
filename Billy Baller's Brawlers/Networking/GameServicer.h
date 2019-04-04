@@ -12,6 +12,9 @@
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import <SpriteKit/SpriteKit.h>
 
+#import "GameScene.h"
+@class GameScene;
+
 #define GAME_SERVICE_TYPE @"game-service"
 
 @interface GameServicer : NSObject <MCNearbyServiceAdvertiserDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate>
@@ -22,7 +25,9 @@
 @property (nonatomic) MCAdvertiserAssistant *advertiserAssistant;
 @property (nonatomic) MCNearbyServiceBrowser *serviceBrowser;
 
-- (id) init;
+@property (nonatomic) GameScene *gameScene;
+
+- (id) initWithScene:(GameScene *)gameSceneIn;
 
 @property (nonatomic) BOOL sessionConnected;
 @property (nonatomic) MCSession *gameSession;

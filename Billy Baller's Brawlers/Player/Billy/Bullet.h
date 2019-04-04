@@ -23,7 +23,7 @@
 
 @interface Bullet : SKSpriteNode
 
-+ (instancetype) bulletAt:(CGPoint)point going:(Direction)direction;
++ (instancetype) bulletAt:(CGPoint)point going:(Direction)direction isOpponents:(BOOL)isOpponents;
 
 @end
 

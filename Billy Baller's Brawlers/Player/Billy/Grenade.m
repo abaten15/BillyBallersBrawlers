@@ -19,7 +19,7 @@
 
 }
 
-+ (instancetype)grenadeAt:(CGPoint)point going:(Direction)direction {
++ (instancetype)grenadeAt:(CGPoint)point going:(Direction)direction isOpponents:(BOOL)isOpponents {
 
 	Grenade *grenade = [Grenade spriteNodeWithImageNamed:@"Grenade"];
 	
@@ -35,15 +35,22 @@
 	grenade.physicsBody.dynamic = YES;
 	grenade.name = grenadeName;
 	
+	grenade.isOpponents = isOpponents;
+	if (isOpponents) {
+		grenade.name = [grenadeName stringByAppendingString:OPPONENT_POSTFIX];
+	}
+	
 	CGFloat totalDistance;
 	
 	SKAction * motion;
+	CGFloat newY = -500;
 	if (direction == North) {
-		totalDistance = GRENADE_GOTO_OFFSET - point.y;
-		motion = [SKAction moveTo:CGPointMake(point.x, point.y + totalDistance) duration:totalDistance/GRENADE_SPEED];
-	} else {
-		totalDistance = GRENADE_GOTO_OFFSET - point.y;
-		motion = [SKAction moveTo:CGPointMake(point.x, point.y - totalDistance) duration:totalDistance/GRENADE_SPEED];
+		totalDistance = abs((int)(newY - point.y));
+		motion = [SKAction moveTo:CGPointMake(point.x, newY) duration:totalDistance/GRENADE_SPEED];
+	} else if (direction == South) {
+		newY *= -1;
+		totalDistance = abs((int)(newY - point.y));
+		motion = [SKAction moveTo:CGPointMake(point.x, newY) duration:totalDistance/GRENADE_SPEED];
 	}
 	
 	SKAction *onDestroyAction = [SKAction performSelector:@selector(explode) onTarget:grenade];
@@ -57,7 +64,7 @@
 
 - (void) explode {
 	// Spawn Explosion
-	Explosion *explosion = [Explosion explosionAt:self.position withDuration:EXPLOSION_DURATAION];
+	Explosion *explosion = [Explosion explosionAt:self.position withDuration:EXPLOSION_DURATAION isOpponents:_isOpponents];
 	[self.parent addChild:explosion];
 	[self removeFromParent];
 }

@@ -11,9 +11,12 @@
 
 #import "Background.h"
 #import "Player.h"
+@class Player;
 #import "PlayerControls.h"
+@class PlayerControls;
 #import "CategoryDefinitions.h"
 #import "GameServicer.h"
+@class GameServicer;
 
 #define JOIN_GAME_BUTTON_POSITION CGPointMake(0, -100)
 #define JOIN_GAME_BUTTON_SIZE CGSizeMake(300, 150)
@@ -42,6 +45,7 @@
 @property (nonatomic) Player *opponent;
 @property (nonatomic) PlayerControls *opponentControls;
 - (void) spawnOpponent;
+- (void) checkOpponentData:(NSData *)data;
 
 @property (nonatomic) GameServicer *gameServicer;
 @property (nonatomic) BOOL GameStarted;

@@ -24,8 +24,9 @@
 
 @interface Grenade : SKSpriteNode
 
-+ (instancetype)grenadeAt:(CGPoint)point going:(Direction)direction;
++ (instancetype)grenadeAt:(CGPoint)point going:(Direction)direction isOpponents:(BOOL)isOpponents;
 
+@property (nonatomic) BOOL isOpponents;
 - (void) explode;
 
 @end

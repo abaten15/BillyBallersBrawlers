@@ -19,7 +19,7 @@ static const u_int32_t grenadeCategory = 0x1 << 3;
 static const u_int32_t explosionCategory = 0x1 << 4;
 
 #define playerName @"playerName"
-#define opponentName @"opponentCategory"
+#define opponentName @"opponentName"
 #define wallName @"wallName"
 #define bulletName @"bulletName"
 #define grenadeName @"grenadeName"

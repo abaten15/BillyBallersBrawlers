@@ -25,7 +25,7 @@
 	
 	_opponent = NULL;
 	
-	_gameServicer = [[GameServicer alloc] init];
+	_gameServicer = [[GameServicer alloc] initWithScene:self];
 	
 	_hostGameButton = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithWhite:0 alpha:1] size:HOST_GAME_BUTTON_SIZE];
 	[_hostGameButton setPosition:HOST_GAME_BUTTON_POSITION];
@@ -62,7 +62,7 @@
 	[_background setZPosition:0];
 	[self addChild:_background];
 	
-	_player = [Player brawlerWithID:BILLY_ID isOpponent:NO];
+	_player = [Player brawlerWithID:BILLY_ID isOpponent:NO withServicer:_gameServicer];
 	[self addChild:_player];
 	
 	_playerControls = [PlayerControls controlsForPlayer:_player withServicer:_gameServicer];
@@ -85,47 +85,101 @@
 	if (!contact.bodyA.node.parent || !contact.bodyB.node.parent) {
 		return;
 	}
+	NSLog(@"handling contact");
 	NSString *nameA = contact.bodyA.node.name;
+	NSLog(nameA);
 	NSString *nameB = contact.bodyB.node.name;
+	NSLog(nameB);
+	NSString *opponentBulletStr = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
 	if ([nameA isEqualToString:wallName] && [nameB isEqualToString:bulletName]) {
 		[contact.bodyB.node removeFromParent];
 	} else if ([nameA isEqualToString:wallName] && [nameB isEqualToString:bulletName]) {
 		[contact.bodyA.node removeFromParent];
-	} else if ([nameA isEqualToString:playerName] || [nameB isEqualToString:playerName]) {
-		if ([nameA isEqualToString:bulletName]) {
+	} else if ([nameA isEqualToString:opponentBulletStr] && [nameB isEqualToString:wallName]) {
+		[contact.bodyA.node removeFromParent];
+	} else if ([nameA isEqualToString:wallName] && [nameB isEqualToString:opponentBulletStr]) {
+		[contact.bodyB.node removeFromParent];
+	}
+	else if ([nameA isEqualToString:playerName] || [nameB isEqualToString:playerName]) {
+	
+		NSLog(@"contact with player");
+	
+		NSString *nameToCheck;
+		BOOL isNameA = NO;
+		if ([nameA isEqualToString:playerName]) {
+			nameToCheck = nameB;
+		} else {
+			nameToCheck = nameA;
+			isNameA = YES;
+		}
+		
+		// Bullet Section
+		NSString *bulletSection = @"";
+		NSString *postfix = @"";
+		@try {
+			bulletSection = [nameToCheck substringToIndex:bulletName.length];
+			postfix = [nameToCheck substringFromIndex:bulletName.length];
+		}
+		@catch (NSException *e)  {
+			
+		}
+		@finally {
+		
+		}
+		if ([bulletSection isEqualToString:bulletName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
 			[_player takeDamage:BULLET_DAMAGE];
-			[contact.bodyA.node removeFromParent];
-		} else if ([nameB isEqualToString:bulletName]) {
-			[_player takeDamage:BULLET_DAMAGE];
-			[contact.bodyB.node removeFromParent];
-		} else if ([nameA isEqualToString:explosionName] || [nameB isEqualToString:explosionName]) {
+			if (isNameA) {
+				[contact.bodyA.node removeFromParent];
+			} else {
+				[contact.bodyB.node removeFromParent];
+			}
+			return;
+		}
+		
+		// Explosion Section
+		NSString *explosionSection = @"";
+		@try {
+			explosionSection = [nameToCheck substringToIndex:explosionName.length];
+			postfix = [nameToCheck substringFromIndex:explosionName.length];
+		}
+		@catch (NSException *e) {
+			
+		}
+		@finally {
+		
+		}
+		
+		if ([explosionSection isEqualToString:explosionName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
 			[_player takeDamage:GRENADE_DAMAGE];
+			if (isNameA) {
+				contact.bodyA.node.name = @"invalid";
+			} else {
+				contact.bodyB.node.name = @"invalid";
+			}
+			return;
+		}
+		
+	} else if ([nameA isEqualToString:opponentName] || [nameB isEqualToString:opponentName]) {
+		NSString *nameToCheck;
+		BOOL isNameA = NO;
+		if ([nameA isEqualToString:opponentName]) {
+			nameToCheck = nameB;
+		} else {
+			nameToCheck = nameA;
+			isNameA = YES;
+		}
+
+		if ([nameToCheck isEqualToString:bulletName]) {
+//			[_opponent takeDamage:BULLET_DAMAGE];
+			if (isNameA) {
+				[contact.bodyA.node removeFromParent];
+			} else {
+				[contact.bodyB.node removeFromParent];
+			}
+			return;
 		}
 	}
-	
-/*
-	else if (([nameB isEqualToString:playerName] && [nameA isEqualToString:bulletName]) ||
-		([nameA isEqualToString:playerName] && [nameB isEqualToString:bulletName])) {
-		[_player takeDamage:BULLET_DAMAGE];
-	} else if (([nameA isEqualToString:playerName] && [nameA isEqualToString:explosionName]) ||
-		([nameB isEqualToString:playerName] && [nameA isEqualToString:explosionName])) {
-		[_player takeDamage:GRENADE_DAMAGE];
-	}
-*/
-	
-/*
-	else if ([nameA isEqualToString:playerName] && [nameB isEqualToString:grenadeName]) {
-		Explosion *explosion = [Explosion explosionAt:contact.bodyB.node.position withDuration:EXPLOSION_DURATAION];
-		[explosion checkContact:_player];
-		[self addChild:explosion];
-		[contact.bodyB.node removeFromParent];
-	} else if ([nameB isEqualToString:playerName] && [nameA isEqualToString:grenadeName]) {
-		Explosion *explosion = [Explosion explosionAt:contact.bodyA.node.position withDuration:EXPLOSION_DURATAION];
-		[explosion checkContact:_player];
-		[self addChild:explosion];
-		[contact.bodyA.node removeFromParent];
-	}
-*/
+
 
 }
 
@@ -178,8 +232,16 @@
 }
 
 - (void)spawnOpponent {
-	_opponent = [Player brawlerWithID:BILLY_ID isOpponent:YES];
+	_opponent = [Player brawlerWithID:BILLY_ID isOpponent:YES withServicer:_gameServicer];
 	[self addChild:_opponent];
+	_opponentControls = [PlayerControls controlsForPlayer:_opponent withServicer:_gameServicer];
+}
+
+- (void)checkOpponentData:(NSData *)data {
+	if (_opponent != NULL) {
+		[_opponent.healthBar checkData:data];
+		[_opponentControls performActionFromData:data];
+	}
 }
 
 -(void)update:(CFTimeInterval)currentTime {

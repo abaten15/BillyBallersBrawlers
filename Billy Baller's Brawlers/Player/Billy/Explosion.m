@@ -17,20 +17,22 @@
 
 @implementation Explosion
 
-+ (instancetype) explosionAt:(CGPoint)point withDuration:(CGFloat)duration {
++ (instancetype) explosionAt:(CGPoint)point withDuration:(CGFloat)duration isOpponents:(BOOL)isOpponents {
 
 	Explosion *explosion = [Explosion spriteNodeWithImageNamed:EXPLOSION_IMAGE_NAME];
 
-/*
 	explosion.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:EXPLOSION_SIZE.width/2];
 	explosion.physicsBody.categoryBitMask = explosionCategory;
 	explosion.physicsBody.collisionBitMask = 0x0;
-	explosion.physicsBody.contactTestBitMask = opponentCategory;
+	explosion.physicsBody.contactTestBitMask = playerCategory | opponentCategory;
 	explosion.physicsBody.node.name = explosionName;
 	explosion.physicsBody.affectedByGravity = NO;
 	explosion.physicsBody.dynamic = NO;
 	explosion.name = explosionName;
-*/
+
+	if (isOpponents) {
+		explosion.name = [explosionName stringByAppendingString:OPPONENT_POSTFIX];
+	}
 	
 	[explosion setPosition:point];
 	[explosion setSize:EXPLOSION_SIZE];

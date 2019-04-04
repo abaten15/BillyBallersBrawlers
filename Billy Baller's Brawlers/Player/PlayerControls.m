@@ -49,16 +49,16 @@
 - (void) checkControlsDown:(CGPoint)point {
 
 	if ([_mainAttackButton containsPoint:point]) {
-		[self mainAttackButtonPressed:point];
+		[self mainAttackButtonPressed:point sendData:YES];
 	}
 	else if ([_specialAttackButton containsPoint:point]) {
-		[self specialAttackButtonPressed:point];
+		[self specialAttackButtonPressed:point sendData:YES];
 	}
 	else if ([_flipBrawlerButton containsPoint:point]) {
-		[self flipBrawlerButtonPressed:point];
+		[self flipBrawlerButtonPressed:point sendData:YES];
 	}
 	else if ([_slider containsPoint:point]) {
-		[self sliderMotion:point.x];
+		[self sliderMotion:point.x sendData:YES];
 	}
 
 }
@@ -66,7 +66,7 @@
 - (void) checkControlsMoved:(CGPoint)point {
 
 	if ([_slider containsPoint:point]) {
-		[self sliderMotion:point.x];
+		[self sliderMotion:point.x sendData:YES];
 	}
 
 }
@@ -75,7 +75,7 @@
 
 }
 
-- (void) sliderMotion:(CGFloat)newX {
+- (void) sliderMotion:(CGFloat)newX sendData:(BOOL)shouldSendData {
 	if (newX > SLIDER_MAX_X) {
 		newX = SLIDER_MAX_X;
 	} else if (newX < -SLIDER_MAX_X) {
@@ -84,26 +84,67 @@
 	[_playerToControl moveTo:newX];
 	
 	// Sending data
-	NSString *stringData = [SLIDER_NETWORK_PREFIX stringByAppendingString:[[NSNumber numberWithInt:(int)newX] stringValue]];
-	[_gameServicer sendData:stringData];
+	if (shouldSendData) {
+		NSString *stringData = [SLIDER_NETWORK_PREFIX stringByAppendingString:[[NSNumber numberWithInt:(int)newX] stringValue]];
+		[_gameServicer sendData:stringData];
+	}
 }
 
-- (void) mainAttackButtonPressed:(CGPoint)point {
+- (void) mainAttackButtonPressed:(CGPoint)point sendData:(BOOL)shouldSendData {
 	[_playerToControl performMainAttack];
-	NSString *stringData = MAIN_BUTTON_NETWORK_PREFIX;
-	[_gameServicer sendData:stringData];
+	if (shouldSendData) {
+		NSString *stringData = MAIN_BUTTON_NETWORK_PREFIX;
+		[_gameServicer sendData:stringData];
+	}
 }
 
-- (void) specialAttackButtonPressed:(CGPoint)point {
+- (void) specialAttackButtonPressed:(CGPoint)point sendData:(BOOL)shouldSendData {
 	[_playerToControl performSpecialAttack];
-	NSString *stringData = SPECIAL_BUTTON_NETWORK_PREFIX;
-	[_gameServicer sendData:stringData];
+	if (shouldSendData) {
+		NSString *stringData = SPECIAL_BUTTON_NETWORK_PREFIX;
+		[_gameServicer sendData:stringData];
+	}
 }
 
-- (void) flipBrawlerButtonPressed:(CGPoint)point {
+- (void) flipBrawlerButtonPressed:(CGPoint)point sendData:(BOOL)shouldSendData {
 	[_playerToControl flipBrawler];
-	NSString *stringData = FLIP_BUTTON_NETWORK_PREFIX;
-	[_gameServicer sendData:stringData];
+	if (shouldSendData) {
+		NSString *stringData = FLIP_BUTTON_NETWORK_PREFIX;
+		[_gameServicer sendData:stringData];
+	}
+}
+
+- (void) performActionFromData:(NSData *)data {
+	NSString *string = [[NSString alloc] initWithData:data encoding:kCFStringEncodingUTF8];
+	CGPoint point = CGPointMake(0, 0);
+	if ([string isEqualToString:FLIP_BUTTON_NETWORK_PREFIX]) {
+		[self flipBrawlerButtonPressed:point sendData:NO];
+		return;
+	} else if ([string isEqualToString:MAIN_BUTTON_NETWORK_PREFIX]) {
+		[self mainAttackButtonPressed:point sendData:NO];
+		return;
+	} else if ([string isEqualToString:SPECIAL_BUTTON_NETWORK_PREFIX]) {
+		[self specialAttackButtonPressed:point sendData:NO];
+		return;
+	}
+	
+	NSString *prefix;
+	NSString *newX;
+	@try {
+		prefix = [string substringToIndex:SLIDER_NETWORK_PREFIX.length];
+		newX = [string substringFromIndex:SLIDER_NETWORK_PREFIX.length];
+	}
+	@catch (NSException *e) {
+	
+	}
+	@finally {
+	
+	}
+	
+	if ([prefix isEqualToString:SLIDER_NETWORK_PREFIX]) {
+		CGFloat newXFloat = [newX intValue];
+		[self sliderMotion:newXFloat sendData:NO];
+	}
 }
 
 @end

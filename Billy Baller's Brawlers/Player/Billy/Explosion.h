@@ -15,13 +15,13 @@
 
 #define EXPLOSION_IMAGE_NAME @"Explosion"
 
-#define EXPLOSION_SIZE CGSizeMake(200,200)
+#define EXPLOSION_SIZE CGSizeMake(250,250)
 
 #define EXPLOSION_DURATAION 0.5
 
 @interface Explosion : SKSpriteNode
 
-+ (instancetype)explosionAt:(CGPoint)point withDuration:(CGFloat)duration;
++ (instancetype)explosionAt:(CGPoint)point withDuration:(CGFloat)duration isOpponents:(BOOL)isOpponents;
 
 - (void) checkContact:(Player *) player;
 

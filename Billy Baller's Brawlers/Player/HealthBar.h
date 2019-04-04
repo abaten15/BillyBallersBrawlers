@@ -11,14 +11,22 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+#import "GameServicer.h"
+@class GameServicer;
+
 #define HEALTH_BAR_IMAGE_NAME @"HealthBar"
+
+#define HEALTH_UPDATE_PREFIX @"health-"
 
 #define HEALTH_BAR_SIZE CGSizeMake(100, 15)
 #define HEALTH_BAR_OFFSET CGPointMake(0, 75)
 
 @interface HealthBar : SKSpriteNode
 
-+ (instancetype) healthBarWithMaxHealth:(CGFloat)maxHealth;
++ (instancetype) healthBarWithMaxHealth:(CGFloat)maxHealth withServicer:(GameServicer *)servicer;
+
+@property (nonatomic) GameServicer *gameServicer;
+- (void) checkData:(NSData *) data;
 
 @property (nonatomic) int maxHealth;
 @property (nonatomic) int currentHealth;

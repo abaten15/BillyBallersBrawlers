@@ -20,9 +20,10 @@
 
 }
 
-+ (instancetype)brawlerWithID:(int)brawlerID isOpponent:(BOOL)isOpponentIn {
++ (instancetype)brawlerWithID:(int)brawlerID isOpponent:(BOOL)isOpponentIn withServicer:(GameServicer *)gameServicer {
 
 	Player *player;
+	player.gameServicer = gameServicer;
 	int maxHealth;
 	switch (brawlerID) {
 	case BILLY_ID:
@@ -48,7 +49,7 @@
 	player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:PLAYER_SIZE.width/2];
 	player.physicsBody.categoryBitMask = playerCategory;
 	player.physicsBody.collisionBitMask = 0x0;
-	player.physicsBody.contactTestBitMask = 0x0; // May need changing later
+	player.physicsBody.contactTestBitMask = bulletCategory | grenadeCategory; // May need changing later
 	player.physicsBody.node.name = playerName;
 	player.physicsBody.affectedByGravity = NO;
 	player.physicsBody.dynamic = YES;
@@ -57,7 +58,7 @@
 	[player setPosition:PLAYER_POSITION];
 	[player setSize:PLAYER_SIZE];
 	
-	HealthBar *healthBar = [HealthBar healthBarWithMaxHealth:maxHealth];
+	HealthBar *healthBar = [HealthBar healthBarWithMaxHealth:maxHealth withServicer:player.gameServicer];
 	player.healthBar = healthBar;
 	[player addChild:healthBar];
 	
@@ -65,6 +66,8 @@
 	
 	if (player.isOpponent) {
 		player.physicsBody.categoryBitMask = opponentCategory;
+		player.name = opponentName;
+		player.physicsBody.node.name = opponentName;
 		player.shootingOffset = CGPointMake(player.shootingOffset.x, player.shootingOffset.y * -1);
 		player.yScale *= -1;
 		player.position = CGPointMake(player.position.x, player.position.y * -1);
@@ -91,28 +94,46 @@
 	CGPoint point;
 	if (self.brawlerID == BILLY_ID) {
 		if (_flipped) {
-			flippedOffset = BILLY_MAIN_OFFSET.x * -2;
+			flippedOffset = _shootingOffset.x * -2;
 		}
-		point = CGPointMake(BILLY_MAIN_OFFSET.x + self.position.x + flippedOffset, BILLY_MAIN_OFFSET.y + self.position.y);
-		Bullet *bullet = [Bullet bulletAt:point going:North];
+		point = CGPointMake(BILLY_MAIN_OFFSET.x + self.position.x + flippedOffset, _shootingOffset.y + self.position.y);
+		Bullet *bullet;
+		if (_isOpponent) {
+			bullet.name = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
+			bullet = [Bullet bulletAt:point going:South isOpponents:_isOpponent];
+		} else {
+			bullet = [Bullet bulletAt:point going:North isOpponents:_isOpponent];
+		}
 		[[self parent] addChild:bullet];
 	} else {
 		if (_flipped) {
-			flippedOffset = BILLY_MAIN_OFFSET.x * -2;
+			flippedOffset = _shootingOffset.x * -2;
 		}
-		point = CGPointMake(BILLY_MAIN_OFFSET.x + self.position.x + flippedOffset, BILLY_MAIN_OFFSET.y + self.position.y);
-		Bullet *bulletDefault = [Bullet bulletAt:point going:North];
-		[[self parent] addChild:bulletDefault];
+		point = CGPointMake(_shootingOffset.x + self.position.x + flippedOffset, _shootingOffset.y + self.position.y);
+		Bullet *bullet;
+		if (_isOpponent) {
+			bullet.name = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
+			bullet = [Bullet bulletAt:point going:South isOpponents:_isOpponent];
+		} else {
+			bullet = [Bullet bulletAt:point going:North isOpponents:_isOpponent];
+		}
+		[[self parent] addChild:bullet];
 	}
 }
 
 - (void) performSpecialAttack {
 	int flippedOffset = 0;
 	if (_flipped) {
-		flippedOffset = BILLY_MAIN_OFFSET.x * -2;
+		flippedOffset = _shootingOffset.x * -2;
 	}
-	CGPoint point = CGPointMake(BILLY_MAIN_OFFSET.x + self.position.x + flippedOffset, BILLY_MAIN_OFFSET.y + self.position.y);
-	Grenade *grenade = [Grenade grenadeAt:point going:North];
+	CGPoint point = CGPointMake(_shootingOffset.x + self.position.x + flippedOffset, _shootingOffset.y + self.position.y);
+	Grenade *grenade;
+	if (_isOpponent) {
+		grenade.name = [grenadeName stringByAppendingString:OPPONENT_POSTFIX];
+		grenade = [Grenade grenadeAt:point going:North isOpponents:_isOpponent];
+	} else {
+		grenade = [Grenade grenadeAt:point going:South isOpponents:_isOpponent];
+	}
 	[[self parent] addChild:grenade];
 }
 
