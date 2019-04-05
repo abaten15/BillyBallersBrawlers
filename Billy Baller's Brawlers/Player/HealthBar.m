@@ -43,8 +43,6 @@
 	CGFloat height = HEALTH_BAR_SIZE.height;
 	CGSize newSize = CGSizeMake(width, height);
 	[self setSize:newSize];
-	NSString *intStr = [[NSNumber numberWithInt:_currentHealth] stringValue];
-	[_gameServicer sendData:[HEALTH_UPDATE_PREFIX stringByAppendingString:intStr]];
 	return retVal;
 }
 

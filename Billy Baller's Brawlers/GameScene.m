@@ -128,6 +128,9 @@
 		}
 		if ([bulletSection isEqualToString:bulletName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
 			[_player takeDamage:BULLET_DAMAGE];
+			NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
+			NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
+			[_gameServicer sendData:data];
 			if (isNameA) {
 				[contact.bodyA.node removeFromParent];
 			} else {

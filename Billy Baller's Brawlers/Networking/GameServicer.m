@@ -81,7 +81,6 @@ static NSString * const GameServiceType = @"game-service";
 
 - (void) sendData:(NSString *)data {
 	if (self.sessionConnected == YES && self.gameSession.connectedPeers.count > 0) {
-		
 		NSData *dataToSend = [data dataUsingEncoding:kCFStringEncodingUTF8];
 		[self.gameSession sendData:dataToSend toPeers:self.gameSession.connectedPeers withMode:MCSessionSendDataReliable error:nil];
 	}
