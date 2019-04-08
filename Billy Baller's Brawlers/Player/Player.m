@@ -31,6 +31,8 @@
 		player.speed = BILLY_SPEED;
 		maxHealth = BILLY_MAX_HEALTH;
 		player.shootingOffset = BILLY_MAIN_OFFSET;
+		player.mainCooldown = BILLY_MAIN_COOLDOWN;
+		player.specialCooldown = BILLY_SPECIAL_COOLDOWN;
 		break;
 	case STEVE_ID:
 		player = [Player spriteNodeWithImageNamed:STEVE_IMAGE_NAME];
@@ -45,6 +47,9 @@
 		player.shootingOffset = BILLY_MAIN_OFFSET;
 		break;
 	}
+	
+	player.canShootMain = YES;
+	player.canShootSpecial = YES;
 	
 	player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:PLAYER_SIZE.width/2];
 	player.physicsBody.categoryBitMask = playerCategory;
@@ -90,38 +95,47 @@
 }
 
 - (void) performMainAttack {
+	if (!_canShootMain) {
+		return;
+	}
 	int flippedOffset = 0;
 	CGPoint point;
-	if (self.brawlerID == BILLY_ID) {
-		if (_flipped) {
-			flippedOffset = _shootingOffset.x * -2;
-		}
-		point = CGPointMake(BILLY_MAIN_OFFSET.x + self.position.x + flippedOffset, _shootingOffset.y + self.position.y);
-		Bullet *bullet;
-		if (_isOpponent) {
-			bullet.name = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
-			bullet = [Bullet bulletAt:point going:South isOpponents:_isOpponent];
-		} else {
-			bullet = [Bullet bulletAt:point going:North isOpponents:_isOpponent];
-		}
-		[[self parent] addChild:bullet];
-	} else {
-		if (_flipped) {
-			flippedOffset = _shootingOffset.x * -2;
-		}
-		point = CGPointMake(_shootingOffset.x + self.position.x + flippedOffset, _shootingOffset.y + self.position.y);
-		Bullet *bullet;
-		if (_isOpponent) {
-			bullet.name = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
-			bullet = [Bullet bulletAt:point going:South isOpponents:_isOpponent];
-		} else {
-			bullet = [Bullet bulletAt:point going:North isOpponents:_isOpponent];
-		}
-		[[self parent] addChild:bullet];
+	if (_flipped) {
+		flippedOffset = _shootingOffset.x * -2;
 	}
+	point = CGPointMake(BILLY_MAIN_OFFSET.x + self.position.x + flippedOffset, _shootingOffset.y + self.position.y);
+	Direction dir = North;
+	if (_isOpponent) {
+		dir = South;
+	}
+	if (self.brawlerID == BILLY_ID) {
+		[self shootBulletAt:point going:dir];
+	} else {
+		[self shootBulletAt:point going:dir];
+	}
+	_canShootMain = NO;
+	[self performSelector:@selector(endMainCooldown) withObject:nil afterDelay:_mainCooldown];
+}
+
+- (void) endMainCooldown {
+	_canShootMain = YES;
+}
+
+- (void) shootBulletAt:(CGPoint)point going:(Direction)dir {
+	Bullet *bullet;
+	if (_isOpponent) {
+		bullet.name = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
+		bullet = [Bullet bulletAt:point going:dir isOpponents:_isOpponent];
+	} else {
+		bullet = [Bullet bulletAt:point going:dir isOpponents:_isOpponent];
+	}
+	[[self parent] addChild:bullet];
 }
 
 - (void) performSpecialAttack {
+	if (!_canShootSpecial) {
+		return;
+	}
 	int flippedOffset = 0;
 	if (_flipped) {
 		flippedOffset = _shootingOffset.x * -2;
@@ -135,6 +149,16 @@
 		grenade = [Grenade grenadeAt:point going:South isOpponents:_isOpponent];
 	}
 	[[self parent] addChild:grenade];
+	_canShootSpecial = NO;
+	[self performSelector:@selector(endSpecialCooldown) withObject:nil afterDelay:_specialCooldown];
+}
+
+- (void) endSpecialCooldown {
+	_canShootSpecial = YES;
+}
+
+- (void) shootGrenadeAt:(CGPoint)point going:(Direction)dir {
+	
 }
 
 - (void) updateShootingOffset {

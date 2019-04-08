@@ -15,6 +15,7 @@
 @class HealthBar;
 #import "GameServicer.h"
 @class GameServicer;
+#import "Direction.h"
 
 #define PLAYER_POSITION CGPointMake(0, -500)
 #define PLAYER_SIZE CGSizeMake(100, 100)
@@ -26,6 +27,8 @@
 #define BILLY_IMAGE_NAME @"Billy"
 #define BILLY_SPEED 30.0
 #define BILLY_MAIN_OFFSET CGPointMake(-45, 45)
+#define BILLY_MAIN_COOLDOWN .15
+#define BILLY_SPECIAL_COOLDOWN 1.5
 #define BILLY_MAX_HEALTH 100
 
 #define STEVE_ID 1
@@ -49,9 +52,18 @@
 @property (nonatomic) CGFloat mySpeed;
 - (void) moveTo:(CGFloat) newX;
 
+@property (nonatomic) CGFloat mainCooldown;
+@property (nonatomic) BOOL canShootMain;
 - (void) performMainAttack;
+- (void) endMainCooldown;
 
+@property (nonatomic) CGFloat specialCooldown;
+@property (nonatomic) BOOL canShootSpecial;
 - (void) performSpecialAttack;
+- (void) endSpecialCooldown;
+
+- (void) shootBulletAt:(CGPoint)point going:(Direction)dir;
+- (void) shootGrenadeAt:(CGPoint)point going:(Direction)dir;
 
 @property (nonatomic) BOOL flipped;
 @property (nonatomic) CGPoint shootingOffset;

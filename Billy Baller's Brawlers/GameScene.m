@@ -154,6 +154,9 @@
 		
 		if ([explosionSection isEqualToString:explosionName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
 			[_player takeDamage:GRENADE_DAMAGE];
+			NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
+			NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
+			[_gameServicer sendData:data];
 			if (isNameA) {
 				contact.bodyA.node.name = @"invalid";
 			} else {

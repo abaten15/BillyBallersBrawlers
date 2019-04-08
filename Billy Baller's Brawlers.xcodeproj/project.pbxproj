@@ -24,6 +24,7 @@
 		E5AC43B6220B2D3400A800CE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AC43B5220B2D3400A800CE /* main.m */; };
 		E5AC43C0220B2D3500A800CE /* Billy_Baller_s_BrawlersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AC43BF220B2D3500A800CE /* Billy_Baller_s_BrawlersTests.m */; };
 		E5AC43CB220B2D3500A800CE /* Billy_Baller_s_BrawlersUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AC43CA220B2D3500A800CE /* Billy_Baller_s_BrawlersUITests.m */; };
+		E5BE8764225BD43C008F0A95 /* CooldownManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5BE8763225BD43C008F0A95 /* CooldownManager.m */; };
 		E5F26A072253317100CFE53C /* GameServicer.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F26A062253317100CFE53C /* GameServicer.m */; };
 		E5F92150224B0A1E00667955 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F9214F224B0A1E00667955 /* Bullet.m */; };
 		E5F92153224B1B9400667955 /* Grenade.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F92152224B1B9400667955 /* Grenade.m */; };
@@ -80,6 +81,8 @@
 		E5AC43C6220B2D3500A800CE /* Billy Baller's BrawlersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Billy Baller's BrawlersUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AC43CA220B2D3500A800CE /* Billy_Baller_s_BrawlersUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Billy_Baller_s_BrawlersUITests.m; sourceTree = "<group>"; };
 		E5AC43CC220B2D3500A800CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E5BE8762225BD431008F0A95 /* CooldownManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CooldownManager.h; sourceTree = "<group>"; };
+		E5BE8763225BD43C008F0A95 /* CooldownManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CooldownManager.m; sourceTree = "<group>"; };
 		E5F26A052253314A00CFE53C /* GameServicer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameServicer.h; sourceTree = "<group>"; };
 		E5F26A062253317100CFE53C /* GameServicer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameServicer.m; sourceTree = "<group>"; };
 		E5F9214D224B068200667955 /* Bullet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bullet.h; sourceTree = "<group>"; };
@@ -140,6 +143,8 @@
 				E5F9214C224B066A00667955 /* Billy */,
 				E561D17E22496C5600D53055 /* Player.h */,
 				E561D17F22496C6300D53055 /* Player.m */,
+				E5BE8762225BD431008F0A95 /* CooldownManager.h */,
+				E5BE8763225BD43C008F0A95 /* CooldownManager.m */,
 				E50ABFBA224C358300F12911 /* HealthBar.h */,
 				E50ABFBB224C35F600F12911 /* HealthBar.m */,
 				E561D181224977F300D53055 /* PlayerControls.h */,
@@ -379,6 +384,7 @@
 				E561D18022496C6300D53055 /* Player.m in Sources */,
 				E50ABFBC224C35F600F12911 /* HealthBar.m in Sources */,
 				E5F92153224B1B9400667955 /* Grenade.m in Sources */,
+				E5BE8764225BD43C008F0A95 /* CooldownManager.m in Sources */,
 				E561D17A224961B900D53055 /* Wall.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
