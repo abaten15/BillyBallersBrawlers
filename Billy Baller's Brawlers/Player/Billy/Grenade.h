@@ -14,7 +14,7 @@
 #include "Direction.h"
 #include "Explosion.h"
 
-#define GRENADE_IMAGE_NAME @"GRENADE"
+#define GRENADE_IMAGE_NAME @"Grenade"
 
 #define GRENADE_SIZE CGSizeMake(20,20)
 #define GRENADE_SPEED 1200

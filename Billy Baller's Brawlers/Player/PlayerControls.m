@@ -115,7 +115,7 @@
 }
 
 - (void) performActionFromData:(NSData *)data {
-	NSString *string = [[NSString alloc] initWithData:data encoding:kCFStringEncodingUTF8];
+	NSString *string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
 	CGPoint point = CGPointMake(0, 0);
 	if ([string isEqualToString:FLIP_BUTTON_NETWORK_PREFIX]) {
 		[self flipBrawlerButtonPressed:point sendData:NO];

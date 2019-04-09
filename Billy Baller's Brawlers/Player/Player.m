@@ -47,6 +47,10 @@
 		player.shootingOffset = BILLY_MAIN_OFFSET;
 		break;
 	}
+	if (!isOpponentIn) {
+		player.cooldownManager = [CooldownManager managerForBrawler:brawlerID];
+		[player addChild:player.cooldownManager];
+	}
 	
 	player.canShootMain = YES;
 	player.canShootSpecial = YES;
@@ -95,7 +99,7 @@
 }
 
 - (void) performMainAttack {
-	if (!_canShootMain) {
+	if (!_isOpponent && !_canShootMain ) {
 		return;
 	}
 	int flippedOffset = 0;
@@ -114,11 +118,13 @@
 		[self shootBulletAt:point going:dir];
 	}
 	_canShootMain = NO;
+	[_cooldownManager setCanShootMain:_canShootMain];
 	[self performSelector:@selector(endMainCooldown) withObject:nil afterDelay:_mainCooldown];
 }
 
 - (void) endMainCooldown {
 	_canShootMain = YES;
+	[_cooldownManager setCanShootMain:_canShootMain];
 }
 
 - (void) shootBulletAt:(CGPoint)point going:(Direction)dir {
@@ -133,7 +139,7 @@
 }
 
 - (void) performSpecialAttack {
-	if (!_canShootSpecial) {
+	if (!_isOpponent && !_canShootSpecial) {
 		return;
 	}
 	int flippedOffset = 0;
@@ -141,6 +147,18 @@
 		flippedOffset = _shootingOffset.x * -2;
 	}
 	CGPoint point = CGPointMake(_shootingOffset.x + self.position.x + flippedOffset, _shootingOffset.y + self.position.y);
+	[self shootGrenadeAt:point going:North];
+	_canShootSpecial = NO;
+	[_cooldownManager setCanShootSpecial:_canShootSpecial];
+	[self performSelector:@selector(endSpecialCooldown) withObject:nil afterDelay:_specialCooldown];
+}
+
+- (void) endSpecialCooldown {
+	_canShootSpecial = YES;
+	[_cooldownManager setCanShootSpecial:_canShootSpecial];
+}
+
+- (void) shootGrenadeAt:(CGPoint)point going:(Direction)dir {
 	Grenade *grenade;
 	if (_isOpponent) {
 		grenade.name = [grenadeName stringByAppendingString:OPPONENT_POSTFIX];
@@ -149,16 +167,6 @@
 		grenade = [Grenade grenadeAt:point going:South isOpponents:_isOpponent];
 	}
 	[[self parent] addChild:grenade];
-	_canShootSpecial = NO;
-	[self performSelector:@selector(endSpecialCooldown) withObject:nil afterDelay:_specialCooldown];
-}
-
-- (void) endSpecialCooldown {
-	_canShootSpecial = YES;
-}
-
-- (void) shootGrenadeAt:(CGPoint)point going:(Direction)dir {
-	
 }
 
 - (void) updateShootingOffset {

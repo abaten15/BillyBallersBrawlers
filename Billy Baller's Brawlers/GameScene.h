@@ -10,6 +10,8 @@
 #import <GameplayKit/GameplayKit.h>
 
 #import "Background.h"
+#import "YouLoseAnimation.h"
+#import "YouWinAnimation.h"
 #import "Player.h"
 @class Player;
 #import "PlayerControls.h"
@@ -32,6 +34,12 @@
 @property (nonatomic) NSMutableDictionary<NSString*, GKGraph *> *graphs;
 
 @property (nonatomic) SKSpriteNode *window;
+
+@property (nonatomic) BOOL gameOver;
+@property (nonatomic) YouWinAnimation *youWinAnimation;
+- (void) winGame;
+@property (nonatomic) YouLoseAnimation *youLoseAnimation;
+- (void) loseGame;
 
 @property (nonatomic) NSMutableArray *contactQueue;
 - (void) didBeginContact:(SKPhysicsContact *)contact;

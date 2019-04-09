@@ -13,6 +13,8 @@
 		E561D17A224961B900D53055 /* Wall.m in Sources */ = {isa = PBXBuildFile; fileRef = E561D179224961B900D53055 /* Wall.m */; };
 		E561D18022496C6300D53055 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = E561D17F22496C6300D53055 /* Player.m */; };
 		E561D183224977FD00D53055 /* PlayerControls.m in Sources */ = {isa = PBXBuildFile; fileRef = E561D182224977FD00D53055 /* PlayerControls.m */; };
+		E57CD5D4225C35FA00E86810 /* YouLoseAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = E57CD5D3225C35FA00E86810 /* YouLoseAnimation.m */; };
+		E57CD5D7225C3B1900E86810 /* YouWinAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = E57CD5D6225C3B1900E86810 /* YouWinAnimation.m */; };
 		E5AC43A1220B2D3400A800CE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AC43A0220B2D3400A800CE /* AppDelegate.m */; };
 		E5AC43A3220B2D3400A800CE /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = E5AC43A2220B2D3400A800CE /* GameScene.sks */; };
 		E5AC43A5220B2D3400A800CE /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = E5AC43A4220B2D3400A800CE /* Actions.sks */; };
@@ -61,6 +63,10 @@
 		E561D17F22496C6300D53055 /* Player.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 		E561D181224977F300D53055 /* PlayerControls.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerControls.h; sourceTree = "<group>"; };
 		E561D182224977FD00D53055 /* PlayerControls.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerControls.m; sourceTree = "<group>"; };
+		E57CD5D2225C355B00E86810 /* YouLoseAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YouLoseAnimation.h; sourceTree = "<group>"; };
+		E57CD5D3225C35FA00E86810 /* YouLoseAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YouLoseAnimation.m; sourceTree = "<group>"; };
+		E57CD5D5225C3AD000E86810 /* YouWinAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YouWinAnimation.h; sourceTree = "<group>"; };
+		E57CD5D6225C3B1900E86810 /* YouWinAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YouWinAnimation.m; sourceTree = "<group>"; };
 		E5AC439C220B2D3400A800CE /* Billy Baller's Brawlers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Billy Baller's Brawlers.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AC439F220B2D3400A800CE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E5AC43A0220B2D3400A800CE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -133,6 +139,10 @@
 				E561D17B2249626300D53055 /* Wall.h */,
 				E561D179224961B900D53055 /* Wall.m */,
 				E5F9214E224B087900667955 /* Direction.h */,
+				E57CD5D2225C355B00E86810 /* YouLoseAnimation.h */,
+				E57CD5D3225C35FA00E86810 /* YouLoseAnimation.m */,
+				E57CD5D5225C3AD000E86810 /* YouWinAnimation.h */,
+				E57CD5D6225C3B1900E86810 /* YouWinAnimation.m */,
 			);
 			path = Background;
 			sourceTree = "<group>";
@@ -376,8 +386,10 @@
 				E5AC43AB220B2D3400A800CE /* GameViewController.m in Sources */,
 				E5AC43B6220B2D3400A800CE /* main.m in Sources */,
 				E561D17822495BA700D53055 /* Background.m in Sources */,
+				E57CD5D4225C35FA00E86810 /* YouLoseAnimation.m in Sources */,
 				E50ABFB9224C050900F12911 /* Explosion.m in Sources */,
 				E561D183224977FD00D53055 /* PlayerControls.m in Sources */,
+				E57CD5D7225C3B1900E86810 /* YouWinAnimation.m in Sources */,
 				E5F26A072253317100CFE53C /* GameServicer.m in Sources */,
 				E5F92150224B0A1E00667955 /* Bullet.m in Sources */,
 				E5AC43A1220B2D3400A800CE /* AppDelegate.m in Sources */,

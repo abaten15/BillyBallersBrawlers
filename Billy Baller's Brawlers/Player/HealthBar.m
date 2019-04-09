@@ -48,7 +48,7 @@
 
 - (void) checkData:(NSData *)data {
 	NSLog(@"checking data for health bar");
-	NSString *dataStr = [[NSString alloc] initWithData:data encoding:kCFStringEncodingUTF8];
+	NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
 	NSString *healthPrefix;
 	NSString *healthValue;
 	@try {

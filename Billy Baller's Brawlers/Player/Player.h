@@ -16,6 +16,7 @@
 #import "GameServicer.h"
 @class GameServicer;
 #import "Direction.h"
+#import "CooldownManager.h"
 
 #define PLAYER_POSITION CGPointMake(0, -500)
 #define PLAYER_SIZE CGSizeMake(100, 100)
@@ -51,6 +52,8 @@
 
 @property (nonatomic) CGFloat mySpeed;
 - (void) moveTo:(CGFloat) newX;
+
+@property (nonatomic) CooldownManager *cooldownManager;
 
 @property (nonatomic) CGFloat mainCooldown;
 @property (nonatomic) BOOL canShootMain;

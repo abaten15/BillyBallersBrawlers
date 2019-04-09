@@ -68,6 +68,10 @@
 	_playerControls = [PlayerControls controlsForPlayer:_player withServicer:_gameServicer];
 	[self addChild:_playerControls];
 	
+	_gameOver = NO;
+	_youLoseAnimation = [YouLoseAnimation youLoseAnimation:YOU_LOSE_STATIC_ID];
+	_youWinAnimation = [YouWinAnimation youWinAnimation:YOU_WIN_STATIC_ID];
+	
 }
 
 - (void) didBeginContact:(SKPhysicsContact *)contact {
@@ -85,11 +89,8 @@
 	if (!contact.bodyA.node.parent || !contact.bodyB.node.parent) {
 		return;
 	}
-	NSLog(@"handling contact");
 	NSString *nameA = contact.bodyA.node.name;
-	NSLog(nameA);
 	NSString *nameB = contact.bodyB.node.name;
-	NSLog(nameB);
 	NSString *opponentBulletStr = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
 	if ([nameA isEqualToString:wallName] && [nameB isEqualToString:bulletName]) {
 		[contact.bodyB.node removeFromParent];
@@ -250,9 +251,21 @@
 	}
 }
 
--(void)update:(CFTimeInterval)currentTime {
+- (void)loseGame {
+	_gameOver = YES;
+	[self addChild:_youLoseAnimation];
+	[_youLoseAnimation start];
+}
+
+- (void)winGame {
+	_gameOver = YES;
+	[self addChild:_youWinAnimation];
+	[_youWinAnimation start];
+}
+
+- (void)update:(CFTimeInterval)currentTime {
     // Called before each frame is rendered
-    
+	
     // Initialize _lastUpdateTime if it has not already been
     if (_lastUpdateTime == 0) {
         _lastUpdateTime = currentTime;
@@ -263,10 +276,23 @@
     // Calculate time since last update
     CGFloat dt = currentTime - _lastUpdateTime;
 	
-    if (_opponent == NULL && dt > 1.0/60.0) {
+	if (_gameOver) {
+		if (dt > 60.0 * 3.0) {
+			NSLog(@"Restart game");
+		}
+	}
+    else if (_opponent == NULL && dt > 1.0/60.0) {
     	_lastUpdateTime = currentTime;
 		if (_gameServicer.sessionConnected) {
 			[self spawnOpponent];
+		}
+	}
+	else if (dt > 1.0/60.0) {
+		_lastUpdateTime = currentTime;
+		if (_player.healthBar.currentHealth == 0) {
+			[self loseGame];
+		} else if (_opponent.healthBar.currentHealth == 0) {
+			[self winGame];
 		}
 	}
     
@@ -274,10 +300,6 @@
     for (GKEntity *entity in self.entities) {
         [entity updateWithDeltaTime:dt];
     }
-
-	if (_opponent != NULL) {
-		_lastUpdateTime = currentTime;
-	}
 
 }
 

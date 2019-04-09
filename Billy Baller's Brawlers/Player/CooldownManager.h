@@ -11,9 +11,21 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface CooldownManager : SKNode
+#define CM_NODE_SIZE CGSizeMake(20, 20)
+#define CM_MAIN_NODE_OFFSET CGPointMake(70, 70)
+#define CM_SPECIAL_NODE_OFFSET CGPointMake(70, 40)
+
+@interface CooldownManager : SKSpriteNode
 
 + (instancetype) managerForBrawler:(int)brawlerID;
+
+@property (nonatomic) SKSpriteNode *mainNode;
+@property (nonatomic) SKSpriteNode *specialNode;
+
+@property (nonatomic) BOOL canShootMainAttack;
+- (void) setCanShootMain:(BOOL)canShoot;
+@property (nonatomic) BOOL canShootSpecialAttack;
+- (void) setCanShootSpecial:(BOOL)canShoot;
 
 @end
 

@@ -21,10 +21,11 @@
 
 + (instancetype)grenadeAt:(CGPoint)point going:(Direction)direction isOpponents:(BOOL)isOpponents {
 
-	Grenade *grenade = [Grenade spriteNodeWithImageNamed:@"Grenade"];
+	Grenade *grenade = [Grenade spriteNodeWithImageNamed:GRENADE_IMAGE_NAME];
 	
 	[grenade setPosition:point];
 	[grenade setSize:GRENADE_SIZE];
+	[grenade setZPosition:5];
 	
 	grenade.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:GRENADE_SIZE.width/2];
 	grenade.physicsBody.categoryBitMask = grenadeCategory;
