@@ -62,7 +62,7 @@
 	[_background setZPosition:0];
 	[self addChild:_background];
 	
-	_player = [Player brawlerWithID:BILLY_ID isOpponent:NO withServicer:_gameServicer];
+	_player = [Player brawlerWithID:STEVE_ID isOpponent:NO withServicer:_gameServicer];
 	[self addChild:_player];
 	
 	_playerControls = [PlayerControls controlsForPlayer:_player withServicer:_gameServicer];

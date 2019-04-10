@@ -36,6 +36,10 @@
 #define STEVE_IMAGE_NAME @"Steve"
 #define STEVE_SPEED 30.0
 #define STEVE_MAX_HEALTH 100
+#define STEVE_SHOOTING_OFFSET CGPointMake(45, 45)
+#define STEVE_MAIN_COOLDOWN .15
+#define STEVE_SPECIAL_COOLDOWN 3
+#define STEVE_MAX_HEALTH 100
 
 @interface Player : SKSpriteNode
 
@@ -45,7 +49,7 @@
 
 @property (nonatomic) GameServicer *gameServicer;
 
-+ (instancetype)brawlerWithID:(int)brawlerID isOpponent:(BOOL)isOpponentIn withServicer:(GameServicer *)gameServicer;
++ (instancetype)brawlerWithID:(int)brawlerIDIn isOpponent:(BOOL)isOpponentIn withServicer:(GameServicer *)gameServicer;
 
 @property (nonatomic) HealthBar *healthBar;
 - (void) takeDamage:(int)damage;
@@ -67,6 +71,7 @@
 
 - (void) shootBulletAt:(CGPoint)point going:(Direction)dir;
 - (void) shootGrenadeAt:(CGPoint)point going:(Direction)dir;
+- (void) shootSlimeBallAt:(CGPoint)point going:(Direction)dir;
 
 @property (nonatomic) BOOL flipped;
 @property (nonatomic) CGPoint shootingOffset;

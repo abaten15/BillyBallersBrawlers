@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E50ABFB9224C050900F12911 /* Explosion.m in Sources */ = {isa = PBXBuildFile; fileRef = E50ABFB8224C050900F12911 /* Explosion.m */; };
 		E50ABFBC224C35F600F12911 /* HealthBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E50ABFBB224C35F600F12911 /* HealthBar.m */; };
+		E535D7A7225D5FEB009C6F95 /* Slime.m in Sources */ = {isa = PBXBuildFile; fileRef = E535D7A6225D5FEB009C6F95 /* Slime.m */; };
 		E561D17822495BA700D53055 /* Background.m in Sources */ = {isa = PBXBuildFile; fileRef = E561D17722495BA700D53055 /* Background.m */; };
 		E561D17A224961B900D53055 /* Wall.m in Sources */ = {isa = PBXBuildFile; fileRef = E561D179224961B900D53055 /* Wall.m */; };
 		E561D18022496C6300D53055 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = E561D17F22496C6300D53055 /* Player.m */; };
@@ -27,6 +28,7 @@
 		E5AC43C0220B2D3500A800CE /* Billy_Baller_s_BrawlersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AC43BF220B2D3500A800CE /* Billy_Baller_s_BrawlersTests.m */; };
 		E5AC43CB220B2D3500A800CE /* Billy_Baller_s_BrawlersUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AC43CA220B2D3500A800CE /* Billy_Baller_s_BrawlersUITests.m */; };
 		E5BE8764225BD43C008F0A95 /* CooldownManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5BE8763225BD43C008F0A95 /* CooldownManager.m */; };
+		E5DEDFB5225D276D002E4D4E /* SlimeBall.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DEDFB4225D276D002E4D4E /* SlimeBall.m */; };
 		E5F26A072253317100CFE53C /* GameServicer.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F26A062253317100CFE53C /* GameServicer.m */; };
 		E5F92150224B0A1E00667955 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F9214F224B0A1E00667955 /* Bullet.m */; };
 		E5F92153224B1B9400667955 /* Grenade.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F92152224B1B9400667955 /* Grenade.m */; };
@@ -55,6 +57,8 @@
 		E50ABFBA224C358300F12911 /* HealthBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HealthBar.h; sourceTree = "<group>"; };
 		E50ABFBB224C35F600F12911 /* HealthBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HealthBar.m; sourceTree = "<group>"; };
 		E52B74F1224EB7C500630F75 /* CategoryDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoryDefinitions.h; sourceTree = "<group>"; };
+		E535D7A5225D5FD8009C6F95 /* Slime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Slime.h; sourceTree = "<group>"; };
+		E535D7A6225D5FEB009C6F95 /* Slime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Slime.m; sourceTree = "<group>"; };
 		E561D17622495B9C00D53055 /* Background.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
 		E561D17722495BA700D53055 /* Background.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Background.m; sourceTree = "<group>"; };
 		E561D179224961B900D53055 /* Wall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Wall.m; sourceTree = "<group>"; };
@@ -89,6 +93,8 @@
 		E5AC43CC220B2D3500A800CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5BE8762225BD431008F0A95 /* CooldownManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CooldownManager.h; sourceTree = "<group>"; };
 		E5BE8763225BD43C008F0A95 /* CooldownManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CooldownManager.m; sourceTree = "<group>"; };
+		E5DEDFB3225D2761002E4D4E /* SlimeBall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlimeBall.h; sourceTree = "<group>"; };
+		E5DEDFB4225D276D002E4D4E /* SlimeBall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlimeBall.m; sourceTree = "<group>"; };
 		E5F26A052253314A00CFE53C /* GameServicer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameServicer.h; sourceTree = "<group>"; };
 		E5F26A062253317100CFE53C /* GameServicer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameServicer.m; sourceTree = "<group>"; };
 		E5F9214D224B068200667955 /* Bullet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bullet.h; sourceTree = "<group>"; };
@@ -243,6 +249,10 @@
 				E5F92152224B1B9400667955 /* Grenade.m */,
 				E50ABFB7224C048900F12911 /* Explosion.h */,
 				E50ABFB8224C050900F12911 /* Explosion.m */,
+				E5DEDFB3225D2761002E4D4E /* SlimeBall.h */,
+				E5DEDFB4225D276D002E4D4E /* SlimeBall.m */,
+				E535D7A5225D5FD8009C6F95 /* Slime.h */,
+				E535D7A6225D5FEB009C6F95 /* Slime.m */,
 			);
 			path = Billy;
 			sourceTree = "<group>";
@@ -382,11 +392,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E535D7A7225D5FEB009C6F95 /* Slime.m in Sources */,
 				E5AC43A8220B2D3400A800CE /* GameScene.m in Sources */,
 				E5AC43AB220B2D3400A800CE /* GameViewController.m in Sources */,
 				E5AC43B6220B2D3400A800CE /* main.m in Sources */,
 				E561D17822495BA700D53055 /* Background.m in Sources */,
 				E57CD5D4225C35FA00E86810 /* YouLoseAnimation.m in Sources */,
+				E5DEDFB5225D276D002E4D4E /* SlimeBall.m in Sources */,
 				E50ABFB9224C050900F12911 /* Explosion.m in Sources */,
 				E561D183224977FD00D53055 /* PlayerControls.m in Sources */,
 				E57CD5D7225C3B1900E86810 /* YouWinAnimation.m in Sources */,

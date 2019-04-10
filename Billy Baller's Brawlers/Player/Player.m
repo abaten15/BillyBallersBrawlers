@@ -13,6 +13,7 @@
 
 #import "Bullet.h"
 #import "Grenade.h"
+#import "SlimeBall.h"
 #import "HealthBar.h"
 #import "CategoryDefinitions.h"
 
@@ -20,12 +21,11 @@
 
 }
 
-+ (instancetype)brawlerWithID:(int)brawlerID isOpponent:(BOOL)isOpponentIn withServicer:(GameServicer *)gameServicer {
++ (instancetype)brawlerWithID:(int)brawlerIDIn isOpponent:(BOOL)isOpponentIn withServicer:(GameServicer *)gameServicer {
 
 	Player *player;
-	player.gameServicer = gameServicer;
 	int maxHealth;
-	switch (brawlerID) {
+	switch (brawlerIDIn) {
 	case BILLY_ID:
 		player = [Player spriteNodeWithImageNamed:BILLY_IMAGE_NAME];
 		player.speed = BILLY_SPEED;
@@ -38,19 +38,26 @@
 		player = [Player spriteNodeWithImageNamed:STEVE_IMAGE_NAME];
 		player.speed = STEVE_SPEED;
 		maxHealth = STEVE_MAX_HEALTH;
-		player.shootingOffset = BILLY_MAIN_OFFSET;
+		player.shootingOffset = STEVE_SHOOTING_OFFSET;
+		player.mainCooldown = STEVE_MAIN_COOLDOWN;
+		player.specialCooldown = STEVE_SPECIAL_COOLDOWN;
 		break;
 	default:
 		player = [Player spriteNodeWithImageNamed:BILLY_IMAGE_NAME];
 		player.speed = BILLY_SPEED;
 		maxHealth = BILLY_MAX_HEALTH;
 		player.shootingOffset = BILLY_MAIN_OFFSET;
+		player.mainCooldown = BILLY_MAIN_COOLDOWN;
+		player.specialCooldown = BILLY_SPECIAL_COOLDOWN;
 		break;
 	}
 	if (!isOpponentIn) {
-		player.cooldownManager = [CooldownManager managerForBrawler:brawlerID];
+		player.cooldownManager = [CooldownManager managerForBrawler:brawlerIDIn];
 		[player addChild:player.cooldownManager];
 	}
+	
+	player.gameServicer = gameServicer;
+	player.brawlerID = brawlerIDIn;
 	
 	player.canShootMain = YES;
 	player.canShootSpecial = YES;
@@ -102,24 +109,31 @@
 	if (!_isOpponent && !_canShootMain ) {
 		return;
 	}
+	
 	int flippedOffset = 0;
 	CGPoint point;
 	if (_flipped) {
 		flippedOffset = _shootingOffset.x * -2;
 	}
-	point = CGPointMake(BILLY_MAIN_OFFSET.x + self.position.x + flippedOffset, _shootingOffset.y + self.position.y);
+	
+	point = CGPointMake(_shootingOffset.x + self.position.x + flippedOffset, _shootingOffset.y + self.position.y);
 	Direction dir = North;
 	if (_isOpponent) {
 		dir = South;
 	}
+	
 	if (self.brawlerID == BILLY_ID) {
+		[self shootBulletAt:point going:dir];
+	} else if (self.brawlerID == STEVE_ID) {
 		[self shootBulletAt:point going:dir];
 	} else {
 		[self shootBulletAt:point going:dir];
 	}
+	
 	_canShootMain = NO;
 	[_cooldownManager setCanShootMain:_canShootMain];
 	[self performSelector:@selector(endMainCooldown) withObject:nil afterDelay:_mainCooldown];
+	
 }
 
 - (void) endMainCooldown {
@@ -139,18 +153,30 @@
 }
 
 - (void) performSpecialAttack {
+
 	if (!_isOpponent && !_canShootSpecial) {
 		return;
 	}
+	
 	int flippedOffset = 0;
 	if (_flipped) {
 		flippedOffset = _shootingOffset.x * -2;
 	}
+	
 	CGPoint point = CGPointMake(_shootingOffset.x + self.position.x + flippedOffset, _shootingOffset.y + self.position.y);
-	[self shootGrenadeAt:point going:North];
+	
+	if (_brawlerID == BILLY_ID) {
+		[self shootGrenadeAt:point going:North];
+	} else if (_brawlerID == STEVE_ID) {
+		[self shootSlimeBallAt:point going:North];
+	} else {
+		[self shootGrenadeAt:point going:North];
+	}
+	
 	_canShootSpecial = NO;
 	[_cooldownManager setCanShootSpecial:_canShootSpecial];
 	[self performSelector:@selector(endSpecialCooldown) withObject:nil afterDelay:_specialCooldown];
+	
 }
 
 - (void) endSpecialCooldown {
@@ -161,12 +187,21 @@
 - (void) shootGrenadeAt:(CGPoint)point going:(Direction)dir {
 	Grenade *grenade;
 	if (_isOpponent) {
-		grenade.name = [grenadeName stringByAppendingString:OPPONENT_POSTFIX];
 		grenade = [Grenade grenadeAt:point going:North isOpponents:_isOpponent];
 	} else {
 		grenade = [Grenade grenadeAt:point going:South isOpponents:_isOpponent];
 	}
 	[[self parent] addChild:grenade];
+}
+
+- (void) shootSlimeBallAt:(CGPoint)point going:(Direction)dir {
+	SlimeBall *slimeBall;
+	if (_isOpponent) {
+		slimeBall = [SlimeBall slimeBallAt:point going:North isOpponents:_isOpponent];
+	} else {
+		slimeBall = [SlimeBall slimeBallAt:point going:South isOpponents:_isOpponent];
+	}
+	[[self parent] addChild:slimeBall];
 }
 
 - (void) updateShootingOffset {
