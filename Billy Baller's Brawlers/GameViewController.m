@@ -14,6 +14,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+	/*
     // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
     // including entities and graphs.
     GKScene *scene = [GKScene sceneWithFileNamed:@"GameScene"];
@@ -27,14 +28,16 @@
     
     // Set the scale mode to scale to fit the window
     sceneNode.scaleMode = SKSceneScaleModeAspectFill;
-    
+	*/
+	 
     SKView *skView = (SKView *)self.view;
-    
-    // Present the scene
-    [skView presentScene:sceneNode];
     
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
+	
+	_sceneManager = [[SceneManager alloc] initWithView:skView];
+	[_sceneManager presentOpeningScene];
+	
 }
 
 - (BOOL)shouldAutorotate {

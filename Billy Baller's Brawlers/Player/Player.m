@@ -89,6 +89,8 @@
 		player.position = CGPointMake(player.position.x, player.position.y * -1);
 	}
 	
+	player.isSlidding = NO;
+	
 	return player;
 	
 }
@@ -100,6 +102,19 @@
 }
 
 - (void) moveTo:(CGFloat)newX {
+	if (_isSlidding) {
+		int x = [self position].x;
+		if (x > 0 && x != SLIDER_MAX_X) {
+			CGFloat duration = ((CGFloat)abs((int)(SLIDER_MAX_X - self.position.x))) / self.speed;
+			SKAction *motion = [SKAction moveTo:CGPointMake(SLIDER_MAX_X, self.position.y) duration:duration];
+			[self runAction:motion];
+		} else if (x < 0 && x != -1 * SLIDER_MAX_X) {
+			CGFloat duration = ((CGFloat)abs((int)(-1 * SLIDER_MAX_X - self.position.x))) / self.speed;
+			SKAction *motion = [SKAction moveTo:CGPointMake(-1 * SLIDER_MAX_X, self.position.y) duration:duration];
+			[self runAction:motion];
+		}
+		return;
+	}
 	CGFloat duration = ((CGFloat)abs((int)(newX - self.position.x))) / self.speed;
 	SKAction *motion = [SKAction moveTo:CGPointMake(newX, self.position.y) duration:duration];
 	[self runAction:motion];
@@ -201,6 +216,7 @@
 	} else {
 		slimeBall = [SlimeBall slimeBallAt:point going:South isOpponents:_isOpponent];
 	}
+	slimeBall.gameScene = _gameScene;
 	[[self parent] addChild:slimeBall];
 }
 
@@ -212,6 +228,8 @@
 	self.xScale *= -1;
 	self.flipped = !self.flipped;
 }
+
+
 
 @end
 

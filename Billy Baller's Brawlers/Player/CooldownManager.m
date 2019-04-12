@@ -14,6 +14,7 @@
 #import "Player.h"
 #import "Bullet.h"
 #import "Grenade.h"
+#import "SlimeBall.h"
 
 @implementation CooldownManager {
 
@@ -30,6 +31,9 @@
 	if (brawlerID == BILLY_ID) {
 		mainImageName = BULLET_IMAGE_NAME;
 		specialImageName = GRENADE_IMAGE_NAME;
+	} else if (brawlerID == STEVE_ID) {
+		mainImageName = BULLET_IMAGE_NAME;
+		specialImageName = SLIME_BALL_IMAGE_NAME;
 	}
 	
 	manager.mainNode = [SKSpriteNode spriteNodeWithImageNamed:mainImageName];

@@ -19,6 +19,8 @@
 #import "CategoryDefinitions.h"
 #import "GameServicer.h"
 @class GameServicer;
+#import "SceneManager.h"
+@class SceneManager;
 
 #define JOIN_GAME_BUTTON_POSITION CGPointMake(0, -100)
 #define JOIN_GAME_BUTTON_SIZE CGSizeMake(300, 150)
@@ -35,6 +37,8 @@
 
 @property (nonatomic) SKSpriteNode *window;
 
+@property (nonatomic) SceneManager *sceneManager;
+
 @property (nonatomic) BOOL gameOver;
 @property (nonatomic) YouWinAnimation *youWinAnimation;
 - (void) winGame;
@@ -44,6 +48,8 @@
 @property (nonatomic) NSMutableArray *contactQueue;
 - (void) didBeginContact:(SKPhysicsContact *)contact;
 - (void) handleContact:(SKPhysicsContact *)contact;
+
+- (void) checkSlimeContact:(NSString *)nameToCheck atPoint:(CGPoint)point;
 
 @property (nonatomic) Background *background;
 
@@ -59,5 +65,7 @@
 @property (nonatomic) BOOL GameStarted;
 @property (nonatomic) SKSpriteNode *hostGameButton;
 @property (nonatomic) SKSpriteNode *joinGameButton;
+
+- (void) unslidePlayer:(BOOL)isOpponent;
 
 @end

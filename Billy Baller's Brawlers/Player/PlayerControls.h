@@ -15,6 +15,7 @@
 @class Player;
 #include "GameServicer.h"
 @class GameServicer;
+#include "Direction.h"
 
 #define SLIDER_POSITION CGPointMake(0, -500)
 #define SLIDER_SIZE CGSizeMake(700, 300)
@@ -57,6 +58,8 @@
 - (void) checkControlsUp:(CGPoint) point;
 
 - (void) performActionFromData:(NSData *)data;
+
+- (void) slidePlayerInDirection:(Direction)dir;
 
 @end
 

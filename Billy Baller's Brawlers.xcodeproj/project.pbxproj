@@ -28,6 +28,9 @@
 		E5AC43C0220B2D3500A800CE /* Billy_Baller_s_BrawlersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AC43BF220B2D3500A800CE /* Billy_Baller_s_BrawlersTests.m */; };
 		E5AC43CB220B2D3500A800CE /* Billy_Baller_s_BrawlersUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AC43CA220B2D3500A800CE /* Billy_Baller_s_BrawlersUITests.m */; };
 		E5BE8764225BD43C008F0A95 /* CooldownManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5BE8763225BD43C008F0A95 /* CooldownManager.m */; };
+		E5D70F64225FB42200224224 /* MenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D70F63225FB42200224224 /* MenuScene.m */; };
+		E5D70F68225FB78A00224224 /* SceneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D70F67225FB78A00224224 /* SceneManager.m */; };
+		E5D70F6C225FDEB400224224 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = E5D70F6B225FDEB400224224 /* MenuScene.sks */; };
 		E5DEDFB5225D276D002E4D4E /* SlimeBall.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DEDFB4225D276D002E4D4E /* SlimeBall.m */; };
 		E5F26A072253317100CFE53C /* GameServicer.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F26A062253317100CFE53C /* GameServicer.m */; };
 		E5F92150224B0A1E00667955 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F9214F224B0A1E00667955 /* Bullet.m */; };
@@ -93,6 +96,11 @@
 		E5AC43CC220B2D3500A800CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5BE8762225BD431008F0A95 /* CooldownManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CooldownManager.h; sourceTree = "<group>"; };
 		E5BE8763225BD43C008F0A95 /* CooldownManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CooldownManager.m; sourceTree = "<group>"; };
+		E5D70F62225FB41400224224 /* MenuScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuScene.h; sourceTree = "<group>"; };
+		E5D70F63225FB42200224224 /* MenuScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MenuScene.m; sourceTree = "<group>"; };
+		E5D70F66225FB78000224224 /* SceneManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneManager.h; sourceTree = "<group>"; };
+		E5D70F67225FB78A00224224 /* SceneManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneManager.m; sourceTree = "<group>"; };
+		E5D70F6B225FDEB400224224 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
 		E5DEDFB3225D2761002E4D4E /* SlimeBall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlimeBall.h; sourceTree = "<group>"; };
 		E5DEDFB4225D276D002E4D4E /* SlimeBall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlimeBall.m; sourceTree = "<group>"; };
 		E5F26A052253314A00CFE53C /* GameServicer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameServicer.h; sourceTree = "<group>"; };
@@ -195,13 +203,13 @@
 				E5AC439F220B2D3400A800CE /* AppDelegate.h */,
 				E5AC43A0220B2D3400A800CE /* AppDelegate.m */,
 				E5AC43A2220B2D3400A800CE /* GameScene.sks */,
+				E5D70F6B225FDEB400224224 /* MenuScene.sks */,
 				E5AC43A4220B2D3400A800CE /* Actions.sks */,
 				E52B74F2224EBA5F00630F75 /* Physics */,
 				E561D17C22496A7E00D53055 /* Background */,
 				E561D17D22496B4D00D53055 /* Player */,
 				E5F26A012253302F00CFE53C /* Networking */,
-				E5AC43A6220B2D3400A800CE /* GameScene.h */,
-				E5AC43A7220B2D3400A800CE /* GameScene.m */,
+				E5D70F65225FB75900224224 /* Scenes */,
 				E5AC43A9220B2D3400A800CE /* GameViewController.h */,
 				E5AC43AA220B2D3400A800CE /* GameViewController.m */,
 				E5AC43AC220B2D3400A800CE /* Main.storyboard */,
@@ -229,6 +237,19 @@
 				E5AC43CC220B2D3500A800CE /* Info.plist */,
 			);
 			path = "Billy Baller's BrawlersUITests";
+			sourceTree = "<group>";
+		};
+		E5D70F65225FB75900224224 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				E5D70F62225FB41400224224 /* MenuScene.h */,
+				E5D70F63225FB42200224224 /* MenuScene.m */,
+				E5AC43A6220B2D3400A800CE /* GameScene.h */,
+				E5AC43A7220B2D3400A800CE /* GameScene.m */,
+				E5D70F66225FB78000224224 /* SceneManager.h */,
+				E5D70F67225FB78A00224224 /* SceneManager.m */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 		E5F26A012253302F00CFE53C /* Networking */ = {
@@ -364,6 +385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5AC43AE220B2D3400A800CE /* Main.storyboard in Resources */,
+				E5D70F6C225FDEB400224224 /* MenuScene.sks in Resources */,
 				E5AC43A3220B2D3400A800CE /* GameScene.sks in Resources */,
 				E5AC43B0220B2D3400A800CE /* Assets.xcassets in Resources */,
 				E5AC43B3220B2D3400A800CE /* LaunchScreen.storyboard in Resources */,
@@ -403,12 +425,14 @@
 				E561D183224977FD00D53055 /* PlayerControls.m in Sources */,
 				E57CD5D7225C3B1900E86810 /* YouWinAnimation.m in Sources */,
 				E5F26A072253317100CFE53C /* GameServicer.m in Sources */,
+				E5D70F64225FB42200224224 /* MenuScene.m in Sources */,
 				E5F92150224B0A1E00667955 /* Bullet.m in Sources */,
 				E5AC43A1220B2D3400A800CE /* AppDelegate.m in Sources */,
 				E561D18022496C6300D53055 /* Player.m in Sources */,
 				E50ABFBC224C35F600F12911 /* HealthBar.m in Sources */,
 				E5F92153224B1B9400667955 /* Grenade.m in Sources */,
 				E5BE8764225BD43C008F0A95 /* CooldownManager.m in Sources */,
+				E5D70F68225FB78A00224224 /* SceneManager.m in Sources */,
 				E561D17A224961B900D53055 /* Wall.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

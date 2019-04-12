@@ -10,6 +10,10 @@
 #import <SpriteKit/SpriteKit.h>
 #import <GameplayKit/GameplayKit.h>
 
+#import "SceneManager.h"
+
 @interface GameViewController : UIViewController
+
+@property (nonatomic) SceneManager *sceneManager;
 
 @end

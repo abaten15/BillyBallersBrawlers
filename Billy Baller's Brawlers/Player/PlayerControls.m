@@ -76,6 +76,9 @@
 }
 
 - (void) sliderMotion:(CGFloat)newX sendData:(BOOL)shouldSendData {
+	if (_playerToControl.isSlidding) {
+		return;
+	}
 	if (newX > SLIDER_MAX_X) {
 		newX = SLIDER_MAX_X;
 	} else if (newX < -SLIDER_MAX_X) {
@@ -91,6 +94,9 @@
 }
 
 - (void) mainAttackButtonPressed:(CGPoint)point sendData:(BOOL)shouldSendData {
+	if (!_playerToControl.cooldownManager.canShootMainAttack) {
+		return;
+	}
 	[_playerToControl performMainAttack];
 	if (shouldSendData) {
 		NSString *stringData = MAIN_BUTTON_NETWORK_PREFIX;
@@ -99,6 +105,9 @@
 }
 
 - (void) specialAttackButtonPressed:(CGPoint)point sendData:(BOOL)shouldSendData {
+	if (!_playerToControl.cooldownManager.canShootSpecialAttack) {
+		return;
+	}
 	[_playerToControl performSpecialAttack];
 	if (shouldSendData) {
 		NSString *stringData = SPECIAL_BUTTON_NETWORK_PREFIX;
@@ -145,6 +154,15 @@
 		CGFloat newXFloat = [newX intValue];
 		[self sliderMotion:newXFloat sendData:NO];
 	}
+}
+
+- (void) slidePlayerInDirection:(Direction)dir {
+	if (dir == East) {
+		[self sliderMotion:SLIDER_MAX_X sendData:YES];
+	} else if (dir == West) {
+		[self sliderMotion:-1 * SLIDER_MAX_X sendData:YES];
+	}
+	_playerToControl.isSlidding = YES;
 }
 
 @end

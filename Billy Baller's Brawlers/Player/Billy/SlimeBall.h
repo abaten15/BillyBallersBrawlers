@@ -12,6 +12,7 @@
 #import <SpriteKit/SpriteKit.h>
 
 #import "Direction.h"
+#import "GameScene.h"
 
 #define SLIME_BALL_IMAGE_NAME @"SlimeBall"
 
@@ -24,6 +25,7 @@
 @interface SlimeBall : SKSpriteNode
 
 @property (nonatomic) BOOL isOpponents;
+@property (nonatomic) GameScene *gameScene;
 + (instancetype) slimeBallAt:(CGPoint)point going:(Direction)dir isOpponents:(BOOL)isOpponents;
 
 - (void) explode;

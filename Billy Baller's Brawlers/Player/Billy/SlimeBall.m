@@ -14,6 +14,7 @@
 #import "Direction.h"
 #import "CategoryDefinitions.h"
 #import "Player.h"
+#import "Slime.h"
 
 @implementation SlimeBall
 
@@ -62,7 +63,9 @@
 }
 
 - (void) explode {
-	
+	Slime *slime = [Slime slimeAt:self.position isOpponents:_isOpponents];
+	slime.gameScene = self.gameScene;
+	[self.parent addChild:slime];
 	[self removeFromParent];
 }
 

@@ -17,6 +17,8 @@
 @class GameServicer;
 #import "Direction.h"
 #import "CooldownManager.h"
+#import "GameScene.h"
+@class GameScene;
 
 #define PLAYER_POSITION CGPointMake(0, -500)
 #define PLAYER_SIZE CGSizeMake(100, 100)
@@ -48,6 +50,7 @@
 @property (nonatomic) int brawlerID;
 
 @property (nonatomic) GameServicer *gameServicer;
+@property (nonatomic) GameScene *gameScene;
 
 + (instancetype)brawlerWithID:(int)brawlerIDIn isOpponent:(BOOL)isOpponentIn withServicer:(GameServicer *)gameServicer;
 
@@ -77,6 +80,8 @@
 @property (nonatomic) CGPoint shootingOffset;
 - (void) updateShootingOffset;
 - (void) flipBrawler;
+
+@property (nonatomic) BOOL isSlidding;
 
 @end
 

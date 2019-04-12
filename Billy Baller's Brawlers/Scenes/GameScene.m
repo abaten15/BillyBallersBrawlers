@@ -14,6 +14,7 @@
 #import "Bullet.h"
 #import "GameServicer.h"
 #import "Grenade.h"
+#import "MenuScene.h"
 
 @implementation GameScene {
     NSTimeInterval _lastUpdateTime;
@@ -63,6 +64,7 @@
 	[self addChild:_background];
 	
 	_player = [Player brawlerWithID:STEVE_ID isOpponent:NO withServicer:_gameServicer];
+	_player.gameScene = self;
 	[self addChild:_player];
 	
 	_playerControls = [PlayerControls controlsForPlayer:_player withServicer:_gameServicer];
@@ -166,6 +168,12 @@
 			return;
 		}
 		
+		if (isNameA) {
+			[self checkSlimeContact:nameToCheck atPoint:contact.bodyA.node.position];
+		} else {
+			[self checkSlimeContact:nameToCheck atPoint:contact.bodyB.node.position];
+		}
+		
 	} else if ([nameA isEqualToString:opponentName] || [nameB isEqualToString:opponentName]) {
 		NSString *nameToCheck;
 		BOOL isNameA = NO;
@@ -177,7 +185,6 @@
 		}
 
 		if ([nameToCheck isEqualToString:bulletName]) {
-//			[_opponent takeDamage:BULLET_DAMAGE];
 			if (isNameA) {
 				[contact.bodyA.node removeFromParent];
 			} else {
@@ -188,6 +195,30 @@
 	}
 
 
+}
+
+- (void) checkSlimeContact:(NSString *)nameToCheck atPoint:(CGPoint)point {
+	NSString *slimeNameStr = @"";
+	NSString *postfix = @"";
+	@try {
+		slimeNameStr = [nameToCheck substringToIndex:slimeName.length];
+		postfix = [nameToCheck substringFromIndex:slimeName.length];
+	}
+	@catch (NSException *e) {
+		
+	}
+	@finally {
+		
+	}
+	if ([slimeNameStr isEqualToString:slimeName]) {
+		Direction dir = East;
+		if (point.x <= 0) {
+			dir = West;
+		}
+		if ([postfix isEqualToString:OPPONENT_POSTFIX]) {
+			[_playerControls slidePlayerInDirection:dir];
+		}
+	}
 }
 
 - (void)touchDownAtPoint:(CGPoint)pos {
@@ -239,9 +270,10 @@
 }
 
 - (void)spawnOpponent {
-	_opponent = [Player brawlerWithID:BILLY_ID isOpponent:YES withServicer:_gameServicer];
+	_opponent = [Player brawlerWithID:STEVE_ID isOpponent:YES withServicer:_gameServicer];
 	[self addChild:_opponent];
 	_opponentControls = [PlayerControls controlsForPlayer:_opponent withServicer:_gameServicer];
+	_opponent.gameScene = self;
 }
 
 - (void)checkOpponentData:(NSData *)data {
@@ -261,6 +293,14 @@
 	_gameOver = YES;
 	[self addChild:_youWinAnimation];
 	[_youWinAnimation start];
+}
+
+- (void) unslidePlayer:(BOOL)isOpponent {
+	if (isOpponent) {
+		_opponent.isSlidding = NO;
+	} else {
+		_player.isSlidding = NO;
+	}
 }
 
 - (void)update:(CFTimeInterval)currentTime {
