@@ -104,10 +104,10 @@ static NSString * const GameServiceType = @"game-service";
 
 - (void)session:(nonnull MCSession *)session peer:(nonnull MCPeerID *)peerID didChangeState:(MCSessionState)state {
 	if (state == MCSessionStateConnecting) {
-		NSLog(@"connecting state");
+	
 	} else if (state == MCSessionStateConnected) {
+		NSLog(@"game connected");
 		_sessionConnected = YES;
-		NSLog(@"Connected");
 	}
 }
 

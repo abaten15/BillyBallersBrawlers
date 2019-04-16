@@ -17,7 +17,9 @@
 
 @interface CooldownManager : SKSpriteNode
 
-+ (instancetype) managerForBrawler:(int)brawlerID;
++ (instancetype) managerForBrawler:(int)brawlerID isOpponent:(BOOL)isOpponent;
+
+@property (nonatomic) BOOL isOpponent;
 
 @property (nonatomic) SKSpriteNode *mainNode;
 @property (nonatomic) SKSpriteNode *specialNode;

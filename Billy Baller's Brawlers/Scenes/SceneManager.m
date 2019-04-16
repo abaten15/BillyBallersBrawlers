@@ -39,6 +39,8 @@
 	self.menuScene = menuSceneObj;
 	self.gameScene = gameSceneObj;
 	
+	self.brawlerSelection = BILLY_ID;
+	
 	return self;
 }
 
@@ -51,6 +53,7 @@
 	if (idIn == MENU_SCENE_ID) {
 		[_viewForLoading presentScene:_menuScene transition:transition];
 	} else if (idIn == GAME_SCENE_ID) {
+		[_gameScene spawnPlayer:_menuScene.brawlerSelection];
 		[_viewForLoading presentScene:_gameScene transition:transition];
 	}
 }

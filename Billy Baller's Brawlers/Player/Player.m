@@ -12,6 +12,7 @@
 #import "Player.h"
 
 #import "Bullet.h"
+#import "ThrowingStar.h"
 #import "Grenade.h"
 #import "SlimeBall.h"
 #import "HealthBar.h"
@@ -42,6 +43,14 @@
 		player.mainCooldown = STEVE_MAIN_COOLDOWN;
 		player.specialCooldown = STEVE_SPECIAL_COOLDOWN;
 		break;
+	case ABBY_ID:
+		player = [Player spriteNodeWithImageNamed:ABBY_IMAGE_NAME];
+		player.speed = ABBY_SPEED;
+		maxHealth = ABBY_MAX_HEALTH;
+		player.shootingOffset = ABBY_SHOOTING_OFFSET;
+		player.mainCooldown = ABBY_MAIN_COOLDOWN;
+		player.specialCooldown = ABBY_SPECIAL_COOLDOWN;
+		break;
 	default:
 		player = [Player spriteNodeWithImageNamed:BILLY_IMAGE_NAME];
 		player.speed = BILLY_SPEED;
@@ -51,10 +60,9 @@
 		player.specialCooldown = BILLY_SPECIAL_COOLDOWN;
 		break;
 	}
-	if (!isOpponentIn) {
-		player.cooldownManager = [CooldownManager managerForBrawler:brawlerIDIn];
-		[player addChild:player.cooldownManager];
-	}
+	player.cooldownManager = [CooldownManager managerForBrawler:brawlerIDIn isOpponent:isOpponentIn];
+	[player addChild:player.cooldownManager];
+	
 	
 	player.gameServicer = gameServicer;
 	player.brawlerID = brawlerIDIn;
@@ -141,6 +149,8 @@
 		[self shootBulletAt:point going:dir];
 	} else if (self.brawlerID == STEVE_ID) {
 		[self shootBulletAt:point going:dir];
+	} else if (self.brawlerID == ABBY_ID) {
+		[self shootThrowingStarAt:point going:dir];
 	} else {
 		[self shootBulletAt:point going:dir];
 	}
@@ -167,6 +177,11 @@
 	[[self parent] addChild:bullet];
 }
 
+- (void) shootThrowingStarAt:(CGPoint)point going:(Direction)dir {
+	ThrowingStar *star = [ThrowingStar throwingStarAt:point going:dir isOpponents:_isOpponent];
+	[[self parent] addChild:star];
+}
+
 - (void) performSpecialAttack {
 
 	if (!_isOpponent && !_canShootSpecial) {
@@ -184,6 +199,8 @@
 		[self shootGrenadeAt:point going:North];
 	} else if (_brawlerID == STEVE_ID) {
 		[self shootSlimeBallAt:point going:North];
+	} else if (_brawlerID == ABBY_ID) {
+	
 	} else {
 		[self shootGrenadeAt:point going:North];
 	}

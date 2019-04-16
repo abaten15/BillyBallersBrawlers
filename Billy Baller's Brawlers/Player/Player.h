@@ -26,6 +26,8 @@
 #define PLAYER_POSTFIX @"player"
 #define OPPONENT_POSTFIX @"opponent"
 
+#define OPPONENT_PREFIX @"opponentID"
+
 #define BILLY_ID 0
 #define BILLY_IMAGE_NAME @"Billy"
 #define BILLY_SPEED 30.0
@@ -37,11 +39,18 @@
 #define STEVE_ID 1
 #define STEVE_IMAGE_NAME @"Steve"
 #define STEVE_SPEED 30.0
-#define STEVE_MAX_HEALTH 100
 #define STEVE_SHOOTING_OFFSET CGPointMake(45, 45)
 #define STEVE_MAIN_COOLDOWN .15
 #define STEVE_SPECIAL_COOLDOWN 3
 #define STEVE_MAX_HEALTH 100
+
+#define ABBY_ID 2
+#define ABBY_IMAGE_NAME @"Abby"
+#define ABBY_SPEED 35.0
+#define ABBY_SHOOTING_OFFSET CGPointMake(45, 45)
+#define ABBY_MAIN_COOLDOWN .3
+#define ABBY_SPECIAL_COOLDOWN 2.5
+#define ABBY_MAX_HEALTH 90
 
 @interface Player : SKSpriteNode
 
@@ -73,6 +82,8 @@
 - (void) endSpecialCooldown;
 
 - (void) shootBulletAt:(CGPoint)point going:(Direction)dir;
+- (void) shootThrowingStarAt:(CGPoint)point going:(Direction)dir;
+
 - (void) shootGrenadeAt:(CGPoint)point going:(Direction)dir;
 - (void) shootSlimeBallAt:(CGPoint)point going:(Direction)dir;
 

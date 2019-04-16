@@ -17,12 +17,37 @@
 #define START_GAME_SIZE CGSizeMake(300, 150)
 #define START_GAME_POSITION CGPointMake(0, -200)
 
+#define BILLY_SELECT_IMAGE_NAME @"BillySelect"
+#define BILLY_SELECT_SIZE CGSizeMake(100, 100)
+#define BILLY_SELECT_POSITION CGPointMake(-200, 300)
+
+#define STEVE_SELECT_IMAGE_NAME @"SteveSelect"
+#define STEVE_SELECT_SIZE CGSizeMake(100, 100)
+#define STEVE_SELECT_POSITION CGPointMake(-50, 300)
+
+#define ABBY_SELECT_IMAGE_NAME @"AbbySelect"
+#define ABBY_SELECT_SIZE CGSizeMake(100, 100)
+#define ABBY_SELECT_POSITION CGPointMake(100, 300)
+
+#define SELECT_BORDER_IMAGE_NAME @"SelectBorder"
+#define SELECT_BORDER_SIZE CGSizeMake(100, 100)
+
 @interface MenuScene : SKScene
 
 @property (nonatomic) SceneManager *sceneManager;
 
 @property (nonatomic) SKSpriteNode *window;
 @property (nonatomic) SKSpriteNode *startGameButton;
+
+@property (nonatomic) int brawlerSelection;
+@property (nonatomic) SKSpriteNode *billySelect;
+- (void) billySelectPressed;
+@property (nonatomic) SKSpriteNode *steveSelect;
+- (void) steveSelectPressed;
+@property (nonatomic) SKSpriteNode *abbySelect;
+- (void) abbySelectPressed;
+
+@property (nonatomic) SKSpriteNode *selectBorder;
 
 @end
 

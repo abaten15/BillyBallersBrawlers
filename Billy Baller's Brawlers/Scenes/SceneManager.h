@@ -29,7 +29,7 @@
 
 @interface SceneManager : NSObject
 
-
+@property (nonatomic) int brawlerSelection;
 
 @property (nonatomic) MenuScene *menuScene;
 @property (nonatomic) GameScene *gameScene;

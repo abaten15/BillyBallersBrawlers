@@ -17,12 +17,14 @@
 
 #define BULLET_SIZE CGSizeMake(20,20)
 #define BULLET_SPEED 1200
-#define BULLET_DAMAGE 20
+#define BILLY_BULLET_DAMAGE 20
+#define STEVE_BULLET_DAMAGE 10
 
 #define BULLET_GOTO_OFFSET 1600
 
 @interface Bullet : SKSpriteNode
 
+@property (nonatomic) int brawlerId;
 + (instancetype) bulletAt:(CGPoint)point going:(Direction)direction isOpponents:(BOOL)isOpponents;
 
 @end

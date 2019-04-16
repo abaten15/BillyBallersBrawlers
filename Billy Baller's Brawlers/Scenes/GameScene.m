@@ -26,8 +26,11 @@
 	
 	_opponent = NULL;
 	
+	_playerDataSentCount = 0;
+	
 	_gameServicer = [[GameServicer alloc] initWithScene:self];
 	
+	_isHost = NO;
 	_hostGameButton = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithWhite:0 alpha:1] size:HOST_GAME_BUTTON_SIZE];
 	[_hostGameButton setPosition:HOST_GAME_BUTTON_POSITION];
 	[_hostGameButton setZPosition:1];
@@ -63,16 +66,20 @@
 	[_background setZPosition:0];
 	[self addChild:_background];
 	
-	_player = [Player brawlerWithID:STEVE_ID isOpponent:NO withServicer:_gameServicer];
+	_gameOver = NO;
+	_youLoseAnimation = [YouLoseAnimation youLoseAnimation:YOU_LOSE_STATIC_ID];
+	_youWinAnimation = [YouWinAnimation youWinAnimation:YOU_WIN_STATIC_ID];
+	
+}
+
+- (void) spawnPlayer:(int)brawlerIdIn {
+
+	_player = [Player brawlerWithID:brawlerIdIn isOpponent:NO withServicer:_gameServicer];
 	_player.gameScene = self;
 	[self addChild:_player];
 	
 	_playerControls = [PlayerControls controlsForPlayer:_player withServicer:_gameServicer];
 	[self addChild:_playerControls];
-	
-	_gameOver = NO;
-	_youLoseAnimation = [YouLoseAnimation youLoseAnimation:YOU_LOSE_STATIC_ID];
-	_youWinAnimation = [YouWinAnimation youWinAnimation:YOU_WIN_STATIC_ID];
 	
 }
 
@@ -130,7 +137,11 @@
 		
 		}
 		if ([bulletSection isEqualToString:bulletName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
-			[_player takeDamage:BULLET_DAMAGE];
+			if (_opponent.brawlerID == BILLY_ID) {
+				[_player takeDamage:BILLY_BULLET_DAMAGE];
+			} else if (_opponent.brawlerID == STEVE_ID) {
+				[_player takeDamage:STEVE_BULLET_DAMAGE];
+			}
 			NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
 			NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
 			[_gameServicer sendData:data];
@@ -238,16 +249,16 @@
 			[_hostGameButton removeFromParent];
 			[_joinGameButton removeFromParent];
 			[_gameServicer hostGame];
-			_GameStarted = YES;
+			_isHost = YES;
 		} else if ([_joinGameButton containsPoint:point]) {
 			[_hostGameButton removeFromParent];
 			[_joinGameButton removeFromParent];
 			[_gameServicer joinGame];
-			_GameStarted = YES;
 		}
 		return;
+	} else {
+		[_playerControls checkControlsDown:point];
 	}
-	[_playerControls checkControlsDown:point];
 }
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
 	if (!_GameStarted) {
@@ -269,17 +280,49 @@
 
 }
 
-- (void)spawnOpponent {
-	_opponent = [Player brawlerWithID:STEVE_ID isOpponent:YES withServicer:_gameServicer];
+- (void) sendPlayerID {
+	NSString *stringData = [OPPONENT_PREFIX stringByAppendingString:[[NSNumber numberWithInt:_player.brawlerID] stringValue]];
+	[_gameServicer sendData:stringData];
+}
+
+- (BOOL)spawnOpponent:(NSData *)data {
+	NSLog(@"checking spaawn data");
+	// Getting player data
+	NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+	NSString *opponentPrefix;
+	NSString *opponentBrawlerID;
+	@try {
+		opponentPrefix = [dataStr substringToIndex:OPPONENT_PREFIX.length];
+		opponentBrawlerID = [dataStr substringFromIndex:OPPONENT_PREFIX.length];
+	}
+	@catch (NSException *e) {
+		return false;
+	}
+	int opponentID = BILLY_ID;
+	if ([opponentPrefix isEqualToString:OPPONENT_PREFIX]) {
+		opponentID = [opponentBrawlerID intValue];
+	}
+	
+	_opponent = [Player brawlerWithID:opponentID isOpponent:YES withServicer:_gameServicer];
 	[self addChild:_opponent];
 	_opponentControls = [PlayerControls controlsForPlayer:_opponent withServicer:_gameServicer];
 	_opponent.gameScene = self;
+	
+	return true;
+	
 }
 
 - (void)checkOpponentData:(NSData *)data {
 	if (_opponent != NULL) {
 		[_opponent.healthBar checkData:data];
 		[_opponentControls performActionFromData:data];
+	} else if (_opponent == NULL) {
+		if ([self spawnOpponent:data]) {
+			_GameStarted = YES;
+			if (!_isHost) {
+				[self sendPlayerID];
+			}
+		}
 	}
 }
 
@@ -323,15 +366,15 @@
 	}
     else if (_opponent == NULL && dt > 1.0/60.0) {
     	_lastUpdateTime = currentTime;
-		if (_gameServicer.sessionConnected) {
-			[self spawnOpponent];
+    	if (_gameServicer.sessionConnected && !_GameStarted) {
+    		[self sendPlayerID];
 		}
 	}
 	else if (dt > 1.0/60.0) {
 		_lastUpdateTime = currentTime;
 		if (_player.healthBar.currentHealth == 0) {
 			[self loseGame];
-		} else if (_opponent.healthBar.currentHealth == 0) {
+		} else if (_opponent != NULL && _opponent.healthBar.currentHealth == 0) {
 			[self winGame];
 		}
 	}

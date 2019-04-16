@@ -18,6 +18,8 @@ static const u_int32_t bulletCategory = 0x1 << 2;
 static const u_int32_t grenadeCategory = 0x1 << 3;
 static const u_int32_t explosionCategory = 0x1 << 4;
 static const u_int32_t slimeCategory = 0x1 << 5;
+static const u_int32_t throwingStarCategory = 0x1 << 6;
+static const u_int32_t starPieceCategory = 0x1 << 7;
 
 #define playerName @"playerName"
 #define opponentName @"opponentName"
@@ -26,6 +28,8 @@ static const u_int32_t slimeCategory = 0x1 << 5;
 #define grenadeName @"grenadeName"
 #define explosionName @"explosionName"
 #define slimeName @"slimeName"
+#define throwingStarName @"throwingStarName"
+#define starPieceName @"starPieceName"
 
 static id<SKPhysicsContactDelegate> SceneContactDelegate;
 

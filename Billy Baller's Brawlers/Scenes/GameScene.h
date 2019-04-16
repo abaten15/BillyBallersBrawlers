@@ -55,12 +55,16 @@
 
 @property (nonatomic) Player *player;
 @property (nonatomic) PlayerControls *playerControls;
+- (void) spawnPlayer:(int)brawlerIdIn;
 
 @property (nonatomic) Player *opponent;
 @property (nonatomic) PlayerControls *opponentControls;
-- (void) spawnOpponent;
+- (BOOL) spawnOpponent:(NSData *)data;
 - (void) checkOpponentData:(NSData *)data;
+@property (nonatomic) int playerDataSentCount;
+- (void) sendPlayerID;
 
+@property (nonatomic) BOOL isHost;
 @property (nonatomic) GameServicer *gameServicer;
 @property (nonatomic) BOOL GameStarted;
 @property (nonatomic) SKSpriteNode *hostGameButton;

@@ -13,6 +13,7 @@
 
 #import "Player.h"
 #import "Bullet.h"
+#import "ThrowingStar.h"
 #import "Grenade.h"
 #import "SlimeBall.h"
 
@@ -20,11 +21,11 @@
 
 }
 
-+ (instancetype) managerForBrawler:(int)brawlerID {
++ (instancetype) managerForBrawler:(int)brawlerID isOpponent:(BOOL)isOpponentIn {
 
 	CooldownManager *manager = [CooldownManager spriteNodeWithColor:[UIColor colorWithWhite:0 alpha:0] size:CGSizeMake(0, 0)];
 	
-
+	manager.isOpponent = isOpponentIn;
 	
 	NSString *mainImageName = @"";
 	NSString *specialImageName = @"";
@@ -34,6 +35,8 @@
 	} else if (brawlerID == STEVE_ID) {
 		mainImageName = BULLET_IMAGE_NAME;
 		specialImageName = SLIME_BALL_IMAGE_NAME;
+	} else if (brawlerID == ABBY_ID) {
+		mainImageName = THROWING_STAR_IMAGE_NAME;
 	}
 	
 	manager.mainNode = [SKSpriteNode spriteNodeWithImageNamed:mainImageName];
@@ -53,6 +56,10 @@
 }
 
 - (void) setCanShootMain:(BOOL)canShoot {
+	if (_isOpponent) {
+		_canShootMainAttack = YES;
+		return;
+	}
 	if (canShoot && !_canShootMainAttack) {
 		_canShootMainAttack = YES;
 		[self addChild:_mainNode];
@@ -63,6 +70,10 @@
 }
 
 - (void) setCanShootSpecial:(BOOL)canShoot {
+	if (_isOpponent) {
+		_canShootSpecialAttack = YES;
+		return;
+	}
 	if (canShoot && !_canShootSpecialAttack) {
 		_canShootSpecialAttack = YES;
 		[self addChild:_specialNode];

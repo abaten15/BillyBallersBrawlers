@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		E50ABFB9224C050900F12911 /* Explosion.m in Sources */ = {isa = PBXBuildFile; fileRef = E50ABFB8224C050900F12911 /* Explosion.m */; };
 		E50ABFBC224C35F600F12911 /* HealthBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E50ABFBB224C35F600F12911 /* HealthBar.m */; };
+		E51DCEEB2265361400829673 /* ThrowingStar.m in Sources */ = {isa = PBXBuildFile; fileRef = E51DCEEA2265361400829673 /* ThrowingStar.m */; };
+		E51DCEEE22657A8900829673 /* StarPiece.m in Sources */ = {isa = PBXBuildFile; fileRef = E51DCEED22657A8900829673 /* StarPiece.m */; };
 		E535D7A7225D5FEB009C6F95 /* Slime.m in Sources */ = {isa = PBXBuildFile; fileRef = E535D7A6225D5FEB009C6F95 /* Slime.m */; };
 		E561D17822495BA700D53055 /* Background.m in Sources */ = {isa = PBXBuildFile; fileRef = E561D17722495BA700D53055 /* Background.m */; };
 		E561D17A224961B900D53055 /* Wall.m in Sources */ = {isa = PBXBuildFile; fileRef = E561D179224961B900D53055 /* Wall.m */; };
@@ -59,6 +61,10 @@
 		E50ABFB8224C050900F12911 /* Explosion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Explosion.m; sourceTree = "<group>"; };
 		E50ABFBA224C358300F12911 /* HealthBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HealthBar.h; sourceTree = "<group>"; };
 		E50ABFBB224C35F600F12911 /* HealthBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HealthBar.m; sourceTree = "<group>"; };
+		E51DCEE92265360300829673 /* ThrowingStar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThrowingStar.h; sourceTree = "<group>"; };
+		E51DCEEA2265361400829673 /* ThrowingStar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThrowingStar.m; sourceTree = "<group>"; };
+		E51DCEEC22657A7E00829673 /* StarPiece.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StarPiece.h; sourceTree = "<group>"; };
+		E51DCEED22657A8900829673 /* StarPiece.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StarPiece.m; sourceTree = "<group>"; };
 		E52B74F1224EB7C500630F75 /* CategoryDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoryDefinitions.h; sourceTree = "<group>"; };
 		E535D7A5225D5FD8009C6F95 /* Slime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Slime.h; sourceTree = "<group>"; };
 		E535D7A6225D5FEB009C6F95 /* Slime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Slime.m; sourceTree = "<group>"; };
@@ -137,6 +143,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E51DCEE7226535D500829673 /* Steve */ = {
+			isa = PBXGroup;
+			children = (
+				E5DEDFB3225D2761002E4D4E /* SlimeBall.h */,
+				E5DEDFB4225D276D002E4D4E /* SlimeBall.m */,
+				E535D7A5225D5FD8009C6F95 /* Slime.h */,
+				E535D7A6225D5FEB009C6F95 /* Slime.m */,
+			);
+			path = Steve;
+			sourceTree = "<group>";
+		};
+		E51DCEE8226535EF00829673 /* Abby */ = {
+			isa = PBXGroup;
+			children = (
+				E51DCEE92265360300829673 /* ThrowingStar.h */,
+				E51DCEEA2265361400829673 /* ThrowingStar.m */,
+				E51DCEEC22657A7E00829673 /* StarPiece.h */,
+				E51DCEED22657A8900829673 /* StarPiece.m */,
+			);
+			path = Abby;
+			sourceTree = "<group>";
+		};
 		E52B74F2224EBA5F00630F75 /* Physics */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,6 +193,8 @@
 			isa = PBXGroup;
 			children = (
 				E5F9214C224B066A00667955 /* Billy */,
+				E51DCEE7226535D500829673 /* Steve */,
+				E51DCEE8226535EF00829673 /* Abby */,
 				E561D17E22496C5600D53055 /* Player.h */,
 				E561D17F22496C6300D53055 /* Player.m */,
 				E5BE8762225BD431008F0A95 /* CooldownManager.h */,
@@ -270,10 +300,6 @@
 				E5F92152224B1B9400667955 /* Grenade.m */,
 				E50ABFB7224C048900F12911 /* Explosion.h */,
 				E50ABFB8224C050900F12911 /* Explosion.m */,
-				E5DEDFB3225D2761002E4D4E /* SlimeBall.h */,
-				E5DEDFB4225D276D002E4D4E /* SlimeBall.m */,
-				E535D7A5225D5FD8009C6F95 /* Slime.h */,
-				E535D7A6225D5FEB009C6F95 /* Slime.m */,
 			);
 			path = Billy;
 			sourceTree = "<group>";
@@ -430,9 +456,11 @@
 				E5AC43A1220B2D3400A800CE /* AppDelegate.m in Sources */,
 				E561D18022496C6300D53055 /* Player.m in Sources */,
 				E50ABFBC224C35F600F12911 /* HealthBar.m in Sources */,
+				E51DCEEB2265361400829673 /* ThrowingStar.m in Sources */,
 				E5F92153224B1B9400667955 /* Grenade.m in Sources */,
 				E5BE8764225BD43C008F0A95 /* CooldownManager.m in Sources */,
 				E5D70F68225FB78A00224224 /* SceneManager.m in Sources */,
+				E51DCEEE22657A8900829673 /* StarPiece.m in Sources */,
 				E561D17A224961B900D53055 /* Wall.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
