@@ -15,7 +15,7 @@
 
 #define STAR_PIECE_IMAGE_NAME @"StarPiece"
 #define STAR_PIECE_SIZE CGSizeMake(20, 20)
-#define STAR_PIECE_GOTO_OFFSET 500
+#define STAR_PIECE_GOTO_OFFSET 50
 #define STAR_PIECE_SPEED 1000
 
 @interface StarPiece : SKSpriteNode

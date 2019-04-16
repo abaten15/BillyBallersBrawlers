@@ -42,13 +42,13 @@
 	}
 	
 	// Actions
-	CGFloat totalDistance = STAR_PIECE_GOTO_OFFSET - point.y;
+	CGFloat totalDistance = STAR_PIECE_GOTO_OFFSET;
 	
 	SKAction * motion;
-	if (dir == North) {
-		motion = [SKAction moveTo:CGPointMake(point.x, point.y + totalDistance) duration:totalDistance/STAR_PIECE_SPEED];
+	if (dir == East) {
+		motion = [SKAction moveTo:CGPointMake(point.x + totalDistance, point.y) duration:totalDistance/STAR_PIECE_SPEED];
 	} else {
-		motion = [SKAction moveTo:CGPointMake(point.x, point.y - totalDistance) duration:totalDistance/STAR_PIECE_SPEED];
+		motion = [SKAction moveTo:CGPointMake(point.x - totalDistance, point.y) duration:totalDistance/STAR_PIECE_SPEED];
 	}
 	
 	SKAction *onDestroyAction = [SKAction performSelector:@selector(removeFromParent) onTarget:starPiece];

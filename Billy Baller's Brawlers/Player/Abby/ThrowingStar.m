@@ -13,6 +13,7 @@
 
 #import "CategoryDefinitions.h"
 #import "Player.h"
+#import "StarPiece.h"
 
 @implementation ThrowingStar {
 
@@ -46,9 +47,9 @@
 	
 	SKAction * motion;
 	if (dir == North) {
-		motion = [SKAction moveTo:CGPointMake(point.x, point.y + totalDistance) duration:totalDistance/THROWING_STAR_SPEED];
+		motion = [SKAction moveTo:CGPointMake(point.x, THROWING_STAR_GOTO_OFFSET) duration:totalDistance/THROWING_STAR_SPEED];
 	} else {
-		motion = [SKAction moveTo:CGPointMake(point.x, point.y - totalDistance) duration:totalDistance/THROWING_STAR_SPEED];
+		motion = [SKAction moveTo:CGPointMake(point.x, -1 * THROWING_STAR_GOTO_OFFSET) duration:totalDistance/THROWING_STAR_SPEED];
 	}
 	
 	SKAction *onDestroyAction = [SKAction performSelector:@selector(splitStarPieces) onTarget:throwingStar];
@@ -61,6 +62,10 @@
 }
 
 - (void) splitStarPieces {
+	StarPiece *pieceOne = [StarPiece starPieceAt:self.position going:East isOpponents:_isOpponents];
+	[self.parent addChild:pieceOne];
+	StarPiece *pieceTwo = [StarPiece starPieceAt:self.position going:West isOpponents:_isOpponents];
+	[self.parent addChild:pieceTwo];
 	[self removeFromParent];
 }
 
