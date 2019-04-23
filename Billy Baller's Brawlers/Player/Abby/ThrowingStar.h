@@ -17,6 +17,7 @@
 #define THROWING_STAR_SIZE CGSizeMake(20, 20)
 #define THROWING_STAR_GOTO_OFFSET 500
 #define THROWING_STAR_SPEED 1200
+#define THROWING_STAR_DAMAGE 20
 
 @interface ThrowingStar : SKSpriteNode
 

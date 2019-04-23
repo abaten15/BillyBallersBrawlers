@@ -30,12 +30,12 @@
 	
 	// Bullet collision body
 	throwingStar.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:THROWING_STAR_SIZE.width/2];
-	throwingStar.physicsBody.categoryBitMask = throwingStarCategory;
+	throwingStar.physicsBody.categoryBitMask = projectileCategory;
 	throwingStar.physicsBody.collisionBitMask = 0x0;
 	throwingStar.physicsBody.contactTestBitMask = wallCategory | opponentCategory | playerCategory;
 	throwingStar.physicsBody.node.name = throwingStarName;
 	throwingStar.physicsBody.affectedByGravity = NO;
-	throwingStar.physicsBody.dynamic = YES;
+	throwingStar.physicsBody.dynamic = NO;
 	throwingStar.name = throwingStarName;
 	
 	if (isOpponentsIn) {
@@ -49,11 +49,14 @@
 	if (dir == North) {
 		motion = [SKAction moveTo:CGPointMake(point.x, THROWING_STAR_GOTO_OFFSET) duration:totalDistance/THROWING_STAR_SPEED];
 	} else {
+		totalDistance = THROWING_STAR_GOTO_OFFSET + point.y;
 		motion = [SKAction moveTo:CGPointMake(point.x, -1 * THROWING_STAR_GOTO_OFFSET) duration:totalDistance/THROWING_STAR_SPEED];
 	}
 	
 	SKAction *onDestroyAction = [SKAction performSelector:@selector(splitStarPieces) onTarget:throwingStar];
 	SKAction *sequence = [SKAction sequence:@[motion, onDestroyAction]];
+	
+	throwingStar.isOpponents = isOpponentsIn;
 	
 	[throwingStar runAction:sequence];
 

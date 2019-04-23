@@ -22,12 +22,12 @@
 	Explosion *explosion = [Explosion spriteNodeWithImageNamed:EXPLOSION_IMAGE_NAME];
 
 	explosion.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:EXPLOSION_SIZE.width/2];
-	explosion.physicsBody.categoryBitMask = explosionCategory;
+	explosion.physicsBody.categoryBitMask = aoeCategory;
 	explosion.physicsBody.collisionBitMask = 0x0;
 	explosion.physicsBody.contactTestBitMask = playerCategory | opponentCategory;
 	explosion.physicsBody.node.name = explosionName;
 	explosion.physicsBody.affectedByGravity = NO;
-	explosion.physicsBody.dynamic = NO;
+	explosion.physicsBody.dynamic = YES;
 	explosion.name = explosionName;
 
 	if (isOpponents) {

@@ -15,6 +15,7 @@
 #import "ThrowingStar.h"
 #import "Grenade.h"
 #import "SlimeBall.h"
+#import "SniperBullet.h"
 #import "HealthBar.h"
 #import "CategoryDefinitions.h"
 
@@ -63,6 +64,7 @@
 	player.cooldownManager = [CooldownManager managerForBrawler:brawlerIDIn isOpponent:isOpponentIn];
 	[player addChild:player.cooldownManager];
 	
+	[player setZPosition:1];
 	
 	player.gameServicer = gameServicer;
 	player.brawlerID = brawlerIDIn;
@@ -73,7 +75,7 @@
 	player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:PLAYER_SIZE.width/2];
 	player.physicsBody.categoryBitMask = playerCategory;
 	player.physicsBody.collisionBitMask = 0x0;
-	player.physicsBody.contactTestBitMask = bulletCategory | grenadeCategory; // May need changing later
+	player.physicsBody.contactTestBitMask = projectileCategory | aoeCategory; // May need changing later
 	player.physicsBody.node.name = playerName;
 	player.physicsBody.affectedByGravity = NO;
 	player.physicsBody.dynamic = YES;
@@ -200,7 +202,7 @@
 	} else if (_brawlerID == STEVE_ID) {
 		[self shootSlimeBallAt:point going:North];
 	} else if (_brawlerID == ABBY_ID) {
-	
+		[self shootSniperBulletAt:point going:North];
 	} else {
 		[self shootGrenadeAt:point going:North];
 	}
@@ -235,6 +237,16 @@
 	}
 	slimeBall.gameScene = _gameScene;
 	[[self parent] addChild:slimeBall];
+}
+
+- (void) shootSniperBulletAt:(CGPoint)point going:(Direction)dir {
+	SniperBullet *sniperBullet;
+	if (_isOpponent) {
+		sniperBullet = [SniperBullet sniperBulletAt:point going:South isOpponents:_isOpponent];
+	} else {
+		sniperBullet = [SniperBullet sniperBulletAt:point going:North isOpponents:_isOpponent];
+	}
+	[[self parent] addChild:sniperBullet];
 }
 
 - (void) updateShootingOffset {

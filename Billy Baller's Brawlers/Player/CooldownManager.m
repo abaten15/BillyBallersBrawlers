@@ -16,6 +16,7 @@
 #import "ThrowingStar.h"
 #import "Grenade.h"
 #import "SlimeBall.h"
+#import "SniperBullet.h"
 
 @implementation CooldownManager {
 
@@ -37,6 +38,7 @@
 		specialImageName = SLIME_BALL_IMAGE_NAME;
 	} else if (brawlerID == ABBY_ID) {
 		mainImageName = THROWING_STAR_IMAGE_NAME;
+		specialImageName = SNIPER_BULLET_IMAGE_NAME;
 	}
 	
 	manager.mainNode = [SKSpriteNode spriteNodeWithImageNamed:mainImageName];
@@ -46,6 +48,9 @@
 	manager.specialNode = [SKSpriteNode spriteNodeWithImageNamed:specialImageName];
 	[manager.specialNode setSize:CM_NODE_SIZE];
 	[manager.specialNode setPosition:CM_SPECIAL_NODE_OFFSET];
+	if (brawlerID == ABBY_ID) {
+		[manager.specialNode setSize:SNIPER_BULLET_SIZE];
+	}
 	[manager addChild:manager.specialNode];
 	
 	manager.canShootMainAttack = YES;

@@ -12,6 +12,8 @@
 #import "GameScene.h"
 #import "Background.h"
 #import "Bullet.h"
+#import "ThrowingStar.h"
+#import "StarPiece.h"
 #import "GameServicer.h"
 #import "Grenade.h"
 #import "MenuScene.h"
@@ -185,6 +187,12 @@
 			[self checkSlimeContact:nameToCheck atPoint:contact.bodyB.node.position];
 		}
 		
+		[self checkThrowingStarContact:contact checkingName:nameToCheck isNameA:isNameA];
+		
+		[self checkStarPieceContact:contact checkingName:nameToCheck isNameA:isNameA];
+		
+		[self checkSniperBulletContact:contact checkingName:nameToCheck isNameA:isNameA];
+		
 	} else if ([nameA isEqualToString:opponentName] || [nameB isEqualToString:opponentName]) {
 		NSString *nameToCheck;
 		BOOL isNameA = NO;
@@ -202,6 +210,24 @@
 				[contact.bodyB.node removeFromParent];
 			}
 			return;
+		} else if ([nameToCheck isEqualToString:throwingStarName]) {
+			if (isNameA) {
+				[contact.bodyA.node removeFromParent];
+			} else {
+				[contact.bodyB.node removeFromParent];
+			}
+		} else if ([nameToCheck isEqualToString:starPieceName]) {
+			if (isNameA) {
+				[contact.bodyA.node removeFromParent];
+			} else {
+				[contact.bodyB.node removeFromParent];
+			}
+		} else if ([nameToCheck isEqualToString:sniperBulletName]) {
+			if (isNameA) {
+				[contact.bodyA.node removeFromParent];
+			} else {
+				[contact.bodyB.node removeFromParent];
+			}
 		}
 	}
 
@@ -216,7 +242,7 @@
 		postfix = [nameToCheck substringFromIndex:slimeName.length];
 	}
 	@catch (NSException *e) {
-		
+		return;
 	}
 	@finally {
 		
@@ -230,6 +256,67 @@
 			[_playerControls slidePlayerInDirection:dir];
 		}
 	}
+}
+
+- (void) checkThrowingStarContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA {
+	NSString *throwingStarStr = @"";
+	NSString *postfix = @"";
+	@try {
+		throwingStarStr = [nameToCheck substringToIndex:throwingStarName.length];
+		postfix = [nameToCheck substringFromIndex:throwingStarName.length];
+	}
+	@catch (NSException *e) {
+		return;
+	}
+	@finally {
+	
+	}
+	
+	if ([throwingStarStr isEqualToString:throwingStarName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
+		[_player takeDamage:THROWING_STAR_DAMAGE];
+		NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
+		NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
+		[_gameServicer sendData:data];
+		if (isNameA) {
+			[contact.bodyA.node removeFromParent];
+		} else {
+			[contact.bodyB.node removeFromParent];
+		}
+	}
+	
+}
+
+- (void) checkStarPieceContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA {
+	NSString *starPieceStr = @"";
+	NSString *postfix = @"";
+	@try {
+		starPieceStr = [nameToCheck substringToIndex:starPieceName.length];
+		postfix = [nameToCheck substringFromIndex:starPieceName.length];
+	}
+	@catch (NSException *e) {
+		return;
+	}
+	@finally {
+	
+	}
+	
+	if ([starPieceStr isEqualToString:starPieceName] & [postfix isEqualToString:OPPONENT_POSTFIX]) {
+		
+		[_player takeDamage:STAR_PIECE_DAMAGE];
+		NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
+		NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
+		[_gameServicer sendData:data];
+		if (isNameA) {
+			[contact.bodyA.node removeFromParent];
+		} else {
+			[contact.bodyB.node removeFromParent];
+		}
+	}
+	
+}
+
+- (void) checkSniperBulletContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA {
+
 }
 
 - (void)touchDownAtPoint:(CGPoint)pos {
@@ -319,9 +406,7 @@
 	} else if (_opponent == NULL) {
 		if ([self spawnOpponent:data]) {
 			_GameStarted = YES;
-			if (!_isHost) {
-				[self sendPlayerID];
-			}
+			[self sendPlayerID];
 		}
 	}
 }

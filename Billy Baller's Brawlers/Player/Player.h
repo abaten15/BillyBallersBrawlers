@@ -86,6 +86,7 @@
 
 - (void) shootGrenadeAt:(CGPoint)point going:(Direction)dir;
 - (void) shootSlimeBallAt:(CGPoint)point going:(Direction)dir;
+- (void) shootSniperBulletAt:(CGPoint)point going:(Direction)dir;
 
 @property (nonatomic) BOOL flipped;
 @property (nonatomic) CGPoint shootingOffset;

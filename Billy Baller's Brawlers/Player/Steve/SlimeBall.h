@@ -26,7 +26,7 @@
 
 @property (nonatomic) BOOL isOpponents;
 @property (nonatomic) GameScene *gameScene;
-+ (instancetype) slimeBallAt:(CGPoint)point going:(Direction)dir isOpponents:(BOOL)isOpponents;
++ (instancetype) slimeBallAt:(CGPoint)point going:(Direction)dir isOpponents:(BOOL)isOpponentsIn;
 
 - (void) explode;
 

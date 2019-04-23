@@ -50,6 +50,9 @@
 - (void) handleContact:(SKPhysicsContact *)contact;
 
 - (void) checkSlimeContact:(NSString *)nameToCheck atPoint:(CGPoint)point;
+- (void) checkThrowingStarContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA;
+- (void) checkStarPieceContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA;
+- (void) checkSniperBulletContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA;
 
 @property (nonatomic) Background *background;
 

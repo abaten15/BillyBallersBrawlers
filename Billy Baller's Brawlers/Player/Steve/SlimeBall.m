@@ -18,27 +18,15 @@
 
 @implementation SlimeBall
 
-+ (instancetype) slimeBallAt:(CGPoint)point going:(Direction)dir isOpponents:(BOOL)isOpponents {
++ (instancetype) slimeBallAt:(CGPoint)point going:(Direction)dir isOpponents:(BOOL)isOpponentsIn {
 
 	SlimeBall *ball = [SlimeBall spriteNodeWithImageNamed:SLIME_BALL_IMAGE_NAME];
 	
 	[ball setPosition:point];
 	[ball setSize:SLIME_BALL_SIZE];
-	[ball setZPosition:3];
-	
-	ball.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:SLIME_BALL_SIZE.width/2];
-	ball.physicsBody.categoryBitMask = grenadeCategory;
-	ball.physicsBody.collisionBitMask = 0x0;
-	ball.physicsBody.contactTestBitMask = opponentCategory;
-	ball.physicsBody.node.name = grenadeName;
-	ball.physicsBody.affectedByGravity = NO;
-	ball.physicsBody.dynamic = YES;
-	ball.name = grenadeName;
-	
-	ball.isOpponents = isOpponents;
-	if (isOpponents) {
-		ball.name = [grenadeName stringByAppendingString:OPPONENT_POSTFIX];
-	}
+	[ball setZPosition:2];
+
+	ball.isOpponents = isOpponentsIn;
 	
 	CGFloat totalDistance;
 	

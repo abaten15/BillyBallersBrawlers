@@ -21,13 +21,20 @@
 	
 	Slime *retVal = [Slime spriteNodeWithImageNamed:SLIME_IMAGE_NAME];
 	
+	retVal.isOpponents = isOpponentsIn;
+	if (isOpponentsIn) {
+		NSLog(@"is opponents");
+	} else {
+		NSLog(@"is not opponents");
+	}
+	
 	CGPoint location = CGPointMake(0, 0);
 	if (point.x > 0) {
 		location.x = SLIME_X_OFFSET;
 	} else {
 		location.x = -1 * SLIME_X_OFFSET;
 	}
-	if (isOpponentsIn) {
+	if (retVal.isOpponents) {
 		location.y = -1 * SLIME_Y_OFFSET;
 	} else {
 		location.y = SLIME_Y_OFFSET;
@@ -35,18 +42,17 @@
 	
 	[retVal setPosition:location];
 	[retVal setSize:SLIME_SIZE];
-	[retVal setZPosition:3];
+	[retVal setZPosition:2];
 	
 	retVal.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:SLIME_SIZE];
-	retVal.physicsBody.categoryBitMask = slimeCategory;
+	retVal.physicsBody.categoryBitMask = aoeCategory;
 	retVal.physicsBody.collisionBitMask = 0x0;
 	retVal.physicsBody.contactTestBitMask = playerCategory | opponentCategory;
 	retVal.physicsBody.node.name = slimeName;
 	retVal.physicsBody.affectedByGravity = NO;
-	retVal.physicsBody.dynamic = YES;
+	retVal.physicsBody.dynamic = NO;
 	retVal.name = slimeName;
 	
-	retVal.isOpponents = isOpponentsIn;
 	if (isOpponentsIn) {
 		retVal.name = [slimeName stringByAppendingString:OPPONENT_POSTFIX];
 	}

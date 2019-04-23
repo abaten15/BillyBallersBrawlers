@@ -17,6 +17,7 @@
 #define STAR_PIECE_SIZE CGSizeMake(20, 20)
 #define STAR_PIECE_GOTO_OFFSET 50
 #define STAR_PIECE_SPEED 1000
+#define STAR_PIECE_DAMAGE 10
 
 @interface StarPiece : SKSpriteNode
 

@@ -27,20 +27,6 @@
 	[grenade setSize:GRENADE_SIZE];
 	[grenade setZPosition:5];
 	
-	grenade.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:GRENADE_SIZE.width/2];
-	grenade.physicsBody.categoryBitMask = grenadeCategory;
-	grenade.physicsBody.collisionBitMask = 0x0;
-	grenade.physicsBody.contactTestBitMask = opponentCategory;
-	grenade.physicsBody.node.name = grenadeName;
-	grenade.physicsBody.affectedByGravity = NO;
-	grenade.physicsBody.dynamic = YES;
-	grenade.name = grenadeName;
-	
-	grenade.isOpponents = isOpponents;
-	if (isOpponents) {
-		grenade.name = [grenadeName stringByAppendingString:OPPONENT_POSTFIX];
-	}
-	
 	CGFloat totalDistance;
 	
 	SKAction * motion;

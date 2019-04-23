@@ -27,17 +27,20 @@
 	[starPiece setSize:STAR_PIECE_SIZE];
 	[starPiece setZPosition:1];
 	
+	starPiece.isOpponents = isOpponentsIn;
+	
 	// Bullet collision body
 	starPiece.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:STAR_PIECE_SIZE.width/2];
-	starPiece.physicsBody.categoryBitMask = starPieceCategory;
+	starPiece.physicsBody.categoryBitMask = projectileCategory;
 	starPiece.physicsBody.collisionBitMask = 0x0;
 	starPiece.physicsBody.contactTestBitMask = wallCategory | opponentCategory | playerCategory;
 	starPiece.physicsBody.node.name = starPieceName;
 	starPiece.physicsBody.affectedByGravity = NO;
-	starPiece.physicsBody.dynamic = YES;
+	starPiece.physicsBody.dynamic = NO;
 	starPiece.name = starPieceName;
 	
 	if (isOpponentsIn) {
+		starPiece.physicsBody.node.name = [starPieceName stringByAppendingString:OPPONENT_POSTFIX];
 		starPiece.name = [starPieceName stringByAppendingString:OPPONENT_POSTFIX];
 	}
 	
@@ -48,6 +51,7 @@
 	if (dir == East) {
 		motion = [SKAction moveTo:CGPointMake(point.x + totalDistance, point.y) duration:totalDistance/STAR_PIECE_SPEED];
 	} else {
+		starPiece.xScale *= -1;
 		motion = [SKAction moveTo:CGPointMake(point.x - totalDistance, point.y) duration:totalDistance/STAR_PIECE_SPEED];
 	}
 	
