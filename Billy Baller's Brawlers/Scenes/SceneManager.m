@@ -17,14 +17,33 @@
 #import "GameScene.h"
 @class GameScene;
 
+#import "ProfileLoader.h"
+
 @implementation SceneManager {
 
 }
 
 - (id) initWithView:(SKView *)viewIn {
+
 	self = [super init];
 	
 	self.viewForLoading = viewIn;
+	
+	_profileLoader = [[ProfileLoader alloc] init];
+//	NSDictionary *query = @{@"userid":@60};
+	/*
+	[_profileLoader push:nil keys:query file:nil completionHandler:^(NSData * _Nonnull data, NSURLResponse * _Nonnull response, NSError * _Nonnull error) {
+        NSLog(@"Got the result back.");
+        NSError *jsonError;
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSASCIIStringEncoding error:&jsonError];
+		
+		
+		
+        NSLog(@"JSON result is %@", json);
+//        [self performSelectorOnMainThread:@selector(updateDisplay:) withObject:json waitUntilDone:NO];
+		
+    }];
+    */
 	
 	GKScene *menuScene = [GKScene sceneWithFileNamed:MENU_SCENE_FILE_NAME];
 	GKScene *gameScene = [GKScene sceneWithFileNamed:GAME_SCENE_FILE_NAME];

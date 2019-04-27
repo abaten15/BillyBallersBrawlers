@@ -23,6 +23,8 @@
 
 	Grenade *grenade = [Grenade spriteNodeWithImageNamed:GRENADE_IMAGE_NAME];
 	
+	grenade.isOpponents = isOpponents;
+	
 	[grenade setPosition:point];
 	[grenade setSize:GRENADE_SIZE];
 	[grenade setZPosition:5];

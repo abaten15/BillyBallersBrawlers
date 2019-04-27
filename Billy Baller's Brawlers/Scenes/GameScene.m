@@ -16,6 +16,7 @@
 #import "StarPiece.h"
 #import "GameServicer.h"
 #import "Grenade.h"
+#import "SniperBullet.h"
 #import "MenuScene.h"
 
 @implementation GameScene {
@@ -102,17 +103,22 @@
 	}
 	NSString *nameA = contact.bodyA.node.name;
 	NSString *nameB = contact.bodyB.node.name;
-	NSString *opponentBulletStr = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
-	if ([nameA isEqualToString:wallName] && [nameB isEqualToString:bulletName]) {
-		[contact.bodyB.node removeFromParent];
-	} else if ([nameA isEqualToString:wallName] && [nameB isEqualToString:bulletName]) {
-		[contact.bodyA.node removeFromParent];
-	} else if ([nameA isEqualToString:opponentBulletStr] && [nameB isEqualToString:wallName]) {
-		[contact.bodyA.node removeFromParent];
-	} else if ([nameA isEqualToString:wallName] && [nameB isEqualToString:opponentBulletStr]) {
-		[contact.bodyB.node removeFromParent];
-	}
-	else if ([nameA isEqualToString:playerName] || [nameB isEqualToString:playerName]) {
+//	NSString *opponentBulletStr = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
+	
+	if ([nameA isEqualToString:wallName] || [nameB isEqualToString:wallName]) {
+		
+		NSString *nameToCheck;
+		BOOL isNameA = NO;
+		if ([nameA isEqualToString:wallName]){
+			nameToCheck = nameB;
+		} else {
+			nameToCheck = nameA;
+			isNameA = YES;
+		}
+		
+		[self checkWallContacts:contact checkingName:nameToCheck isNameA:isNameA];
+		
+	} else if ([nameA isEqualToString:playerName] || [nameB isEqualToString:playerName]) {
 	
 		NSLog(@"contact with player");
 	
@@ -125,71 +131,19 @@
 			isNameA = YES;
 		}
 		
-		// Bullet Section
-		NSString *bulletSection = @"";
-		NSString *postfix = @"";
-		@try {
-			bulletSection = [nameToCheck substringToIndex:bulletName.length];
-			postfix = [nameToCheck substringFromIndex:bulletName.length];
-		}
-		@catch (NSException *e)  {
-			
-		}
-		@finally {
+		[self checkBulletContact:contact checkingName:nameToCheck isNameA:isNameA];
 		
-		}
-		if ([bulletSection isEqualToString:bulletName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
-			if (_opponent.brawlerID == BILLY_ID) {
-				[_player takeDamage:BILLY_BULLET_DAMAGE];
-			} else if (_opponent.brawlerID == STEVE_ID) {
-				[_player takeDamage:STEVE_BULLET_DAMAGE];
-			}
-			NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
-			NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
-			[_gameServicer sendData:data];
-			if (isNameA) {
-				[contact.bodyA.node removeFromParent];
-			} else {
-				[contact.bodyB.node removeFromParent];
-			}
-			return;
-		}
+		[self checkThrowingStarContact:contact checkingName:nameToCheck isNameA:isNameA];
 		
-		// Explosion Section
-		NSString *explosionSection = @"";
-		@try {
-			explosionSection = [nameToCheck substringToIndex:explosionName.length];
-			postfix = [nameToCheck substringFromIndex:explosionName.length];
-		}
-		@catch (NSException *e) {
-			
-		}
-		@finally {
+		[self checkStarPieceContact:contact checkingName:nameToCheck isNameA:isNameA];
 		
-		}
-		
-		if ([explosionSection isEqualToString:explosionName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
-			[_player takeDamage:GRENADE_DAMAGE];
-			NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
-			NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
-			[_gameServicer sendData:data];
-			if (isNameA) {
-				contact.bodyA.node.name = @"invalid";
-			} else {
-				contact.bodyB.node.name = @"invalid";
-			}
-			return;
-		}
+		[self checkExplosionContact:contact checkingName:nameToCheck isNameA:isNameA];
 		
 		if (isNameA) {
 			[self checkSlimeContact:nameToCheck atPoint:contact.bodyA.node.position];
 		} else {
 			[self checkSlimeContact:nameToCheck atPoint:contact.bodyB.node.position];
 		}
-		
-		[self checkThrowingStarContact:contact checkingName:nameToCheck isNameA:isNameA];
-		
-		[self checkStarPieceContact:contact checkingName:nameToCheck isNameA:isNameA];
 		
 		[self checkSniperBulletContact:contact checkingName:nameToCheck isNameA:isNameA];
 		
@@ -234,28 +188,57 @@
 
 }
 
-- (void) checkSlimeContact:(NSString *)nameToCheck atPoint:(CGPoint)point {
-	NSString *slimeNameStr = @"";
-	NSString *postfix = @"";
-	@try {
-		slimeNameStr = [nameToCheck substringToIndex:slimeName.length];
-		postfix = [nameToCheck substringFromIndex:slimeName.length];
-	}
-	@catch (NSException *e) {
+- (void) checkWallContacts:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA {
+	// Checking for Bullets
+	NSString *opponentBullet = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
+	if ([nameToCheck isEqualToString:bulletName] || [nameToCheck isEqualToString:opponentBullet]) {
+		if (isNameA) {
+			[contact.bodyA.node removeFromParent];
+		} else {
+			[contact.bodyB.node removeFromParent];
+		}
 		return;
 	}
-	@finally {
+	NSString *opponentThrowingStar = [throwingStarName stringByAppendingString:OPPONENT_POSTFIX];
+	if ([nameToCheck isEqualToString:throwingStarName] || [nameToCheck isEqualToString:opponentThrowingStar]) {
+		if (isNameA) {
+			[contact.bodyA.node removeFromParent];
+		} else {
+			[contact.bodyB.node removeFromParent];
+		}
+		return;
+	}
+}
+
+- (void) checkBulletContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA {
+		NSString *bulletSection = @"";
+		NSString *postfix = @"";
+		@try {
+			bulletSection = [nameToCheck substringToIndex:bulletName.length];
+			postfix = [nameToCheck substringFromIndex:bulletName.length];
+		}
+		@catch (NSException *e)  {
+			
+		}
+		@finally {
 		
-	}
-	if ([slimeNameStr isEqualToString:slimeName]) {
-		Direction dir = East;
-		if (point.x <= 0) {
-			dir = West;
 		}
-		if ([postfix isEqualToString:OPPONENT_POSTFIX]) {
-			[_playerControls slidePlayerInDirection:dir];
+		if ([bulletSection isEqualToString:bulletName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
+			if (_opponent.brawlerID == BILLY_ID) {
+				[_player takeDamage:BILLY_BULLET_DAMAGE];
+			} else if (_opponent.brawlerID == STEVE_ID) {
+				[_player takeDamage:STEVE_BULLET_DAMAGE];
+			}
+			NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
+			NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
+			[_gameServicer sendData:data];
+			if (isNameA) {
+				[contact.bodyA.node removeFromParent];
+			} else {
+				[contact.bodyB.node removeFromParent];
+			}
+			return;
 		}
-	}
 }
 
 - (void) checkThrowingStarContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA {
@@ -315,8 +298,88 @@
 	
 }
 
-- (void) checkSniperBulletContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA {
+- (void) checkExplosionContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA {
 
+		NSString *explosionSection = @"";
+		NSString *postfix = @"";
+		@try {
+			explosionSection = [nameToCheck substringToIndex:explosionName.length];
+			postfix = [nameToCheck substringFromIndex:explosionName.length];
+		}
+		@catch (NSException *e) {
+			
+		}
+		@finally {
+		
+		}
+	
+		NSLog(@"checking for explosion");
+	
+		if ([explosionSection isEqualToString:explosionName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
+			NSLog(@"explosion contact");
+			[_player takeDamage:GRENADE_DAMAGE];
+			NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
+			NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
+			[_gameServicer sendData:data];
+			if (isNameA) {
+				contact.bodyA.node.name = @"invalid";
+			} else {
+				contact.bodyB.node.name = @"invalid";
+			}
+			return;
+		}
+}
+
+- (void) checkSlimeContact:(NSString *)nameToCheck atPoint:(CGPoint)point {
+	NSString *slimeNameStr = @"";
+	NSString *postfix = @"";
+	@try {
+		slimeNameStr = [nameToCheck substringToIndex:slimeName.length];
+		postfix = [nameToCheck substringFromIndex:slimeName.length];
+	}
+	@catch (NSException *e) {
+		return;
+	}
+	@finally {
+		
+	}
+	if ([slimeNameStr isEqualToString:slimeName]) {
+		Direction dir = East;
+		if (point.x <= 0) {
+			dir = West;
+		}
+		if ([postfix isEqualToString:OPPONENT_POSTFIX]) {
+			[_playerControls slidePlayerInDirection:dir];
+		}
+	}
+}
+
+- (void) checkSniperBulletContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA {
+	NSString *sniperStr = @"";
+	NSString *postfix = @"";
+	@try {
+		sniperStr = [nameToCheck substringToIndex:sniperBulletName.length];
+		postfix = [nameToCheck substringFromIndex:sniperBulletName.length];
+	}
+	@catch (NSException *e) {
+		return;
+	}
+	@finally {
+	
+	}
+	
+	if ([sniperStr isEqualToString:sniperBulletName] & [postfix isEqualToString:OPPONENT_POSTFIX]) {
+		
+		[_player takeDamage:SNIPER_BULLET_DAMAGE];
+		NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
+		NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
+		[_gameServicer sendData:data];
+		if (isNameA) {
+			[contact.bodyA.node removeFromParent];
+		} else {
+			[contact.bodyB.node removeFromParent];
+		}
+	}
 }
 
 - (void)touchDownAtPoint:(CGPoint)pos {

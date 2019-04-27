@@ -23,6 +23,8 @@
 
 	Bullet *bullet = [Bullet spriteNodeWithImageNamed:@"Bullet"];
 	
+	bullet.isOpponents = isOpponents;
+	
 	// Bullet init
 	[bullet setPosition:point];
 	[bullet setSize:BULLET_SIZE];

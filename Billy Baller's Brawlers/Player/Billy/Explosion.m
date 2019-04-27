@@ -27,7 +27,7 @@
 	explosion.physicsBody.contactTestBitMask = playerCategory | opponentCategory;
 	explosion.physicsBody.node.name = explosionName;
 	explosion.physicsBody.affectedByGravity = NO;
-	explosion.physicsBody.dynamic = YES;
+	explosion.physicsBody.dynamic = NO;
 	explosion.name = explosionName;
 
 	if (isOpponents) {

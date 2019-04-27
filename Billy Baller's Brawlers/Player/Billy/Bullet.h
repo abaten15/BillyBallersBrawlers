@@ -25,6 +25,7 @@
 @interface Bullet : SKSpriteNode
 
 @property (nonatomic) int brawlerId;
+@property (nonatomic) BOOL isOpponents;
 + (instancetype) bulletAt:(CGPoint)point going:(Direction)direction isOpponents:(BOOL)isOpponents;
 
 @end

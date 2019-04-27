@@ -17,6 +17,8 @@
 #import "GameScene.h"
 @class GameScene;
 
+#import "ProfileLoader.h"
+
 #define MENU_SCENE_ID 0
 #define GAME_SCENE_ID 1
 
@@ -30,6 +32,8 @@
 @interface SceneManager : NSObject
 
 @property (nonatomic) int brawlerSelection;
+
+@property (nonatomic) ProfileLoader *profileLoader;
 
 @property (nonatomic) MenuScene *menuScene;
 @property (nonatomic) GameScene *gameScene;

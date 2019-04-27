@@ -38,6 +38,19 @@
 	_sceneManager = [[SceneManager alloc] initWithView:skView];
 	[_sceneManager presentOpeningScene];
 	
+/*
+	NSDictionary *query = @{@"value":};
+    [networker push:nil keys:query file:nil completionHandler:^(NSData * _Nonnull data, NSURLResponse * _Nonnull response, NSError * _Nonnull error) {
+        NSLog(@"Got the result back.");
+        NSError *jsonError;
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSASCIIStringEncoding error:&jsonError];
+		
+        NSLog(@"JSON result is %@", json);
+        [self performSelectorOnMainThread:@selector(updateDisplay:) withObject:json waitUntilDone:NO];
+		
+    }];
+*/
+	
 }
 
 - (BOOL)shouldAutorotate {
