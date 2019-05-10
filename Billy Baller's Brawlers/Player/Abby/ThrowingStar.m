@@ -26,7 +26,7 @@
 	// Bullet init
 	[throwingStar setPosition:point];
 	[throwingStar setSize:THROWING_STAR_SIZE];
-	[throwingStar setZPosition:1];
+	[throwingStar setZPosition:3];
 	
 	// Bullet collision body
 	throwingStar.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:THROWING_STAR_SIZE.width/2];

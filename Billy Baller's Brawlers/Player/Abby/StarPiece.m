@@ -25,7 +25,7 @@
 	
 	[starPiece setPosition:point];
 	[starPiece setSize:STAR_PIECE_SIZE];
-	[starPiece setZPosition:1];
+	[starPiece setZPosition:3];
 	
 	starPiece.isOpponents = isOpponentsIn;
 	

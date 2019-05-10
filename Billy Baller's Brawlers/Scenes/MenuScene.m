@@ -18,6 +18,13 @@
 }
 
 - (void)sceneDidLoad {
+
+	_chooseYourBrawlerLabel = [SKLabelNode labelNodeWithText:@"Choose Your Brawler"];
+	[_chooseYourBrawlerLabel setPosition:CHOOSE_YOUR_BRAWLER_POSITION];
+	[_chooseYourBrawlerLabel setFontName:@"AvenirNext-Bold"];
+	[_chooseYourBrawlerLabel setFontSize:50];
+	[_chooseYourBrawlerLabel setFontColor:[UIColor colorWithWhite:0 alpha:1]];
+	[self addChild:_chooseYourBrawlerLabel];
 	
 	_startGameButton = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithWhite:0 alpha:1.0] size:START_GAME_SIZE];
 	[_startGameButton setPosition:START_GAME_POSITION];
@@ -59,6 +66,12 @@
 	[_abbySelect setZPosition:1];
 	[self addChild:_abbySelect];
 	
+	_harrySelect = [SKSpriteNode spriteNodeWithImageNamed:HARRY_SELECT_IMAGE_NAME];
+	[_harrySelect setSize:HARRY_SELECT_SIZE];
+	[_harrySelect setPosition:HARRY_SELECT_POSITION];
+	[_harrySelect setZPosition:1];
+	[self addChild:_harrySelect];
+	
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -72,6 +85,8 @@
 		[self steveSelectPressed];
 	} else if ([_abbySelect containsPoint:point]) {
 		[self abbySelectPressed];
+	} else if ([_harrySelect containsPoint:point]) {
+		[self harrySelectPressed];
 	}
 }
 
@@ -91,6 +106,12 @@
 	[_selectBorder setPosition:ABBY_SELECT_POSITION];
 	[_selectBorder setSize:ABBY_SELECT_SIZE];
 	_brawlerSelection = ABBY_ID;
+}
+
+- (void)harrySelectPressed {
+	[_selectBorder setPosition:HARRY_SELECT_POSITION];
+	[_selectBorder setSize:HARRY_SELECT_SIZE];
+	_brawlerSelection = HARRY_ID;
 }
 
 - (void)update:(CFTimeInterval)currentTime {

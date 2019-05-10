@@ -1,0 +1,89 @@
+commit 372990b2f846395822f8a2f0e1cd438460d3cdf9
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Sat Apr 27 12:29:30 2019 -0400
+
+    collision detection improved and plaayer profile implemented
+
+commit 4c6ec975199e137935dbb5b63bc97e2eaa353101
+Author: Nick Abate <abaten15@Nicks-MacBook-Pro-4.local>
+Date:   Tue Apr 23 18:12:49 2019 -0400
+
+    Implemented Abby attacks
+
+commit 635670657c7c7bcd432bf55b017fc83a30429548
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Tue Apr 16 14:59:28 2019 -0400
+
+    Abby Main attack working
+
+commit 86cd8adec4d3077e5c4f7fa93d44c1c990e0cfeb
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Mon Apr 15 23:24:09 2019 -0400
+
+    Selection screen implemented. Abby implementation begun
+
+commit 1f75ab08a2106351985d3bf228a7e3d6c70d58c0
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Fri Apr 12 17:32:05 2019 -0400
+
+    screen transitions implemented
+
+commit c71dd340de868e04b9d53f12c00329b0609bcfb8
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Wed Apr 10 05:29:38 2019 -0400
+
+    Steve's secondary projectile implemented
+
+commit 2f3eacc3ec441485ca9ec98acf4d3dee0de30625
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Tue Apr 9 14:47:03 2019 -0400
+
+    win/lose animations completed. Fixed shooting bug
+
+commit 09a9d6885421dadead3c41e3ef3f9ab9aba41445
+Author: Nick Abate <abaten15@Nicks-MacBook-Pro-4.local>
+Date:   Mon Apr 8 15:21:37 2019 -0400
+
+    UI for attack cooldowns
+
+commit 0c69ab3adfd5e3e37e23fa39e8a3459ad9a2e312
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Fri Apr 5 16:57:56 2019 -0400
+
+    peer to peer gameplay fully functional
+
+commit 460426e9b5e2027f113df52f1032c51f17da05fa
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Thu Apr 4 19:16:57 2019 -0400
+
+    collision bug fixed. worked on updating healthbar through p2p networking.
+
+commit 13e8ec9aca4b4018bb7424162eb8a986ad445051
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Wed Apr 3 13:47:01 2019 -0400
+
+    sending player actions to each other. opponent spawns on connection.
+
+commit 0e172f63adf42c3533b233946e49d45237b531a5
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Tue Apr 2 02:59:56 2019 -0400
+
+    peer to peer connection working
+
+commit d50ddfdea3e2120687253d098f295ee87b199ee0
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Sun Mar 31 17:46:15 2019 -0400
+
+    started collision detection
+
+commit 211917fd1189023f2d7a4dab3a613b2a59b50ce7
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Fri Mar 29 16:08:06 2019 -0400
+
+    Player controls implemented. Billy attacks created.
+
+commit e28b9d8f979ba03a0a97f4b6ae6bc9043d04ec15
+Author: Nicholas Abate <abaten15@nicks-macbook-pro-4.local>
+Date:   Wed Feb 6 09:56:56 2019 -0500
+
+    Initial Commit

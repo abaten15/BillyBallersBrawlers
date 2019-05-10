@@ -36,6 +36,10 @@
 		E5D70F68225FB78A00224224 /* SceneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D70F67225FB78A00224224 /* SceneManager.m */; };
 		E5D70F6C225FDEB400224224 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = E5D70F6B225FDEB400224224 /* MenuScene.sks */; };
 		E5DEDFB5225D276D002E4D4E /* SlimeBall.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DEDFB4225D276D002E4D4E /* SlimeBall.m */; };
+		E5F02249227678C2000EE09C /* LoadingScrene.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F02248227678C2000EE09C /* LoadingScrene.m */; };
+		E5F0224D22767D05000EE09C /* LoadingScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = E5F0224C22767D05000EE09C /* LoadingScreen.sks */; };
+		E5F0225122768F47000EE09C /* StunBullet.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F0225022768F47000EE09C /* StunBullet.m */; };
+		E5F022542277790E000EE09C /* ShovelWall.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F022532277790E000EE09C /* ShovelWall.m */; };
 		E5F26A072253317100CFE53C /* GameServicer.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F26A062253317100CFE53C /* GameServicer.m */; };
 		E5F92150224B0A1E00667955 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F9214F224B0A1E00667955 /* Bullet.m */; };
 		E5F92153224B1B9400667955 /* Grenade.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F92152224B1B9400667955 /* Grenade.m */; };
@@ -115,6 +119,13 @@
 		E5D70F6B225FDEB400224224 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
 		E5DEDFB3225D2761002E4D4E /* SlimeBall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlimeBall.h; sourceTree = "<group>"; };
 		E5DEDFB4225D276D002E4D4E /* SlimeBall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlimeBall.m; sourceTree = "<group>"; };
+		E5F0224722766C55000EE09C /* LoadingScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadingScreen.h; sourceTree = "<group>"; };
+		E5F02248227678C2000EE09C /* LoadingScrene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoadingScrene.m; sourceTree = "<group>"; };
+		E5F0224C22767D05000EE09C /* LoadingScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LoadingScreen.sks; sourceTree = "<group>"; };
+		E5F0224F22768EC5000EE09C /* StunBullet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StunBullet.h; sourceTree = "<group>"; };
+		E5F0225022768F47000EE09C /* StunBullet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StunBullet.m; sourceTree = "<group>"; };
+		E5F0225222777905000EE09C /* ShovelWall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShovelWall.h; sourceTree = "<group>"; };
+		E5F022532277790E000EE09C /* ShovelWall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShovelWall.m; sourceTree = "<group>"; };
 		E5F26A052253314A00CFE53C /* GameServicer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameServicer.h; sourceTree = "<group>"; };
 		E5F26A062253317100CFE53C /* GameServicer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameServicer.m; sourceTree = "<group>"; };
 		E5F9214D224B068200667955 /* Bullet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bullet.h; sourceTree = "<group>"; };
@@ -203,6 +214,7 @@
 				E5F9214C224B066A00667955 /* Billy */,
 				E51DCEE7226535D500829673 /* Steve */,
 				E51DCEE8226535EF00829673 /* Abby */,
+				E5F0224E22768EAF000EE09C /* Harry */,
 				E561D17E22496C5600D53055 /* Player.h */,
 				E561D17F22496C6300D53055 /* Player.m */,
 				E5BE8762225BD431008F0A95 /* CooldownManager.h */,
@@ -242,6 +254,7 @@
 				E5AC43A0220B2D3400A800CE /* AppDelegate.m */,
 				E5AC43A2220B2D3400A800CE /* GameScene.sks */,
 				E5D70F6B225FDEB400224224 /* MenuScene.sks */,
+				E5F0224C22767D05000EE09C /* LoadingScreen.sks */,
 				E5AC43A4220B2D3400A800CE /* Actions.sks */,
 				E52B74F2224EBA5F00630F75 /* Physics */,
 				E561D17C22496A7E00D53055 /* Background */,
@@ -286,8 +299,21 @@
 				E5AC43A7220B2D3400A800CE /* GameScene.m */,
 				E5D70F66225FB78000224224 /* SceneManager.h */,
 				E5D70F67225FB78A00224224 /* SceneManager.m */,
+				E5F0224722766C55000EE09C /* LoadingScreen.h */,
+				E5F02248227678C2000EE09C /* LoadingScrene.m */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		E5F0224E22768EAF000EE09C /* Harry */ = {
+			isa = PBXGroup;
+			children = (
+				E5F0224F22768EC5000EE09C /* StunBullet.h */,
+				E5F0225022768F47000EE09C /* StunBullet.m */,
+				E5F0225222777905000EE09C /* ShovelWall.h */,
+				E5F022532277790E000EE09C /* ShovelWall.m */,
+			);
+			path = Harry;
 			sourceTree = "<group>";
 		};
 		E5F26A012253302F00CFE53C /* Networking */ = {
@@ -423,6 +449,7 @@
 				E5AC43AE220B2D3400A800CE /* Main.storyboard in Resources */,
 				E5D70F6C225FDEB400224224 /* MenuScene.sks in Resources */,
 				E5AC43A3220B2D3400A800CE /* GameScene.sks in Resources */,
+				E5F0224D22767D05000EE09C /* LoadingScreen.sks in Resources */,
 				E5AC43B0220B2D3400A800CE /* Assets.xcassets in Resources */,
 				E5AC43B3220B2D3400A800CE /* LaunchScreen.storyboard in Resources */,
 				E5AC43A5220B2D3400A800CE /* Actions.sks in Resources */,
@@ -467,10 +494,13 @@
 				E5AC43A1220B2D3400A800CE /* AppDelegate.m in Sources */,
 				E561D18022496C6300D53055 /* Player.m in Sources */,
 				E5CE58802267D893002E3A8D /* SniperBullet.m in Sources */,
+				E5F0225122768F47000EE09C /* StunBullet.m in Sources */,
+				E5F022542277790E000EE09C /* ShovelWall.m in Sources */,
 				E50ABFBC224C35F600F12911 /* HealthBar.m in Sources */,
 				E51DCEEB2265361400829673 /* ThrowingStar.m in Sources */,
 				E5F92153224B1B9400667955 /* Grenade.m in Sources */,
 				E5BE8764225BD43C008F0A95 /* CooldownManager.m in Sources */,
+				E5F02249227678C2000EE09C /* LoadingScrene.m in Sources */,
 				E5D70F68225FB78A00224224 /* SceneManager.m in Sources */,
 				E51DCEEE22657A8900829673 /* StarPiece.m in Sources */,
 				E561D17A224961B900D53055 /* Wall.m in Sources */,

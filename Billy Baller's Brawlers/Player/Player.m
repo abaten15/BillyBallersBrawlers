@@ -13,9 +13,13 @@
 
 #import "Bullet.h"
 #import "ThrowingStar.h"
+#import "StunBullet.h"
+
 #import "Grenade.h"
 #import "SlimeBall.h"
 #import "SniperBullet.h"
+#import "ShovelWall.h"
+
 #import "HealthBar.h"
 #import "CategoryDefinitions.h"
 
@@ -52,6 +56,14 @@
 		player.mainCooldown = ABBY_MAIN_COOLDOWN;
 		player.specialCooldown = ABBY_SPECIAL_COOLDOWN;
 		break;
+	case HARRY_ID:
+		player = [Player spriteNodeWithImageNamed:HARRY_IMAGE_NAME];
+		player.speed = HARRY_SPEED;
+		maxHealth = HARRY_MAX_HEALTH;
+		player.shootingOffset = HARRY_SHOOTING_OFFSET;
+		player.mainCooldown = HARRY_MAIN_COOLDOWN;
+		player.specialCooldown = HARRY_SPECIAL_COOLDOWN;
+		break;
 	default:
 		player = [Player spriteNodeWithImageNamed:BILLY_IMAGE_NAME];
 		player.speed = BILLY_SPEED;
@@ -61,10 +73,11 @@
 		player.specialCooldown = BILLY_SPECIAL_COOLDOWN;
 		break;
 	}
+	
 	player.cooldownManager = [CooldownManager managerForBrawler:brawlerIDIn isOpponent:isOpponentIn];
 	[player addChild:player.cooldownManager];
 	
-	[player setZPosition:1];
+	[player setZPosition:2];
 	
 	player.gameServicer = gameServicer;
 	player.brawlerID = brawlerIDIn;
@@ -75,7 +88,7 @@
 	player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:PLAYER_SIZE.width/2];
 	player.physicsBody.categoryBitMask = playerCategory;
 	player.physicsBody.collisionBitMask = 0x0;
-	player.physicsBody.contactTestBitMask = projectileCategory | aoeCategory; // May need changing later
+	player.physicsBody.contactTestBitMask = projectileCategory | aoeCategory | playerWallCategory; // May need changing later
 	player.physicsBody.node.name = playerName;
 	player.physicsBody.affectedByGravity = NO;
 	player.physicsBody.dynamic = YES;
@@ -100,6 +113,7 @@
 	}
 	
 	player.isSlidding = NO;
+	player.isStunned = NO;
 	
 	return player;
 	
@@ -153,6 +167,8 @@
 		[self shootBulletAt:point going:dir];
 	} else if (self.brawlerID == ABBY_ID) {
 		[self shootThrowingStarAt:point going:dir];
+	} else if (self.brawlerID == HARRY_ID) {
+		[self shootStunBulletAt:point going:dir];
 	} else {
 		[self shootBulletAt:point going:dir];
 	}
@@ -169,19 +185,18 @@
 }
 
 - (void) shootBulletAt:(CGPoint)point going:(Direction)dir {
-	Bullet *bullet;
-	if (_isOpponent) {
-		bullet.name = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
-		bullet = [Bullet bulletAt:point going:dir isOpponents:_isOpponent];
-	} else {
-		bullet = [Bullet bulletAt:point going:dir isOpponents:_isOpponent];
-	}
+	Bullet *bullet = [Bullet bulletAt:point going:dir isOpponents:_isOpponent];
 	[[self parent] addChild:bullet];
 }
 
 - (void) shootThrowingStarAt:(CGPoint)point going:(Direction)dir {
 	ThrowingStar *star = [ThrowingStar throwingStarAt:point going:dir isOpponents:_isOpponent];
 	[[self parent] addChild:star];
+}
+
+- (void) shootStunBulletAt:(CGPoint)point going:(Direction)dir {
+	StunBullet *stunbullet = [StunBullet stunBulletAt:point going:dir isOpponents:_isOpponent];
+	[[self parent] addChild:stunbullet];
 }
 
 - (void) performSpecialAttack {
@@ -203,6 +218,8 @@
 		[self shootSlimeBallAt:point going:North];
 	} else if (_brawlerID == ABBY_ID) {
 		[self shootSniperBulletAt:point going:North];
+	} else if (_brawlerID == HARRY_ID) {
+		[self shootShovelWallAt:point going:North];
 	} else {
 		[self shootGrenadeAt:point going:North];
 	}
@@ -249,6 +266,16 @@
 	[[self parent] addChild:sniperBullet];
 }
 
+- (void) shootShovelWallAt:(CGPoint)point going:(Direction)dir {
+	ShovelWall *shovelWall;
+	if (_isOpponent) {
+		shovelWall = [ShovelWall shovelWallAt:point.x isOpponents:_isOpponent];
+	} else {
+		shovelWall = [ShovelWall shovelWallAt:point.x isOpponents:_isOpponent];
+	}
+	[[self parent] addChild:shovelWall];
+}
+
 - (void) updateShootingOffset {
 	
 }
@@ -258,7 +285,14 @@
 	self.flipped = !self.flipped;
 }
 
+- (void) getStunned {
+	self.isStunned = YES;
+	
+}
 
+- (void) endStun {
+	self.isStunned = NO;
+}
 
 @end
 

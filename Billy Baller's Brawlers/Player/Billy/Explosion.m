@@ -20,6 +20,8 @@
 + (instancetype) explosionAt:(CGPoint)point withDuration:(CGFloat)duration isOpponents:(BOOL)isOpponents {
 
 	Explosion *explosion = [Explosion spriteNodeWithImageNamed:EXPLOSION_IMAGE_NAME];
+	
+	[explosion setZPosition:3];
 
 	explosion.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:EXPLOSION_SIZE.width/2];
 	explosion.physicsBody.categoryBitMask = aoeCategory;

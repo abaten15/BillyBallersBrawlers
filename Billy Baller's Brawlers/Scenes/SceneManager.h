@@ -12,16 +12,19 @@
 #import <SpriteKit/SpriteKit.h>
 #import <GameplayKit/GameplayKit.h>
 
+#import "LoadingScreen.h"
+@class LoadingScreen;
 #import "MenuScene.h"
 @class MenuScene;
 #import "GameScene.h"
 @class GameScene;
-
 #import "ProfileLoader.h"
+@class ProfileLoader;
 
 #define MENU_SCENE_ID 0
 #define GAME_SCENE_ID 1
 
+#define LOADING_SCENE_FILE_NAME @"LoadingScreen"
 #define MENU_SCENE_FILE_NAME @"MenuScene"
 #define GAME_SCENE_FILE_NAME @"GameScene"
 
@@ -35,6 +38,7 @@
 
 @property (nonatomic) ProfileLoader *profileLoader;
 
+@property (nonatomic) LoadingScreen *loadingScene;
 @property (nonatomic) MenuScene *menuScene;
 @property (nonatomic) GameScene *gameScene;
 
@@ -47,6 +51,8 @@
 
 - (void) presentOpeningScene;
 - (void) presentSceneWithID:(int)idIn;
+
+- (void) parseJSON:(NSDictionary *)json;
 
 @end
 

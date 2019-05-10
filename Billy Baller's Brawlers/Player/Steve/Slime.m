@@ -42,7 +42,7 @@
 	
 	[retVal setPosition:location];
 	[retVal setSize:SLIME_SIZE];
-	[retVal setZPosition:2];
+	[retVal setZPosition:1];
 	
 	retVal.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:SLIME_SIZE];
 	retVal.physicsBody.categoryBitMask = aoeCategory;

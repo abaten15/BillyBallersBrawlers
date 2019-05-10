@@ -27,7 +27,7 @@
 	
 	[grenade setPosition:point];
 	[grenade setSize:GRENADE_SIZE];
-	[grenade setZPosition:5];
+	[grenade setZPosition:3];
 	
 	CGFloat totalDistance;
 	

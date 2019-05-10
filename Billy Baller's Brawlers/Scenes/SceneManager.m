@@ -30,33 +30,26 @@
 	self.viewForLoading = viewIn;
 	
 	_profileLoader = [[ProfileLoader alloc] init];
-//	NSDictionary *query = @{@"userid":@60};
-	/*
-	[_profileLoader push:nil keys:query file:nil completionHandler:^(NSData * _Nonnull data, NSURLResponse * _Nonnull response, NSError * _Nonnull error) {
-        NSLog(@"Got the result back.");
-        NSError *jsonError;
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSASCIIStringEncoding error:&jsonError];
-		
-		
-		
-        NSLog(@"JSON result is %@", json);
-//        [self performSelectorOnMainThread:@selector(updateDisplay:) withObject:json waitUntilDone:NO];
-		
-    }];
-    */
 	
+	GKScene *loadingScene = [GKScene sceneWithFileNamed:LOADING_SCENE_FILE_NAME];
 	GKScene *menuScene = [GKScene sceneWithFileNamed:MENU_SCENE_FILE_NAME];
 	GKScene *gameScene = [GKScene sceneWithFileNamed:GAME_SCENE_FILE_NAME];
 	
+	LoadingScreen *loadingScreenObj = (LoadingScreen *)loadingScene.rootNode;
 	MenuScene *menuSceneObj = (MenuScene *)menuScene.rootNode;
 	GameScene *gameSceneObj = (GameScene *)gameScene.rootNode;
+	loadingScreenObj.sceneManager = self;
+	loadingScreenObj.scaleMode = SKSceneScaleModeAspectFill;
 	menuSceneObj.sceneManager = self;
 	menuSceneObj.scaleMode = SKSceneScaleModeAspectFill;
 	gameSceneObj.sceneManager = self;
 	gameSceneObj.scaleMode = SKSceneScaleModeAspectFill;
 	
+	self.loadingScene = loadingScreenObj;
 	self.menuScene = menuSceneObj;
 	self.gameScene = gameSceneObj;
+	
+	[self.loadingScene loadingDelay];
 	
 	self.brawlerSelection = BILLY_ID;
 	
@@ -64,7 +57,7 @@
 }
 
 - (void) presentOpeningScene {
-	[_viewForLoading presentScene:_menuScene];
+	[_viewForLoading presentScene:_loadingScene];
 }
 
 - (void) presentSceneWithID:(int)idIn {
@@ -75,6 +68,10 @@
 		[_gameScene spawnPlayer:_menuScene.brawlerSelection];
 		[_viewForLoading presentScene:_gameScene transition:transition];
 	}
+}
+
+- (void) parseJSON:(NSDictionary *)json {
+
 }
 
 @end

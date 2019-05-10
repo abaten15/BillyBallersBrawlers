@@ -28,7 +28,7 @@
 	// Bullet init
 	[bullet setPosition:point];
 	[bullet setSize:BULLET_SIZE];
-	[bullet setZPosition:1];
+	[bullet setZPosition:3];
 	
 	// Bullet collision body
 	bullet.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:BULLET_SIZE.width/2];

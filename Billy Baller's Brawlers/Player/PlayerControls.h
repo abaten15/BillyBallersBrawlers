@@ -34,6 +34,8 @@
 #define FLIP_BUTTON_SIZE CGSizeMake(100,100)
 #define FLIP_BUTTON_NETWORK_PREFIX @"flipButton"
 
+#define PLAYER_BOUNCE_DATA @"playerBounce"
+
 @interface PlayerControls : SKNode
 
 @property (nonatomic) Player *playerToControl;
@@ -60,6 +62,15 @@
 - (void) performActionFromData:(NSData *)data;
 
 - (void) slidePlayerInDirection:(Direction)dir;
+
+@property (nonatomic) BOOL playerIsStunned;
+- (void) playerGotStunned;
+- (void) endPlayerStun;
+
+@property (nonatomic) BOOL playerIsBouncingOffWall;
+- (void) bouncePlayerInDirection:(Direction)dir bounceDistance:(CGFloat)bounceDistance;
+- (void) endPlayerBounce;
+- (void) sendBounceData:(CGFloat)bounceTo;
 
 @end
 

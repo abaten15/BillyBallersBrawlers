@@ -24,7 +24,7 @@
 	
 	[ball setPosition:point];
 	[ball setSize:SLIME_BALL_SIZE];
-	[ball setZPosition:2];
+	[ball setZPosition:3];
 
 	ball.isOpponents = isOpponentsIn;
 	

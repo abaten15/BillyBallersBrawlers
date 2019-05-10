@@ -9,17 +9,20 @@
 #ifndef ProfileLoader_h
 #define ProfileLoader_h
 
-#define SERVER_IP_ADDRESS @"http://192.168.1.17"
+#define SERVER_IP_ADDRESS @"http://149.125.51.67"
 #define PROFILE_PHP_PATH @"/~abaten15/billys/profile.php"
+
+#import "SceneManager.h"
+@class SceneManager;
 
 @interface ProfileLoader : NSObject
 
-- (id) init;
-
 @property (nonatomic) NSString *urlPath;
+@property (nonatomic) SceneManager *sceneManager;
 
-- (void) push:(NSString *)url keys:(NSDictionary *)keys file:(NSString *)file completionHandler:(void(^)(NSData *data, NSURLResponse *response, NSError *error))completionHandler;
+- (id) initWithManager:(SceneManager *)manager;
 
+- (void) parseJSONData:(NSDictionary *)json;
 
 @end
 

@@ -9,15 +9,20 @@
 #import <SpriteKit/SpriteKit.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 
+#import "MenuScene.h"
 #import "GameScene.h"
 #import "Background.h"
+
+#import "GameServicer.h"
+
 #import "Bullet.h"
 #import "ThrowingStar.h"
 #import "StarPiece.h"
-#import "GameServicer.h"
+#import "StunBullet.h"
+
 #import "Grenade.h"
 #import "SniperBullet.h"
-#import "MenuScene.h"
+#import "ShovelWall.h"
 
 @implementation GameScene {
     NSTimeInterval _lastUpdateTime;
@@ -137,6 +142,9 @@
 		
 		[self checkStarPieceContact:contact checkingName:nameToCheck isNameA:isNameA];
 		
+		[self checkStunBulletContact:contact checkingName:nameToCheck isNameA:isNameA];
+		
+		
 		[self checkExplosionContact:contact checkingName:nameToCheck isNameA:isNameA];
 		
 		if (isNameA) {
@@ -146,6 +154,8 @@
 		}
 		
 		[self checkSniperBulletContact:contact checkingName:nameToCheck isNameA:isNameA];
+		
+		[self checkShovelWallContact:contact checkingName:nameToCheck isNameA:isNameA];
 		
 	} else if ([nameA isEqualToString:opponentName] || [nameB isEqualToString:opponentName]) {
 		NSString *nameToCheck;
@@ -171,6 +181,12 @@
 				[contact.bodyB.node removeFromParent];
 			}
 		} else if ([nameToCheck isEqualToString:starPieceName]) {
+			if (isNameA) {
+				[contact.bodyA.node removeFromParent];
+			} else {
+				[contact.bodyB.node removeFromParent];
+			}
+		} else if ([nameToCheck isEqualToString:stunBulletName]) {
 			if (isNameA) {
 				[contact.bodyA.node removeFromParent];
 			} else {
@@ -283,7 +299,7 @@
 	
 	}
 	
-	if ([starPieceStr isEqualToString:starPieceName] & [postfix isEqualToString:OPPONENT_POSTFIX]) {
+	if ([starPieceStr isEqualToString:starPieceName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
 		
 		[_player takeDamage:STAR_PIECE_DAMAGE];
 		NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
@@ -296,6 +312,35 @@
 		}
 	}
 	
+}
+
+- (void) checkStunBulletContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA {
+	NSString *stunBulletStr = @"";
+	NSString *postfix = @"";
+	@try {
+		stunBulletStr = [nameToCheck substringToIndex:stunBulletName.length];
+		postfix = [nameToCheck substringFromIndex:stunBulletName.length];
+	}
+	@catch (NSException *e) {
+		return;
+	}
+	@finally{
+	
+	}
+	
+	if ([stunBulletStr isEqualToString:stunBulletName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
+		[_player takeDamage:STUN_BULLET_DAMAGE];
+		NSLog(@"should stun player");
+		[_playerControls playerGotStunned];
+		NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
+		NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
+		[_gameServicer sendData:data];
+		if (isNameA) {
+			[contact.bodyA.node removeFromParent];
+		} else {
+			[contact.bodyB.node removeFromParent];
+		}
+	}
 }
 
 - (void) checkExplosionContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA {
@@ -368,7 +413,7 @@
 	
 	}
 	
-	if ([sniperStr isEqualToString:sniperBulletName] & [postfix isEqualToString:OPPONENT_POSTFIX]) {
+	if ([sniperStr isEqualToString:sniperBulletName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
 		
 		[_player takeDamage:SNIPER_BULLET_DAMAGE];
 		NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
@@ -380,6 +425,42 @@
 			[contact.bodyB.node removeFromParent];
 		}
 	}
+}
+
+- (void) checkShovelWallContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA {
+
+	NSString *shovelWallStr = @"";
+	NSString *postfix = @"";
+	@try {
+		shovelWallStr = [nameToCheck substringToIndex:shovelWallName.length];
+		postfix = [nameToCheck substringFromIndex:shovelWallName.length];
+	}
+	@catch (NSException *e) {
+		return;
+	}
+	@finally {
+	
+	}
+	
+	if ([shovelWallStr isEqualToString:shovelWallName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
+		CGFloat playerX;
+		CGFloat wallX;
+		if (isNameA) {
+			wallX = contact.bodyA.node.position.x;
+			playerX = contact.bodyB.node.position.x;
+		} else {
+			wallX = contact.bodyB.node.position.x;
+			playerX = contact.bodyA.node.position.x;
+		}
+		Direction bounceDirection;
+		if (wallX < playerX) {
+			bounceDirection = East;
+		} else {
+			bounceDirection = West;
+		}
+		[_playerControls bouncePlayerInDirection:bounceDirection bounceDistance:SHOVEL_WALL_BOUNCINESS];
+	}
+	
 }
 
 - (void)touchDownAtPoint:(CGPoint)pos {

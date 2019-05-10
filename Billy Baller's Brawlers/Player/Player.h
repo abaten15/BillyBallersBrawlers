@@ -52,6 +52,14 @@
 #define ABBY_SPECIAL_COOLDOWN 2.5
 #define ABBY_MAX_HEALTH 90
 
+#define HARRY_ID 3
+#define HARRY_IMAGE_NAME @"Harry"
+#define HARRY_SPEED 27.0
+#define HARRY_SHOOTING_OFFSET CGPointMake(50, 50)
+#define HARRY_MAIN_COOLDOWN 1.25
+#define HARRY_SPECIAL_COOLDOWN 4.0
+#define HARRY_MAX_HEALTH 110
+
 @interface Player : SKSpriteNode
 
 @property (nonatomic) BOOL isOpponent;
@@ -83,10 +91,16 @@
 
 - (void) shootBulletAt:(CGPoint)point going:(Direction)dir;
 - (void) shootThrowingStarAt:(CGPoint)point going:(Direction)dir;
+- (void) shootStunBulletAt:(CGPoint)point going:(Direction)dir;
 
 - (void) shootGrenadeAt:(CGPoint)point going:(Direction)dir;
 - (void) shootSlimeBallAt:(CGPoint)point going:(Direction)dir;
 - (void) shootSniperBulletAt:(CGPoint)point going:(Direction)dir;
+- (void) shootShovelWallAt:(CGPoint)point going:(Direction)dir;
+
+@property (nonatomic) BOOL isStunned;
+- (void) getStunned;
+- (void) endStun;
 
 @property (nonatomic) BOOL flipped;
 @property (nonatomic) CGPoint shootingOffset;

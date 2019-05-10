@@ -25,7 +25,7 @@
 	
 	[sniperBullet setPosition:point];
 	[sniperBullet setSize:SNIPER_BULLET_SIZE];
-	[sniperBullet setZPosition:1];
+	[sniperBullet setZPosition:3];
 	
 	sniperBullet.isOpponents = isOpponentsIn;
 	

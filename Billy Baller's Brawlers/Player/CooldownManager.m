@@ -14,6 +14,7 @@
 #import "Player.h"
 #import "Bullet.h"
 #import "ThrowingStar.h"
+#import "StunBullet.h"
 #import "Grenade.h"
 #import "SlimeBall.h"
 #import "SniperBullet.h"
@@ -39,6 +40,8 @@
 	} else if (brawlerID == ABBY_ID) {
 		mainImageName = THROWING_STAR_IMAGE_NAME;
 		specialImageName = SNIPER_BULLET_IMAGE_NAME;
+	} else if (brawlerID == HARRY_ID) {
+		mainImageName = STUN_BULLET_IMAGE_NAME;
 	}
 	
 	manager.mainNode = [SKSpriteNode spriteNodeWithImageNamed:mainImageName];

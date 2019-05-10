@@ -11,6 +11,9 @@
 
 #import "PlayerControls.h"
 
+#import "StunBullet.h"
+#import "ShovelWall.h"
+
 @implementation PlayerControls {
 
 }
@@ -42,11 +45,18 @@
 	[controls.flipBrawlerButton setSize:FLIP_BUTTON_SIZE];
 	[controls addChild:controls.flipBrawlerButton];
 	
+	controls.playerIsStunned = NO;
+	controls.playerIsBouncingOffWall = NO;
+	
 	return controls;
 	
 }
 
 - (void) checkControlsDown:(CGPoint)point {
+
+	if (_playerIsStunned == YES) {
+		return;
+	}
 
 	if ([_mainAttackButton containsPoint:point]) {
 		[self mainAttackButtonPressed:point sendData:YES];
@@ -57,13 +67,17 @@
 	else if ([_flipBrawlerButton containsPoint:point]) {
 		[self flipBrawlerButtonPressed:point sendData:YES];
 	}
-	else if ([_slider containsPoint:point]) {
+	else if ([_slider containsPoint:point] && _playerIsBouncingOffWall == NO) {
 		[self sliderMotion:point.x sendData:YES];
 	}
 
 }
 
 - (void) checkControlsMoved:(CGPoint)point {
+
+	if (_playerIsStunned == YES) {
+		return;
+	}
 
 	if ([_slider containsPoint:point]) {
 		[self sliderMotion:point.x sendData:YES];
@@ -79,6 +93,10 @@
 	if (_playerToControl.isSlidding) {
 		return;
 	}
+	if (_playerIsBouncingOffWall) {
+		return;
+	}
+	NSLog(@"moving player");
 	if (newX > SLIDER_MAX_X) {
 		newX = SLIDER_MAX_X;
 	} else if (newX < -SLIDER_MAX_X) {
@@ -135,10 +153,12 @@
 	} else if ([string isEqualToString:SPECIAL_BUTTON_NETWORK_PREFIX]) {
 		[self specialAttackButtonPressed:point sendData:NO];
 		return;
+	} else if ([string isEqualToString:PLAYER_BOUNCE_DATA]) {
+		
 	}
 	
-	NSString *prefix;
-	NSString *newX;
+	NSString *prefix = @"";
+	NSString *newX = @"";
 	@try {
 		prefix = [string substringToIndex:SLIDER_NETWORK_PREFIX.length];
 		newX = [string substringFromIndex:SLIDER_NETWORK_PREFIX.length];
@@ -154,6 +174,31 @@
 		CGFloat newXFloat = [newX intValue];
 		[self sliderMotion:newXFloat sendData:NO];
 	}
+	
+	
+	prefix = @"";
+	newX = @"";
+	
+	@try {
+		prefix = [string substringToIndex:PLAYER_BOUNCE_DATA.length];
+		newX = [string substringFromIndex:PLAYER_BOUNCE_DATA.length];
+	}
+	@catch (NSException *e) {
+	
+	}
+	@finally {
+	
+	}
+	
+	if ([prefix isEqualToString:PLAYER_BOUNCE_DATA]) {
+		CGFloat newXFloat = [newX intValue];
+		[_playerToControl removeAllActions];
+		[self sliderMotion:newXFloat sendData:NO];
+		self.playerIsBouncingOffWall = YES;
+		[self performSelector:@selector(endPlayerBounce) withObject:nil afterDelay:SHOVEL_WALL_DURATION/2.0];
+	}
+	
+	
 }
 
 - (void) slidePlayerInDirection:(Direction)dir {
@@ -163,6 +208,45 @@
 		[self sliderMotion:-1 * SLIDER_MAX_X sendData:YES];
 	}
 	_playerToControl.isSlidding = YES;
+}
+
+- (void) playerGotStunned {
+	[self sliderMotion:_playerToControl.position.x sendData:YES];
+	_playerIsStunned = YES;
+	NSLog(@"player got stunned");
+	[self performSelector:@selector(endPlayerStun) withObject:nil afterDelay:STUN_BULLET_STUN_DURATION];
+}
+
+- (void) endPlayerStun {
+
+	_playerIsStunned = NO;
+	
+}
+
+- (void) bouncePlayerInDirection:(Direction)dir bounceDistance:(CGFloat)bounceDistance {
+	NSLog(@"bouncing player");
+	CGFloat xToGoTo;
+	if (dir == West) {
+		xToGoTo = _playerToControl.position.x - bounceDistance;
+	} else {
+		xToGoTo = _playerToControl.position.x + bounceDistance;
+	}
+	[_playerToControl removeAllActions];
+	[self sliderMotion:xToGoTo sendData:YES];
+	
+	_playerIsBouncingOffWall = YES;
+	[self performSelector:@selector(endPlayerBounce) withObject:nil afterDelay:SHOVEL_WALL_DURATION];
+}
+
+- (void) sendBounceData:(CGFloat)bounceTo {
+	NSString *bounceToStr = [[NSNumber numberWithInt:(int)bounceTo] stringValue];
+	NSString *bounceData = [PLAYER_BOUNCE_DATA stringByAppendingString:bounceToStr];
+	[_gameServicer sendData:bounceData];
+}
+
+- (void) endPlayerBounce {
+	NSLog(@"stop plaayer bouncing");
+	_playerIsBouncingOffWall = NO;
 }
 
 @end

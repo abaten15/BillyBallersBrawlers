@@ -22,6 +22,7 @@
 	
 	[node setPosition:BACKGROUND_POSITION];
 	[node setSize:BACKGROUND_SIZE];
+	[node setZPosition:0];
 	
 	// Creating Wall Objects
 	node.wallTL = [Wall wallAtLocation:WALL_TL];
