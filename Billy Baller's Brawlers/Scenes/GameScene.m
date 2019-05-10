@@ -108,10 +108,8 @@
 	}
 	NSString *nameA = contact.bodyA.node.name;
 	NSString *nameB = contact.bodyB.node.name;
-//	NSString *opponentBulletStr = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
 	
 	if ([nameA isEqualToString:wallName] || [nameB isEqualToString:wallName]) {
-		
 		NSString *nameToCheck;
 		BOOL isNameA = NO;
 		if ([nameA isEqualToString:wallName]){
@@ -143,7 +141,6 @@
 		[self checkStarPieceContact:contact checkingName:nameToCheck isNameA:isNameA];
 		
 		[self checkStunBulletContact:contact checkingName:nameToCheck isNameA:isNameA];
-		
 		
 		[self checkExplosionContact:contact checkingName:nameToCheck isNameA:isNameA];
 		
@@ -198,6 +195,23 @@
 			} else {
 				[contact.bodyB.node removeFromParent];
 			}
+		} else if ([nameToCheck isEqualToString:shovelWallName]) {
+			CGFloat playerX;
+			CGFloat wallX;
+			if (isNameA) {
+				wallX = contact.bodyA.node.position.x;
+				playerX = contact.bodyB.node.position.x;
+			} else {
+				wallX = contact.bodyB.node.position.x;
+				playerX = contact.bodyA.node.position.x;
+			}
+			Direction bounceDirection;
+			if (wallX < playerX) {
+				bounceDirection = East;
+			} else {
+				bounceDirection = West;
+			}
+			[_opponentControls bouncePlayerInDirection:bounceDirection bounceDistance:SHOVEL_WALL_BOUNCINESS takeDamage:NO damageToTake:0];
 		}
 	}
 
@@ -458,7 +472,7 @@
 		} else {
 			bounceDirection = West;
 		}
-		[_playerControls bouncePlayerInDirection:bounceDirection bounceDistance:SHOVEL_WALL_BOUNCINESS];
+		[_playerControls bouncePlayerInDirection:bounceDirection bounceDistance:SHOVEL_WALL_BOUNCINESS takeDamage:YES damageToTake:SHOVEL_WALL_DAMAGE];
 	}
 	
 }

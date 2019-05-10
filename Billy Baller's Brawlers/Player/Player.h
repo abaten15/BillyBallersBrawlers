@@ -109,6 +109,10 @@
 
 @property (nonatomic) BOOL isSlidding;
 
+@property (nonatomic) BOOL isBouncing;
+- (void) stopBouncing;
+- (void) bounceTo:(CGFloat)newX takeDamage:(BOOL)shouldTakeDamage damageToTake:(int)damageToTake;
+
 @end
 
 #endif /* Player_h */

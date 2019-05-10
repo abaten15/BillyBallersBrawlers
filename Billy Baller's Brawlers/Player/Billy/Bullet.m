@@ -28,13 +28,13 @@
 	// Bullet init
 	[bullet setPosition:point];
 	[bullet setSize:BULLET_SIZE];
-	[bullet setZPosition:3];
+	[bullet setZPosition:1];
 	
 	// Bullet collision body
 	bullet.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:BULLET_SIZE.width/2];
 	bullet.physicsBody.categoryBitMask = projectileCategory;
 	bullet.physicsBody.collisionBitMask = 0x0;
-	bullet.physicsBody.contactTestBitMask = wallCategory | opponentCategory | playerCategory;
+	bullet.physicsBody.contactTestBitMask = opponentCategory | playerCategory | wallCategory;
 	bullet.physicsBody.node.name = bulletName;
 	bullet.physicsBody.affectedByGravity = NO;
 	bullet.physicsBody.dynamic = NO;
@@ -42,6 +42,7 @@
 	
 	if (isOpponents) {
 		bullet.name = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
+		bullet.physicsBody.node.name = [bulletName stringByAppendingString:OPPONENT_POSTFIX];
 	}
 	
 	// Actions

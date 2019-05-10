@@ -114,6 +114,7 @@
 	
 	player.isSlidding = NO;
 	player.isStunned = NO;
+	player.isBouncing = NO;
 	
 	return player;
 	
@@ -126,6 +127,9 @@
 }
 
 - (void) moveTo:(CGFloat)newX {
+	if (_isBouncing) {
+		return;
+	}
 	if (_isSlidding) {
 		int x = [self position].x;
 		if (x > 0 && x != SLIDER_MAX_X) {
@@ -142,6 +146,23 @@
 	CGFloat duration = ((CGFloat)abs((int)(newX - self.position.x))) / self.speed;
 	SKAction *motion = [SKAction moveTo:CGPointMake(newX, self.position.y) duration:duration];
 	[self runAction:motion];
+}
+
+
+- (void) bounceTo:(CGFloat)newX takeDamage:(BOOL)shouldTakeDamage damageToTake:(int)damageToTake {
+	if (_isBouncing) {
+		return;
+	}
+	_isBouncing = YES;
+	CGFloat duration = ((CGFloat)abs((int)(newX - self.position.x))) / self.speed;
+	SKAction *motion = [SKAction moveTo:CGPointMake(newX, self.position.y) duration:duration];
+	SKAction *endBounceAction = [SKAction performSelector:@selector(stopBouncing) onTarget:self];
+	SKAction *sequence = [SKAction sequence:@[motion, endBounceAction]];
+	[self runAction:sequence];
+}
+
+- (void) stopBouncing {
+	_isBouncing = NO;
 }
 
 - (void) performMainAttack {

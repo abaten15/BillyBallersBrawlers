@@ -68,7 +68,7 @@
 - (void) endPlayerStun;
 
 @property (nonatomic) BOOL playerIsBouncingOffWall;
-- (void) bouncePlayerInDirection:(Direction)dir bounceDistance:(CGFloat)bounceDistance;
+- (void) bouncePlayerInDirection:(Direction)dir bounceDistance:(CGFloat)bounceDistance takeDamage:(BOOL)shouldTakeDamage damageToTake:(int)damageToTake;
 - (void) endPlayerBounce;
 - (void) sendBounceData:(CGFloat)bounceTo;
 

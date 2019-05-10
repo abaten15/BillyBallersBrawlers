@@ -14,7 +14,7 @@
 #define WALL_IMAGE_NAME @"Wall"
 
 #define WALL_SIZE CGSizeMake(200, 80)
-#define WALL_PHYSICS_SIZE CGSizeMake(200, 40)
+#define WALL_PHYSICS_SIZE CGSizeMake(200, 80)
 
 #define WALL_TL 0
 #define WALL_TL_POS CGPointMake(-150, 360)

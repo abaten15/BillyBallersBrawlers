@@ -96,7 +96,6 @@
 	if (_playerIsBouncingOffWall) {
 		return;
 	}
-	NSLog(@"moving player");
 	if (newX > SLIDER_MAX_X) {
 		newX = SLIDER_MAX_X;
 	} else if (newX < -SLIDER_MAX_X) {
@@ -223,7 +222,8 @@
 	
 }
 
-- (void) bouncePlayerInDirection:(Direction)dir bounceDistance:(CGFloat)bounceDistance {
+- (void) bouncePlayerInDirection:(Direction)dir bounceDistance:(CGFloat)bounceDistance takeDamage:(BOOL)shouldTakeDamage damageToTake:(int)damageToTake {
+
 	NSLog(@"bouncing player");
 	CGFloat xToGoTo;
 	if (dir == West) {
@@ -232,10 +232,9 @@
 		xToGoTo = _playerToControl.position.x + bounceDistance;
 	}
 	[_playerToControl removeAllActions];
-	[self sliderMotion:xToGoTo sendData:YES];
 	
-	_playerIsBouncingOffWall = YES;
-	[self performSelector:@selector(endPlayerBounce) withObject:nil afterDelay:SHOVEL_WALL_DURATION];
+	[_playerToControl bounceTo:xToGoTo takeDamage:shouldTakeDamage damageToTake:damageToTake];
+	
 }
 
 - (void) sendBounceData:(CGFloat)bounceTo {

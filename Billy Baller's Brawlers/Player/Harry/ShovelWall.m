@@ -45,6 +45,12 @@
 		shovelWall.name = [shovelWallName stringByAppendingString:OPPONENT_POSTFIX];
 	}
 	
+	SKAction *delayAction = [SKAction waitForDuration:SHOVEL_WALL_DURATION];
+	SKAction *deathAction = [SKAction performSelector:@selector(removeFromParent) withObject:nil];
+	SKAction *sequence = [SKAction sequence:@[delayAction, deathAction]];
+	
+	[shovelWall runAction:sequence];
+	
 	return shovelWall;
 
 }
