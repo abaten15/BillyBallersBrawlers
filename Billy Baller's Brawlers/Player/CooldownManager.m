@@ -12,9 +12,12 @@
 #import <SpriteKit/SpriteKit.h>
 
 #import "Player.h"
+
 #import "Bullet.h"
 #import "ThrowingStar.h"
 #import "StunBullet.h"
+#import "Drone.h"
+
 #import "Grenade.h"
 #import "SlimeBall.h"
 #import "SniperBullet.h"
@@ -44,6 +47,8 @@
 	} else if (brawlerID == HARRY_ID) {
 		mainImageName = STUN_BULLET_IMAGE_NAME;
 		specialImageName = SHOVEL_ICON_IMAGE_NAME;
+	} else if (brawlerID == TIM_ID) {
+		mainImageName = DRONE_IMAGE_NAME_1;
 	}
 	
 	manager.mainNode = [SKSpriteNode spriteNodeWithImageNamed:mainImageName];

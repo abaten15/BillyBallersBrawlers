@@ -93,7 +93,7 @@
 - (void)billySelectPressed {
 	[_selectBorder setPosition:BILLY_SELECT_POSITION];
 	[_selectBorder setSize:BILLY_SELECT_SIZE];
-	_brawlerSelection = BILLY_ID;
+	_brawlerSelection = TIM_ID;
 }
 
 - (void)steveSelectPressed {

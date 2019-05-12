@@ -14,6 +14,7 @@
 #import "Bullet.h"
 #import "ThrowingStar.h"
 #import "StunBullet.h"
+#import "Drone.h"
 
 #import "Grenade.h"
 #import "SlimeBall.h"
@@ -63,6 +64,14 @@
 		player.shootingOffset = HARRY_SHOOTING_OFFSET;
 		player.mainCooldown = HARRY_MAIN_COOLDOWN;
 		player.specialCooldown = HARRY_SPECIAL_COOLDOWN;
+		break;
+	case TIM_ID:
+		player = [Player spriteNodeWithImageNamed:TIM_IMAGE_NAME];
+		player.speed = TIM_SPEED;
+		maxHealth = TIM_MAX_HEALTH;
+		player.shootingOffset = TIM_SHOOTING_OFFSET;
+		player.mainCooldown = TIM_MAIN_COOLDOWN;
+		player.specialCooldown = TIM_SPECIAL_COOLDOWN;
 		break;
 	default:
 		player = [Player spriteNodeWithImageNamed:BILLY_IMAGE_NAME];
@@ -190,6 +199,8 @@
 		[self shootThrowingStarAt:point going:dir];
 	} else if (self.brawlerID == HARRY_ID) {
 		[self shootStunBulletAt:point going:dir];
+	} else if (self.brawlerID == TIM_ID) {
+		[self launchDroneAt:point];
 	} else {
 		[self shootBulletAt:point going:dir];
 	}
@@ -218,6 +229,11 @@
 - (void) shootStunBulletAt:(CGPoint)point going:(Direction)dir {
 	StunBullet *stunbullet = [StunBullet stunBulletAt:point going:dir isOpponents:_isOpponent];
 	[[self parent] addChild:stunbullet];
+}
+
+- (void) launchDroneAt:(CGPoint)point {
+	Drone *drone = [Drone droneAt:point isOpponents:_isOpponent];
+	[[self parent] addChild:drone];
 }
 
 - (void) performSpecialAttack {

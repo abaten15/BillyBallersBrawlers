@@ -54,11 +54,19 @@
 
 #define HARRY_ID 3
 #define HARRY_IMAGE_NAME @"Harry"
-#define HARRY_SPEED 27.0
+#define HARRY_SPEED 30.0
 #define HARRY_SHOOTING_OFFSET CGPointMake(50, 50)
 #define HARRY_MAIN_COOLDOWN 1.25
 #define HARRY_SPECIAL_COOLDOWN 4.0
 #define HARRY_MAX_HEALTH 110
+
+#define TIM_ID 4
+#define TIM_IMAGE_NAME @"Tim"
+#define TIM_SPEED 35.0
+#define TIM_SHOOTING_OFFSET CGPointMake(50, 50)
+#define TIM_MAIN_COOLDOWN 2.0
+#define TIM_SPECIAL_COOLDOWN 3.0
+#define TIM_MAX_HEALTH 100
 
 @interface Player : SKSpriteNode
 
@@ -92,6 +100,7 @@
 - (void) shootBulletAt:(CGPoint)point going:(Direction)dir;
 - (void) shootThrowingStarAt:(CGPoint)point going:(Direction)dir;
 - (void) shootStunBulletAt:(CGPoint)point going:(Direction)dir;
+- (void) launchDroneAt:(CGPoint)point;
 
 - (void) shootGrenadeAt:(CGPoint)point going:(Direction)dir;
 - (void) shootSlimeBallAt:(CGPoint)point going:(Direction)dir;
