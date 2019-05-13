@@ -19,6 +19,7 @@
 #import "Grenade.h"
 #import "SlimeBall.h"
 #import "SniperBullet.h"
+#import "ShovelPath.h"
 #import "ShovelWall.h"
 #import "TommyTurret.h"
 
@@ -33,52 +34,70 @@
 
 	Player *player;
 	int maxHealth;
+	CGSize playerSize = PLAYER_SIZE;
+	CGFloat physicsBodySize = PLAYER_SIZE.width/2.0;
 	switch (brawlerIDIn) {
 	case BILLY_ID:
 		player = [Player spriteNodeWithImageNamed:BILLY_IMAGE_NAME];
 		player.speed = BILLY_SPEED;
 		maxHealth = BILLY_MAX_HEALTH;
-		player.shootingOffset = BILLY_MAIN_OFFSET;
+		player.mainShootingOffset = BILLY_MAIN_OFFSET;
+		player.specialShootingOffset = BILLY_SPECIAL_OFFSET;
 		player.mainCooldown = BILLY_MAIN_COOLDOWN;
 		player.specialCooldown = BILLY_SPECIAL_COOLDOWN;
+		playerSize = BILLY_PLAYER_SIZE;
+		physicsBodySize = BILLY_PHYSICS_BODY_SIZE.width/2.0;
 		break;
 	case STEVE_ID:
 		player = [Player spriteNodeWithImageNamed:STEVE_IMAGE_NAME];
 		player.speed = STEVE_SPEED;
 		maxHealth = STEVE_MAX_HEALTH;
-		player.shootingOffset = STEVE_SHOOTING_OFFSET;
+		player.mainShootingOffset = STEVE_MAIN_OFFSET;
+		player.specialShootingOffset = STEVE_SPECIAL_OFFSET;
 		player.mainCooldown = STEVE_MAIN_COOLDOWN;
 		player.specialCooldown = STEVE_SPECIAL_COOLDOWN;
+		playerSize = STEVE_PLAYER_SIZE;
+		physicsBodySize = STEVE_PHYSICS_BODY_SIZE.width/2.0;
 		break;
 	case ABBY_ID:
 		player = [Player spriteNodeWithImageNamed:ABBY_IMAGE_NAME];
 		player.speed = ABBY_SPEED;
 		maxHealth = ABBY_MAX_HEALTH;
-		player.shootingOffset = ABBY_SHOOTING_OFFSET;
+		player.mainShootingOffset = ABBY_MAIN_OFFSET;
+		player.specialShootingOffset = ABBY_SPECIAL_OFFSET;
 		player.mainCooldown = ABBY_MAIN_COOLDOWN;
 		player.specialCooldown = ABBY_SPECIAL_COOLDOWN;
+		playerSize = ABBY_PLAYER_SIZE;
+		physicsBodySize = ABBY_PHYSICS_BODY_SIZE.width/2.0;
 		break;
 	case HARRY_ID:
 		player = [Player spriteNodeWithImageNamed:HARRY_IMAGE_NAME];
 		player.speed = HARRY_SPEED;
 		maxHealth = HARRY_MAX_HEALTH;
-		player.shootingOffset = HARRY_SHOOTING_OFFSET;
+		player.mainShootingOffset = HARRY_MAIN_OFFSET;
+		player.specialShootingOffset = HARRY_SPECIAL_OFFSET;
 		player.mainCooldown = HARRY_MAIN_COOLDOWN;
 		player.specialCooldown = HARRY_SPECIAL_COOLDOWN;
+		playerSize = HARRY_PLAYER_SIZE;
+		physicsBodySize = HARRY_PHYSICS_BODY_SIZE.width/2.0;
 		break;
 	case TIM_ID:
 		player = [Player spriteNodeWithImageNamed:TIM_IMAGE_NAME];
 		player.speed = TIM_SPEED;
 		maxHealth = TIM_MAX_HEALTH;
-		player.shootingOffset = TIM_SHOOTING_OFFSET;
+		player.mainShootingOffset = TIM_MAIN_OFFSET;
+		player.specialShootingOffset = TIM_SPECIAL_OFFSET;
 		player.mainCooldown = TIM_MAIN_COOLDOWN;
 		player.specialCooldown = TIM_SPECIAL_COOLDOWN;
+		playerSize = TIM_PLAYER_SIZE;
+		physicsBodySize = TIM_PHYSICS_BODY_SIZE.width/2.0;
 		break;
 	default:
 		player = [Player spriteNodeWithImageNamed:BILLY_IMAGE_NAME];
 		player.speed = BILLY_SPEED;
 		maxHealth = BILLY_MAX_HEALTH;
-		player.shootingOffset = BILLY_MAIN_OFFSET;
+		player.mainShootingOffset = BILLY_MAIN_OFFSET;
+		player.specialShootingOffset = BILLY_SPECIAL_OFFSET;
 		player.mainCooldown = BILLY_MAIN_COOLDOWN;
 		player.specialCooldown = BILLY_SPECIAL_COOLDOWN;
 		break;
@@ -95,7 +114,7 @@
 	player.canShootMain = YES;
 	player.canShootSpecial = YES;
 	
-	player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:PLAYER_SIZE.width/2];
+	player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:physicsBodySize];
 	player.physicsBody.categoryBitMask = playerCategory;
 	player.physicsBody.collisionBitMask = 0x0;
 	player.physicsBody.contactTestBitMask = projectileCategory | aoeCategory | playerWallCategory; // May need changing later
@@ -105,7 +124,7 @@
 	player.name = playerName;
 	
 	[player setPosition:PLAYER_POSITION];
-	[player setSize:PLAYER_SIZE];
+	[player setSize:playerSize];
 	
 	HealthBar *healthBar = [HealthBar healthBarWithMaxHealth:maxHealth withServicer:player.gameServicer];
 	player.healthBar = healthBar;
@@ -117,7 +136,8 @@
 		player.physicsBody.categoryBitMask = opponentCategory;
 		player.name = opponentName;
 		player.physicsBody.node.name = opponentName;
-		player.shootingOffset = CGPointMake(player.shootingOffset.x, player.shootingOffset.y * -1);
+		player.mainShootingOffset = CGPointMake(player.mainShootingOffset.x, player.mainShootingOffset.y * -1);
+		player.specialShootingOffset = CGPointMake(player.specialShootingOffset.x, player.specialShootingOffset.y * -1);
 		player.yScale *= -1;
 		player.position = CGPointMake(player.position.x, player.position.y * -1);
 	}
@@ -183,10 +203,10 @@
 	int flippedOffset = 0;
 	CGPoint point;
 	if (_flipped) {
-		flippedOffset = _shootingOffset.x * -2;
+		flippedOffset = _mainShootingOffset.x * -2;
 	}
 	
-	point = CGPointMake(_shootingOffset.x + self.position.x + flippedOffset, _shootingOffset.y + self.position.y);
+	point = CGPointMake(_mainShootingOffset.x + self.position.x + flippedOffset, _mainShootingOffset.y + self.position.y);
 	Direction dir = North;
 	if (_isOpponent) {
 		dir = South;
@@ -245,10 +265,10 @@
 	
 	int flippedOffset = 0;
 	if (_flipped) {
-		flippedOffset = _shootingOffset.x * -2;
+		flippedOffset = _specialShootingOffset.x * -2;
 	}
 	
-	CGPoint point = CGPointMake(_shootingOffset.x + self.position.x + flippedOffset, _shootingOffset.y + self.position.y);
+	CGPoint point = CGPointMake(_specialShootingOffset.x + self.position.x + flippedOffset, _specialShootingOffset.y + self.position.y);
 	
 	if (_brawlerID == BILLY_ID) {
 		[self shootGrenadeAt:point going:North];
@@ -263,7 +283,7 @@
 	} else {
 		[self shootGrenadeAt:point going:North];
 	}
-	
+	 
 	_canShootSpecial = NO;
 	[_cooldownManager setCanShootSpecial:_canShootSpecial];
 	[self performSelector:@selector(endSpecialCooldown) withObject:nil afterDelay:_specialCooldown];
@@ -307,6 +327,12 @@
 }
 
 - (void) shootShovelWallAt:(CGPoint)point going:(Direction)dir {
+
+	CGPoint spawnPoint = CGPointMake(point.x, point.y + SHOVEL_PATH_SIZE.height/2);
+	ShovelPath *shovelPath = [ShovelPath shovelPathAt:spawnPoint isOpponents:_isOpponent];
+	[self.parent addChild:shovelPath];
+
+	/*
 	ShovelWall *shovelWall;
 	if (_isOpponent) {
 		shovelWall = [ShovelWall shovelWallAt:point.x isOpponents:_isOpponent];
@@ -314,6 +340,8 @@
 		shovelWall = [ShovelWall shovelWallAt:point.x isOpponents:_isOpponent];
 	}
 	[[self parent] addChild:shovelWall];
+	*/
+	
 }
 
 - (void) spawnTommyTurretAt:(CGPoint)point {

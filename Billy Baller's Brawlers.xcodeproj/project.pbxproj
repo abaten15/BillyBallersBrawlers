@@ -14,6 +14,7 @@
 		E5234E4722888375000CABAB /* DroneArtillery.m in Sources */ = {isa = PBXBuildFile; fileRef = E5234E4622888375000CABAB /* DroneArtillery.m */; };
 		E5234E4A22889C72000CABAB /* DroneArtilleryExplosion.m in Sources */ = {isa = PBXBuildFile; fileRef = E5234E4922889C72000CABAB /* DroneArtilleryExplosion.m */; };
 		E5234E4D2288E1F1000CABAB /* TommyTurret.m in Sources */ = {isa = PBXBuildFile; fileRef = E5234E4C2288E1F1000CABAB /* TommyTurret.m */; };
+		E5234E5022894007000CABAB /* ShovelPath.m in Sources */ = {isa = PBXBuildFile; fileRef = E5234E4F22894007000CABAB /* ShovelPath.m */; };
 		E535D7A7225D5FEB009C6F95 /* Slime.m in Sources */ = {isa = PBXBuildFile; fileRef = E535D7A6225D5FEB009C6F95 /* Slime.m */; };
 		E54ACA40227232E10050D018 /* ProfileLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = E54ACA3F227232E10050D018 /* ProfileLoader.m */; };
 		E55560E02287AF4600613425 /* Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = E55560DF2287AF4600613425 /* Animation.m */; };
@@ -82,6 +83,8 @@
 		E5234E4922889C72000CABAB /* DroneArtilleryExplosion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DroneArtilleryExplosion.m; sourceTree = "<group>"; };
 		E5234E4B2288E1A0000CABAB /* TommyTurret.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TommyTurret.h; sourceTree = "<group>"; };
 		E5234E4C2288E1F1000CABAB /* TommyTurret.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TommyTurret.m; sourceTree = "<group>"; };
+		E5234E4E22893FF2000CABAB /* ShovelPath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShovelPath.h; sourceTree = "<group>"; };
+		E5234E4F22894007000CABAB /* ShovelPath.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShovelPath.m; sourceTree = "<group>"; };
 		E52B74F1224EB7C500630F75 /* CategoryDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoryDefinitions.h; sourceTree = "<group>"; };
 		E535D7A5225D5FD8009C6F95 /* Slime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Slime.h; sourceTree = "<group>"; };
 		E535D7A6225D5FEB009C6F95 /* Slime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Slime.m; sourceTree = "<group>"; };
@@ -343,6 +346,8 @@
 			children = (
 				E5F0224F22768EC5000EE09C /* StunBullet.h */,
 				E5F0225022768F47000EE09C /* StunBullet.m */,
+				E5234E4E22893FF2000CABAB /* ShovelPath.h */,
+				E5234E4F22894007000CABAB /* ShovelPath.m */,
 				E5F0225222777905000EE09C /* ShovelWall.h */,
 				E5F022532277790E000EE09C /* ShovelWall.m */,
 			);
@@ -531,6 +536,7 @@
 				E5CE58802267D893002E3A8D /* SniperBullet.m in Sources */,
 				E5F0225122768F47000EE09C /* StunBullet.m in Sources */,
 				E5F022542277790E000EE09C /* ShovelWall.m in Sources */,
+				E5234E5022894007000CABAB /* ShovelPath.m in Sources */,
 				E50ABFBC224C35F600F12911 /* HealthBar.m in Sources */,
 				E51DCEEB2265361400829673 /* ThrowingStar.m in Sources */,
 				E5F92153224B1B9400667955 /* Grenade.m in Sources */,

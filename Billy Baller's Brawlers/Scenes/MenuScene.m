@@ -72,6 +72,12 @@
 	[_harrySelect setZPosition:1];
 	[self addChild:_harrySelect];
 	
+	_timSelect = [SKSpriteNode spriteNodeWithImageNamed:TIM_SELECT_IMAGE_NAME];
+	[_timSelect setSize:TIM_SELECT_SIZE];
+	[_timSelect setPosition:TIM_SELECT_POSITION];
+	[_timSelect setZPosition:1];
+	[self addChild:_timSelect];
+	
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -87,13 +93,15 @@
 		[self abbySelectPressed];
 	} else if ([_harrySelect containsPoint:point]) {
 		[self harrySelectPressed];
+	} else if ([_timSelect containsPoint:point]) {
+		[self timSelectPressed];
 	}
 }
 
 - (void)billySelectPressed {
 	[_selectBorder setPosition:BILLY_SELECT_POSITION];
 	[_selectBorder setSize:BILLY_SELECT_SIZE];
-	_brawlerSelection = TIM_ID;
+	_brawlerSelection = BILLY_ID;
 }
 
 - (void)steveSelectPressed {
@@ -112,6 +120,12 @@
 	[_selectBorder setPosition:HARRY_SELECT_POSITION];
 	[_selectBorder setSize:HARRY_SELECT_SIZE];
 	_brawlerSelection = HARRY_ID;
+}
+
+- (void)timSelectPressed {
+	[_selectBorder setPosition:TIM_SELECT_POSITION];
+	[_selectBorder setSize:TIM_SELECT_SIZE];
+	_brawlerSelection = TIM_ID;
 }
 
 - (void)update:(CFTimeInterval)currentTime {

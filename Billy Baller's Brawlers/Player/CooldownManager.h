@@ -12,8 +12,8 @@
 #import <SpriteKit/SpriteKit.h>
 
 #define CM_NODE_SIZE CGSizeMake(20, 20)
-#define CM_MAIN_NODE_OFFSET CGPointMake(70, 70)
-#define CM_SPECIAL_NODE_OFFSET CGPointMake(70, 40)
+#define CM_MAIN_NODE_OFFSET CGPointMake(-80, 70)
+#define CM_SPECIAL_NODE_OFFSET CGPointMake(-80, 40)
 
 @interface CooldownManager : SKSpriteNode
 

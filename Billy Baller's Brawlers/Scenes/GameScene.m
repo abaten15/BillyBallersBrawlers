@@ -265,7 +265,7 @@
 			} else if (_opponent.brawlerID == STEVE_ID) {
 				[_player takeDamage:STEVE_BULLET_DAMAGE];
 			} else if (_opponent.brawlerID == TIM_ID) {
-				[_player takeDamage:]
+				[_player takeDamage:TOMMY_TURRET_BULLET_DAMAGE];
 			}
 			NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
 			NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];

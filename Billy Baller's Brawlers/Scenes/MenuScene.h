@@ -35,6 +35,10 @@
 #define HARRY_SELECT_SIZE CGSizeMake(100, 100)
 #define HARRY_SELECT_POSITION CGPointMake(-150, 150)
 
+#define TIM_SELECT_IMAGE_NAME @"TimSelect"
+#define TIM_SELECT_SIZE CGSizeMake(100, 100)
+#define TIM_SELECT_POSITION CGPointMake(0, 150)
+
 #define SELECT_BORDER_IMAGE_NAME @"SelectBorder"
 #define SELECT_BORDER_SIZE CGSizeMake(100, 100)
 
@@ -56,9 +60,22 @@
 - (void) abbySelectPressed;
 @property (nonatomic) SKSpriteNode *harrySelect;
 - (void) harrySelectPressed;
+@property (nonatomic) SKSpriteNode *timSelect;
+- (void) timSelectPressed;
 
 @property (nonatomic) SKSpriteNode *selectBorder;
 
 @end
 
 #endif /* MenuScene_h */
+
+
+
+
+
+
+
+
+
+
+
