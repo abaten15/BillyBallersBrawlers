@@ -106,6 +106,7 @@
 - (void) shootSlimeBallAt:(CGPoint)point going:(Direction)dir;
 - (void) shootSniperBulletAt:(CGPoint)point going:(Direction)dir;
 - (void) shootShovelWallAt:(CGPoint)point going:(Direction)dir;
+- (void) spawnTommyTurretAt:(CGPoint)point;
 
 @property (nonatomic) BOOL isStunned;
 - (void) getStunned;

@@ -19,10 +19,12 @@
 #import "ThrowingStar.h"
 #import "StarPiece.h"
 #import "StunBullet.h"
+#import "DroneArtilleryExplosion.h"
 
 #import "Grenade.h"
 #import "SniperBullet.h"
 #import "ShovelWall.h"
+#import "TommyTurret.h"
 
 @implementation GameScene {
     NSTimeInterval _lastUpdateTime;
@@ -142,6 +144,10 @@
 		
 		[self checkStunBulletContact:contact checkingName:nameToCheck isNameA:isNameA];
 		
+		[self checkDroneArtilleryExplosionContact:contact checkingName:nameToCheck isNameA:isNameA];
+		
+		
+		
 		[self checkExplosionContact:contact checkingName:nameToCheck isNameA:isNameA];
 		
 		if (isNameA) {
@@ -258,6 +264,8 @@
 				[_player takeDamage:BILLY_BULLET_DAMAGE];
 			} else if (_opponent.brawlerID == STEVE_ID) {
 				[_player takeDamage:STEVE_BULLET_DAMAGE];
+			} else if (_opponent.brawlerID == TIM_ID) {
+				[_player takeDamage:]
 			}
 			NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
 			NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
@@ -355,7 +363,32 @@
 			[contact.bodyB.node removeFromParent];
 		}
 	}
+	
 }
+
+- (void) checkDroneArtilleryExplosionContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA {
+
+	NSString *explosionStr = @"";
+	@try {
+		explosionStr = [nameToCheck substringToIndex:droneArtilleryExplosionName.length];
+	}
+	@catch (NSException *e) {
+		return;
+	}
+	@finally {
+	
+	}
+	
+	if ([explosionStr isEqualToString:droneArtilleryExplosionName]) {
+		[_player takeDamage:DRONE_ARTILLERY_EXPLOSION_DAMAGE];
+		NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
+		NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
+		[_gameServicer sendData:data];
+	}
+	
+}
+
+
 
 - (void) checkExplosionContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA {
 

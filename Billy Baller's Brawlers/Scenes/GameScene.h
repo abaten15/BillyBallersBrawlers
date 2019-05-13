@@ -55,6 +55,7 @@
 - (void) checkThrowingStarContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA;
 - (void) checkStarPieceContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA;
 - (void) checkStunBulletContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA;
+- (void) checkDroneArtilleryExplosionContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA;
 
 - (void) checkExplosionContact:(SKPhysicsContact *)contact checkingName:(NSString *)nameToCheck isNameA:(BOOL)isNameA;
 - (void) checkSlimeContact:(NSString *)nameToCheck atPoint:(CGPoint)point;

@@ -20,6 +20,7 @@
 #import "SlimeBall.h"
 #import "SniperBullet.h"
 #import "ShovelWall.h"
+#import "TommyTurret.h"
 
 #import "HealthBar.h"
 #import "CategoryDefinitions.h"
@@ -257,6 +258,8 @@
 		[self shootSniperBulletAt:point going:North];
 	} else if (_brawlerID == HARRY_ID) {
 		[self shootShovelWallAt:point going:North];
+	} else if (_brawlerID == TIM_ID) {
+		[self spawnTommyTurretAt:point];
 	} else {
 		[self shootGrenadeAt:point going:North];
 	}
@@ -311,6 +314,12 @@
 		shovelWall = [ShovelWall shovelWallAt:point.x isOpponents:_isOpponent];
 	}
 	[[self parent] addChild:shovelWall];
+}
+
+- (void) spawnTommyTurretAt:(CGPoint)point {
+	TommyTurret *turret = [TommyTurret turretAt:point isOpponents:_isOpponent];
+	[turret shootBullet];
+	[[self parent] addChild:turret];
 }
 
 - (void) updateShootingOffset {

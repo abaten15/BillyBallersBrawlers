@@ -30,6 +30,7 @@ static const u_int32_t playerWallCategory = 0x1 << 5;
 #define sniperBulletName @"sniperBulletName"
 #define stunBulletName @"stunBulletName"
 #define shovelWallName @"shovelWallName"
+#define droneArtilleryExplosionName @"droneArtilleryExplosionName"
 
 static id<SKPhysicsContactDelegate> SceneContactDelegate;
 

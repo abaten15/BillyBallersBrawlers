@@ -17,7 +17,7 @@
 
 #define EXPLOSION_SIZE CGSizeMake(250,250)
 
-#define EXPLOSION_DURATAION 0.5
+#define EXPLOSION_DURATAION 0.3
 
 @interface Explosion : SKSpriteNode
 

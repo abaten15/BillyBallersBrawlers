@@ -23,6 +23,8 @@
 @property (nonatomic) BOOL isOpponents;
 + (instancetype) droneAt:(CGPoint)point isOpponents:(BOOL)isOpponentsIn;
 
+@property (nonatomic) int zPositionForExplosion;
+
 - (void)dropBomb;
 
 @end

@@ -22,6 +22,7 @@
 #import "SlimeBall.h"
 #import "SniperBullet.h"
 #import "ShovelWall.h"
+#import "TommyTurret.h"
 
 @implementation CooldownManager {
 
@@ -49,6 +50,7 @@
 		specialImageName = SHOVEL_ICON_IMAGE_NAME;
 	} else if (brawlerID == TIM_ID) {
 		mainImageName = DRONE_IMAGE_NAME_1;
+		specialImageName = TOMMY_TURRET_IMAGE_NAME;
 	}
 	
 	manager.mainNode = [SKSpriteNode spriteNodeWithImageNamed:mainImageName];
