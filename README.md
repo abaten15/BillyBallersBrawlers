@@ -1,15 +1,11 @@
-# New Characters are here!
+# Harry and Tim are entering The Arena!
 
-Billy Baller's friends have come to join the party! Slip Slip Steve and Assaassin Abby have come to the arena and brought some wild weapons with them. This update includes both characters along with a new profile that will be linked to your phone.
+Hardhat Harry and his rival Techy Tim are in the house! This update includes a brand new loading screen, two new characters, and polished gameplay and graphics.
 
-## Slip Slip Steve
+## Hardhat Harry
 
-Steve's slime gun can control an area and push enemies out of cover. He uses his special to force enemies into the open then unloads a swarm of bullets on them. He thrives against opponents that like to use cover but be warned, the speedier the enemy, the harder the battle for Steve.
+Harry is a former construction worker that has come to the arena with a vengeance. His stun gun leaves opponents helpless while his trusty shovel can burrow underground and create a damaging wall on the opponents half. His wall deals damage so make sure to keep your distance while it is up. And if you're using Harry as your brawler, make sure to hit your opponents with your shovel after you stun them. Even better if you trap them in a corner, because then you can stun them again!
 
-## Assassin Abby
+## Techy Tim
 
-Abby quit her job as a hired gun to join Billy and his friends in the arena. Her fast move speed and quick attacks make her a great brawler for players looking for a high skill cap. Her throwing star deals massive damage if it connects, but no need to worry on your misses. When her throwing star reaches the opponents side without making contact, it splits into two (allowing slight AOE and the ability to deal damage to enemies behind cover). Her years of "practice" allow her to snipe enemies over walls. If you make contact with the opponent they will be hurting bad for the rest of the match. It's not aan easy shot to hit however, so make it count!
-
-## User Profiles
-
-When opening up Billy's your phone will connect to your unique account (or create an account for new players) and pull all of your information. Everyone starts of with Billy, Steve, and Abby unlocked but as more brawlers get created you will have to earn the chance to fight with them. This profile capability will allow for progression of brawlers, clans, and a tutorial/free play to harness your skills. 
+Techy Tim has left his boring career as an engineer (let's be honest, game development is where the fun is anyways) to battle his foes with his innovative - and dangerous - technology. He has brought his two AI powered inventions to the arena to deal massive damage to his enemies. When Tim calls on him, Donny the Drone takes to the skies and drops four artillery bombs across the opponents half. This attack is tough to predict, especially for less mobile brawlers... Harry... we're talkin bout you guy. Tim's first ever invention, Tommy the Turret, may be less mobile, but he can pack even more of a punch then Donny if used properly. Place Tommy outside of cover and he will force your opponents into a life-threatening ultimatum - tank Tommy's bullets or endure Donny's airstrike. You might be thinking, "Tommy's inventions seem way too unfair for his opponents". Well don't worry, his opponents are thinking that too.

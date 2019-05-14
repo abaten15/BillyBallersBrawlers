@@ -1,3 +1,39 @@
+commit 75345f755abfd27169bd526447dbe2d6ed67a3c6
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Mon May 13 21:33:40 2019 -0400
+
+    Improved animations. Finally fixed the LAST shovel wall related bug. Polished graphics, hitboxes, aand contact interactions.
+
+commit 37e957b086e4b7e398227cebe1744cf7841c91d8
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Mon May 13 17:01:12 2019 -0400
+
+    Tommy Turret implemented. Unique brawler hitboxes implemented
+
+commit 0bc29294d933bf0d91ee6de6361b0baed9a6a4e0
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Mon May 13 00:01:11 2019 -0400
+
+    Tim attacks finished
+
+commit 9b8b78a6382e5fe9a9b64bb9aef9e892a2ba32ed
+Author: Nick Abate <abaten15@nicks-mbp-4.home>
+Date:   Sat May 11 22:10:52 2019 -0400
+
+    Techy Tim created, Drone attack almost complete
+
+commit c5669d5886bb1e42c6ed945d346143c31ce6a350
+Author: Nick Abate <abaten15@Nicks-MacBook-Pro-4.local>
+Date:   Fri May 10 16:12:56 2019 -0400
+
+    Harry working properly. Fixed bug with background wall collisions
+
+commit 114bd9957c90be6237e66fbf176854f82c76933e
+Author: Nick Abate <abaten15@Nicks-MacBook-Pro-4.local>
+Date:   Thu May 9 22:39:04 2019 -0400
+
+    Harry implemented. Bug in wall still needs to be figured out.
+
 commit 372990b2f846395822f8a2f0e1cd438460d3cdf9
 Author: Nick Abate <abaten15@nicks-mbp-4.home>
 Date:   Sat Apr 27 12:29:30 2019 -0400
