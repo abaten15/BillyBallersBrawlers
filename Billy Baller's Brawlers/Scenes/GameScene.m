@@ -201,24 +201,7 @@
 			} else {
 				[contact.bodyB.node removeFromParent];
 			}
-		} else if ([nameToCheck isEqualToString:shovelWallName]) {
-			CGFloat playerX;
-			CGFloat wallX;
-			if (isNameA) {
-				wallX = contact.bodyA.node.position.x;
-				playerX = contact.bodyB.node.position.x;
-			} else {
-				wallX = contact.bodyB.node.position.x;
-				playerX = contact.bodyA.node.position.x;
-			}
-			Direction bounceDirection;
-			if (wallX < playerX) {
-				bounceDirection = East;
-			} else {
-				bounceDirection = West;
-			}
-			[_opponentControls bouncePlayerInDirection:bounceDirection bounceDistance:SHOVEL_WALL_BOUNCINESS takeDamage:NO damageToTake:0];
-		}
+		} 
 	}
 
 
@@ -352,7 +335,6 @@
 	
 	if ([stunBulletStr isEqualToString:stunBulletName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
 		[_player takeDamage:STUN_BULLET_DAMAGE];
-		NSLog(@"should stun player");
 		[_playerControls playerGotStunned];
 		NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
 		NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
@@ -405,10 +387,7 @@
 		
 		}
 	
-		NSLog(@"checking for explosion");
-	
 		if ([explosionSection isEqualToString:explosionName] && [postfix isEqualToString:OPPONENT_POSTFIX]) {
-			NSLog(@"explosion contact");
 			[_player takeDamage:GRENADE_DAMAGE];
 			NSString *numStr = [[NSNumber numberWithInt:_player.healthBar.currentHealth] stringValue];
 			NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
@@ -564,7 +543,6 @@
 }
 
 - (BOOL)spawnOpponent:(NSData *)data {
-	NSLog(@"checking spaawn data");
 	// Getting player data
 	NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
 	NSString *opponentPrefix;

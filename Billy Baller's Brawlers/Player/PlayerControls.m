@@ -212,7 +212,6 @@
 - (void) playerGotStunned {
 	[self sliderMotion:_playerToControl.position.x sendData:YES];
 	_playerIsStunned = YES;
-	NSLog(@"player got stunned");
 	[self performSelector:@selector(endPlayerStun) withObject:nil afterDelay:STUN_BULLET_STUN_DURATION];
 }
 
@@ -224,7 +223,6 @@
 
 - (void) bouncePlayerInDirection:(Direction)dir bounceDistance:(CGFloat)bounceDistance takeDamage:(BOOL)shouldTakeDamage damageToTake:(int)damageToTake {
 
-	NSLog(@"bouncing player");
 	CGFloat xToGoTo;
 	if (dir == West) {
 		xToGoTo = _playerToControl.position.x - bounceDistance;
@@ -244,7 +242,6 @@
 }
 
 - (void) endPlayerBounce {
-	NSLog(@"stop plaayer bouncing");
 	_playerIsBouncingOffWall = NO;
 }
 

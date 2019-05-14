@@ -83,6 +83,8 @@
 #define TIM_PLAYER_SIZE CGSizeMake(123, 66)
 #define TIM_PHYSICS_BODY_SIZE CGSizeMake(66, 63)
 
+#define INVALID_WALL_LOCATION -1000
+
 @interface Player : SKSpriteNode
 
 @property (nonatomic) BOOL isOpponent;
@@ -96,6 +98,9 @@
 
 @property (nonatomic) HealthBar *healthBar;
 - (void) takeDamage:(int)damage;
+
+@property (nonatomic) CGFloat wallLocation;
+- (void) invalidateWallLocation;
 
 @property (nonatomic) CGFloat mySpeed;
 - (void) moveTo:(CGFloat) newX;

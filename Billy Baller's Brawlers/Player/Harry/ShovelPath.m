@@ -16,11 +16,12 @@
 
 }
 
-+ (instancetype) shovelPathAt:(CGPoint)point isOpponents:(BOOL)isOpponentsIn {
++ (instancetype) shovelPathAt:(CGPoint)point isOpponents:(BOOL)isOpponentsIn inScene:(GameScene *)gameScene {
 
 	ShovelPath *shovelPath = [ShovelPath spriteNodeWithImageNamed:SHOVEL_PATH_IMAGE_NAME];
 	
 	shovelPath.isOpponents = isOpponentsIn;
+	shovelPath.gameScene = gameScene;
 	
 	[shovelPath setPosition:point];
 	[shovelPath setSize:SHOVEL_PATH_SIZE];
@@ -55,10 +56,15 @@
 		spawnShovelWall = YES;
 	}
 	if (spawnShovelWall) {
-		ShovelWall *shovelWall = [ShovelWall shovelWallAt:self.position.x isOpponents:_isOpponents];
+		ShovelWall *shovelWall = [ShovelWall shovelWallAt:self.position.x isOpponents:_isOpponents inScene:_gameScene];
 		[self.parent addChild:shovelWall];
+		if(_isOpponents){
+			[_gameScene.player setWallLocation:self.position.x];
+		} else {
+			[_gameScene.opponent setWallLocation:self.position.x];
+		}
 	} else {
-		ShovelPath *shovelPath = [ShovelPath shovelPathAt:nextSpawnLocation isOpponents:_isOpponents];
+		ShovelPath *shovelPath = [ShovelPath shovelPathAt:nextSpawnLocation isOpponents:_isOpponents inScene:self.gameScene];
 		[self.parent addChild:shovelPath];
 	}
 	

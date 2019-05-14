@@ -11,6 +11,8 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+#import "GameScene.h"
+
 #define SHOVEL_PATH_IMAGE_NAME @"ShovelPath"
 #define SHOVEL_PATH_SIZE CGSizeMake(40, 150)
 #define SHOVEL_PATH_OFFSET 130
@@ -19,7 +21,8 @@
 @interface ShovelPath : SKSpriteNode
 
 @property (nonatomic) BOOL isOpponents;
-+ (instancetype) shovelPathAt:(CGPoint)point isOpponents:(BOOL)isOpponentsIn;
+@property (nonatomic) GameScene *gameScene;
++ (instancetype) shovelPathAt:(CGPoint)point isOpponents:(BOOL)isOpponentsIn inScene:(GameScene *)gameScene;
 
 - (void) spawnNextPath;
 

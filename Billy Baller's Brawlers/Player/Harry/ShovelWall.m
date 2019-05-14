@@ -18,11 +18,12 @@
 
 }
 
-+ (instancetype) shovelWallAt:(CGFloat)xLocation isOpponents:(BOOL)isOpponentsIn {
++ (instancetype) shovelWallAt:(CGFloat)xLocation isOpponents:(BOOL)isOpponentsIn inScene:(GameScene *)gameScene{
 
 	ShovelWall *shovelWall = [ShovelWall spriteNodeWithImageNamed:SHOVEL_WALL_IMAGE_NAME];
 	
 	shovelWall.isOpponents = isOpponentsIn;
+	shovelWall.gameScene = gameScene;
 	
 	[shovelWall setSize:SHOVEL_WALL_SIZE];
 	if (isOpponentsIn) {
@@ -46,13 +47,19 @@
 	}
 	
 	SKAction *delayAction = [SKAction waitForDuration:SHOVEL_WALL_DURATION];
-	SKAction *deathAction = [SKAction performSelector:@selector(removeFromParent) withObject:nil];
+	SKAction *deathAction = [SKAction performSelector:@selector(death) onTarget:shovelWall];
 	SKAction *sequence = [SKAction sequence:@[delayAction, deathAction]];
 	
 	[shovelWall runAction:sequence];
 	
 	return shovelWall;
 
+}
+
+- (void) death {
+	[_gameScene.player invalidateWallLocation];
+	[_gameScene.opponent invalidateWallLocation];
+	[self removeFromParent];
 }
 
 @end

@@ -145,6 +145,7 @@
 	player.isSlidding = NO;
 	player.isStunned = NO;
 	player.isBouncing = NO;
+	[player invalidateWallLocation];
 	
 	return player;
 	
@@ -156,10 +157,16 @@
 	}
 }
 
+- (void) invalidateWallLocation {
+	_wallLocation = INVALID_WALL_LOCATION;
+}
+
 - (void) moveTo:(CGFloat)newX {
+
 	if (_isBouncing) {
 		return;
 	}
+	
 	if (_isSlidding) {
 		int x = [self position].x;
 		if (x > 0 && x != SLIDER_MAX_X) {
@@ -173,22 +180,42 @@
 		}
 		return;
 	}
-	CGFloat duration = ((CGFloat)abs((int)(newX - self.position.x))) / self.speed;
-	SKAction *motion = [SKAction moveTo:CGPointMake(newX, self.position.y) duration:duration];
+	
+	CGFloat moveTo = newX;
+	// Checking wall location
+	if (self.position.x < self.wallLocation && newX > self.wallLocation) {
+		moveTo = self.wallLocation - 3;
+	} else if (self.position.x > self.wallLocation && newX < self.wallLocation) {
+		moveTo = self.wallLocation + 3;
+	}
+	
+	CGFloat duration = ((CGFloat)abs((int)(moveTo - self.position.x))) / self.speed;
+	SKAction *motion = [SKAction moveTo:CGPointMake(moveTo, self.position.y) duration:duration];
 	[self runAction:motion];
 }
 
 
 - (void) bounceTo:(CGFloat)newX takeDamage:(BOOL)shouldTakeDamage damageToTake:(int)damageToTake {
 	if (_isBouncing) {
+	
 		return;
 	}
+	
 	_isBouncing = YES;
+	[self removeAllActions];
 	CGFloat duration = ((CGFloat)abs((int)(newX - self.position.x))) / self.speed;
 	SKAction *motion = [SKAction moveTo:CGPointMake(newX, self.position.y) duration:duration];
 	SKAction *endBounceAction = [SKAction performSelector:@selector(stopBouncing) onTarget:self];
 	SKAction *sequence = [SKAction sequence:@[motion, endBounceAction]];
 	[self runAction:sequence];
+	NSString *stringData = [SLIDER_NETWORK_PREFIX stringByAppendingString:[[NSNumber numberWithInt:(int)newX] stringValue]];
+	[_gameServicer sendData:stringData];
+	if (shouldTakeDamage) {
+		[self takeDamage:damageToTake];
+		NSString *numStr = [[NSNumber numberWithInt:self.healthBar.currentHealth] stringValue];
+		NSString *data = [HEALTH_UPDATE_PREFIX stringByAppendingString:numStr];
+		[_gameServicer sendData:data];
+	}
 }
 
 - (void) stopBouncing {
@@ -329,7 +356,7 @@
 - (void) shootShovelWallAt:(CGPoint)point going:(Direction)dir {
 
 	CGPoint spawnPoint = CGPointMake(point.x, point.y + SHOVEL_PATH_SIZE.height/2);
-	ShovelPath *shovelPath = [ShovelPath shovelPathAt:spawnPoint isOpponents:_isOpponent];
+	ShovelPath *shovelPath = [ShovelPath shovelPathAt:spawnPoint isOpponents:_isOpponent inScene:_gameScene];
 	[self.parent addChild:shovelPath];
 
 	/*
